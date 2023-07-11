@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "602319301186",
+    "project_id": "easy-patient-finder",
+    "storage_bucket": "easy-patient-finder.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:602319301186:android:2269acf101b7131faddbdb",
+        "android_client_info": {
+          "package_name": "com.GP.project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "602319301186-t0k8oattef72fpj05plv3kfgtegu5ul7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.GP.project",
+            "certificate_hash": "e0f8b4808afe905479600239241e6380a00809be"
+          }
+        },
+        {
+          "client_id": "602319301186-rm7e9e2b5vbo32jc5dbk2o85jdbm634h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCc7qlE4cTbREE1Im3UqU_e4iQZqaOoDAc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "602319301186-rm7e9e2b5vbo32jc5dbk2o85jdbm634h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

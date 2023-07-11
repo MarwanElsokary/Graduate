@@ -1,0 +1,677 @@
+@startuml
+set namespaceSeparator ::
+
+class "project::layout::admin::admincubit::cubit.dart::adminLayoutcubit" {
+  +int currentIndex
+  +List<Widget> adminbottomScreens
+  +List<userModel> students
+  +List<userModel> search
+  +List<userModel> doctors
+  +List<userModel> supervisors
+  {static} +adminLayoutcubit get()
+  +void changebottomadmin()
+  +Future<void> getStudents()
+  +void Search()
+  +Future<void> getDoctors()
+  +Future<void> getSupervisors()
+  +Future<void> logoutAdmin()
+}
+
+
+
+
+class "project::layout::doctor::doctorcubit::cubit.dart::doctorLayoutcubit" {
+  +int currentIndex
+  +List<Widget> doctorbottomScreens
+  +userModel? doctormodel
+  +File? doctorSelectedImage
+  +dynamic doctorProfileImage
+  +ImagePicker picker
+  +String? imageurl
+  +IconData suffix
+  +bool hidepass
+  +FirebaseAuth auth
+  +User? currentDoctoruser
+  +List<XFile> selectedImages
+  +ImagePicker picker2
+  +List<String> imagesUrl
+  +List<PickedFile> takedImages
+  +ImagePicker picker3
+  +String globalcaseid
+  +bool isDiabetes
+  +bool isCardiac
+  +bool isHypertension
+  +bool isAllergies
+  +List<caseModel> doctorCases
+  +caseModel? doctorClickcase
+  +List<caseModel> casesperdoctor
+  +bool isCompleteMAX
+  +bool isPartialMAX
+  +bool isCompleteMAN
+  +bool isPartialMAN
+  {static} +doctorLayoutcubit get()
+  +void changebottomdoctor()
+  +Future<void> getDoctorData()
+  +Future<void> getDoctorImage()
+  +void uploadDoctorProfileImage()
+  +Future<void> updateDoctorData()
+  +void changepassvisibility()
+  +void changePassword()
+  +Future<void> selectImages()
+  +Future<void> uploadFunction()
+  +Future<String> uploadFile()
+  +Future<void> takeImages()
+  +Future<void> uploadFunction1()
+  +Future<String> uploadFile1()
+  +Future<void> uploadCaseImage()
+  +void createCase()
+  +bool changeDiabetes()
+  +bool changeCardiac()
+  +bool changeHypertension()
+  +bool changeAllergies()
+  +Future<void> docotrGetCases()
+  +Future<void> doctorGetCase()
+  +void removePostImage()
+  +void getCasesOfDoctor()
+  +bool showCompleteSubCategoryMAX()
+  +bool showPartialSubCategoryMAX()
+  +bool showCompleteSubCategoryMAN()
+  +bool showPartialSubCategoryMAN()
+  +bool superChangeDiabetes()
+  +bool superChangeCardiac()
+  +bool superChangeHypertension()
+  +bool superChangeAllergies()
+  +void updateCase()
+  +void removeImage()
+  +Future<void> logoutdoctor()
+}
+
+"project::layout::doctor::doctorcubit::cubit.dart::doctorLayoutcubit" o-- "project::models::user_model.dart::userModel"
+"project::layout::doctor::doctorcubit::cubit.dart::doctorLayoutcubit" o-- "dart::io::File"
+"project::layout::doctor::doctorcubit::cubit.dart::doctorLayoutcubit" o-- "image_picker::image_picker.dart::ImagePicker"
+"project::layout::doctor::doctorcubit::cubit.dart::doctorLayoutcubit" o-- "flutter::src::widgets::icon_data.dart::IconData"
+"project::layout::doctor::doctorcubit::cubit.dart::doctorLayoutcubit" o-- "firebase_auth::firebase_auth.dart::FirebaseAuth"
+"project::layout::doctor::doctorcubit::cubit.dart::doctorLayoutcubit" o-- "firebase_auth::firebase_auth.dart::User"
+"project::layout::doctor::doctorcubit::cubit.dart::doctorLayoutcubit" o-- "project::models::case_model.dart::caseModel"
+"bloc::src::cubit.dart::Cubit" <|-- "project::layout::doctor::doctorcubit::cubit.dart::doctorLayoutcubit"
+
+
+
+class "project::layout::student::studentcubit::cubit.dart::studentLayoutcubit" {
+  +int currentIndex
+  +List<Widget> studentBottomScreens
+  +userModel? studentmodel
+  +File? studentSelectedImage
+  +dynamic studentProfileImage
+  +ImagePicker picker
+  +String? imageurl
+  +IconData suffix
+  +bool hidepass
+  +FirebaseAuth auth
+  +User? currentStudentuser
+  +Map<String, String> supervisors
+  +List<caseModel> studentCases
+  +caseModel? studentClickcase
+  +List<caseModel> completeCases
+  +List<caseModel> completeCasesMax
+  +List<caseModel> completeCasesMan
+  +List<caseModel> completeFlatCases
+  +List<caseModel> completeFlatCasesMax
+  +List<caseModel> completeFlatCasesMan
+  +List<caseModel> completeWellCases
+  +List<caseModel> completeWellCasesMax
+  +List<caseModel> completeWellCasesMan
+  +List<caseModel> partialCases
+  +List<caseModel> partialCasesMan
+  +List<caseModel> partialCasesMax
+  +List<caseModel> partialCases1
+  +List<caseModel> partialCases1man
+  +List<caseModel> partialCases1max
+  +List<caseModel> partialCases2
+  +List<caseModel> partialCases2man
+  +List<caseModel> partialCases2max
+  +List<caseModel> partialCases3
+  +List<caseModel> partialCases3man
+  +List<caseModel> partialCases3max
+  +List<caseModel> partialCases4
+  +List<caseModel> partialCases4man
+  +List<caseModel> partialCases4max
+  +List<caseModel> singleCases
+  +List<caseModel> singleCasesman
+  +List<caseModel> singleCasesmax
+  +List<caseModel> overcases
+  +List<caseModel> overcasesman
+  +List<caseModel> overcasesmax
+  +List<caseModel> fullMouthCases
+  +List<caseModel> fullMouthCasesman
+  +List<caseModel> fullMouthCasesmax
+  +List<caseModel> maxilloCases
+  +List<caseModel> maxilloCasesmax
+  +List<caseModel> maxilloCasesman
+  +List<requestModel> requestedCasesStudent
+  +List<userModel> RequestedCasesSupervisor
+  {static} +studentLayoutcubit get()
+  +void changebottom()
+  +Future<void> getStudentData()
+  +Future<void> getStudentImage()
+  +void uploadStudentProfileImage()
+  +Future<void> updateStudentData()
+  +void changepassvisibility()
+  +void changePassword()
+  +void getSupervisorsData()
+  +Future<void> studentGetCases()
+  +Future<void> studentGetCase()
+  +Future<void> getCompleteCases()
+  +Future<void> getCompleteFlatCases()
+  +Future<void> getCompleteWellCases()
+  +Future<void> getPartialCases()
+  +Future<void> getPartial1Cases()
+  +Future<void> getPartial2Cases()
+  +Future<void> getPartial3Cases()
+  +Future<void> getPartial4Cases()
+  +Future<void> getSingleCases()
+  +Future<void> getOverCases()
+  +Future<void> getFullMouthCases()
+  +Future<void> getMaxilloCases()
+  +void createRequest()
+  +Future<void> getRequestedCases()
+  +void getstudentRequestedCases()
+  +Future<void> logoutStudent()
+}
+
+"project::layout::student::studentcubit::cubit.dart::studentLayoutcubit" o-- "project::models::user_model.dart::userModel"
+"project::layout::student::studentcubit::cubit.dart::studentLayoutcubit" o-- "dart::io::File"
+"project::layout::student::studentcubit::cubit.dart::studentLayoutcubit" o-- "image_picker::image_picker.dart::ImagePicker"
+"project::layout::student::studentcubit::cubit.dart::studentLayoutcubit" o-- "flutter::src::widgets::icon_data.dart::IconData"
+"project::layout::student::studentcubit::cubit.dart::studentLayoutcubit" o-- "firebase_auth::firebase_auth.dart::FirebaseAuth"
+"project::layout::student::studentcubit::cubit.dart::studentLayoutcubit" o-- "firebase_auth::firebase_auth.dart::User"
+"project::layout::student::studentcubit::cubit.dart::studentLayoutcubit" o-- "project::models::case_model.dart::caseModel"
+"bloc::src::cubit.dart::Cubit" <|-- "project::layout::student::studentcubit::cubit.dart::studentLayoutcubit"
+
+
+class "project::layout::supervisor::supervisorcubit::cubit.dart::supervisorLayoutcubit" {
+  +int currentIndex
+  +List<Widget> superbottomScreens
+  +List<userModel> supervisorStudents
+  +userModel? supervisormodel
+  +List<userModel> doctors
+  +File? supervisorSelectedImage
+  +dynamic supervisorProfileImage
+  +ImagePicker picker
+  +String? imageurl
+  +IconData suffix
+  +bool hidepass
+  +FirebaseAuth auth
+  +User? currentSupervisoruser
+  +List<caseModel> supervisorCases
+  +caseModel? supervisorClickcase
+  +List<caseModel> casesperdoctor
+  +List<requestModel> requestedCases
+  +List<requestModel> requestsPerStudent
+  +bool isCompleteMAX
+  +bool isPartialMAX
+  +bool isCompleteMAN
+  +bool isPartialMAN
+  {static} +supervisorLayoutcubit get()
+  +void changebottomsupervisor()
+  +Future<void> getSupervisorData()
+  +Future<void> getSupervisorStudents()
+  +Future<void> getAllDoctors()
+  +Future<void> getSupervisorImage()
+  +void uploadSupervisorProfileImage()
+  +Future<void> updateSupervisorData()
+  +void deleteSupervisorData()
+  +dynamic deleteAlertResult()
+  +dynamic deleteAlertDialog()
+  +void changepassvisibility()
+  +void changePassword()
+  +Future<void> supervisorGetCases()
+  +Future<void> supervisorGetCase()
+  +void supervisorGetCasesPerDoctor()
+  +Future<void> getRequestedCases()
+  +Future<void> getRequestsPerStudent()
+  +void updateRequest()
+  +bool superChangeDiabetes()
+  +bool superChangeCardiac()
+  +bool superChangeHypertension()
+  +bool superChangeAllergies()
+  +bool showCompleteSubCategoryMAX()
+  +bool showPartialSubCategoryMAX()
+  +bool showCompleteSubCategoryMAN()
+  +bool showPartialSubCategoryMAN()
+  +void updateCase()
+  +void removeImage()
+  +Future<void> logoutSupervisor()
+}
+
+"project::layout::supervisor::supervisorcubit::cubit.dart::supervisorLayoutcubit" o-- "project::models::user_model.dart::userModel"
+"project::layout::supervisor::supervisorcubit::cubit.dart::supervisorLayoutcubit" o-- "dart::io::File"
+"project::layout::supervisor::supervisorcubit::cubit.dart::supervisorLayoutcubit" o-- "image_picker::image_picker.dart::ImagePicker"
+"project::layout::supervisor::supervisorcubit::cubit.dart::supervisorLayoutcubit" o-- "flutter::src::widgets::icon_data.dart::IconData"
+"project::layout::supervisor::supervisorcubit::cubit.dart::supervisorLayoutcubit" o-- "firebase_auth::firebase_auth.dart::FirebaseAuth"
+"project::layout::supervisor::supervisorcubit::cubit.dart::supervisorLayoutcubit" o-- "firebase_auth::firebase_auth.dart::User"
+"project::layout::supervisor::supervisorcubit::cubit.dart::supervisorLayoutcubit" o-- "project::models::case_model.dart::caseModel"
+"bloc::src::cubit.dart::Cubit" <|-- "project::layout::supervisor::supervisorcubit::cubit.dart::supervisorLayoutcubit"
+
+
+
+class "project::models::case_model.dart::caseModel" {
+  +String? uId
+  +String? caseState
+  +String? caseId
+  +String? name
+  +String? image
+  +String? dateTime
+  +String? patientName
+  +String? patientAge
+  +String? currentMedications
+  +String? gender
+  +String? patientAddress
+  +String? patientPhone
+  +bool? isDiabetes
+  +bool? isHypertension
+  +bool? isCardiac
+  +bool? isAllergies
+  +String? others
+  +String? maxillaryCategory
+  +String? maxillarySubCategory
+  +String? maxillaryModification
+  +String? mandibularCategory
+  +String? mandibularSubCategory
+  +String? mandibularModification
+  +String? level
+  +String? allergies
+  +List<String> images
+  +Map<String, dynamic> tomap()
+}
+
+class "project::models::request.dart::requestModel" {
+  +String? doctorid
+  +String? doctorname
+  +String? doctorimage
+  +String? studentid
+  +String? studentname
+  +String? studentimage
+  +String? dateTime
+  +String? patientName
+  +String? patientAge
+  +String? currentMedications
+  +String? gender
+  +String? patientAddress
+  +String? patientPhone
+  +bool? isDiabetes
+  +bool? isHypertension
+  +bool? isCardiac
+  +bool? isAllergies
+  +String? others
+  +String? maxillaryCategory
+  +String? maxillarySubCategory
+  +String? maxillaryModification
+  +String? mandibularCategory
+  +String? mandibularSubCategory
+  +String? mandibularModification
+  +String? level
+  +String? allergies
+  +List<String> images
+  +String? requeststatus
+  +String? supervisorid
+  +String? caseid
+  +String? requestid
+  +Map<String, dynamic> tomap()
+}
+
+class "project::models::user_model.dart::userModel" {
+  +String? name
+  +String? phone
+  +String? email
+  +String? studentId
+  +String? role
+  +String? image
+  +String? uId
+  +String? level
+  +String? supervisorName
+  +String? supervisorId
+  +Map<String, dynamic> tomap()
+}
+
+
+class "project::modules::doctor::change_password.dart::changePasswordScreen" {
+  +TextEditingController oldPasswordcon
+  +TextEditingController newPasswordcon
+  +GlobalKey<FormState> formkey
+  +bool ispass
+  +Widget build()
+}
+
+"project::modules::doctor::change_password.dart::changePasswordScreen" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"project::modules::doctor::change_password.dart::changePasswordScreen" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "project::modules::doctor::change_password.dart::changePasswordScreen"
+
+class "project::modules::doctor::edit_profile.dart::doctorEditProfileScreen" {
+  +TextEditingController namecon
+  +TextEditingController phonecon
+  +TextEditingController emailcon
+  +TextEditingController passwordcon
+  +GlobalKey<FormState> formkey
+  +GlobalKey<FormState> formkey1
+  +bool emailchaged
+  +Widget build()
+}
+
+"project::modules::doctor::edit_profile.dart::doctorEditProfileScreen" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"project::modules::doctor::edit_profile.dart::doctorEditProfileScreen" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "project::modules::doctor::edit_profile.dart::doctorEditProfileScreen"
+
+
+
+class "project::modules::doctor::newpost_screen.dart::newPostScreen" {
+  +TextEditingController textController
+  +String? maxillaryCategorydropdownvalue
+  +List<String> itemsMax
+  +String? maxillarySubcategorydropdownvalue
+  +List<String> itemsCompleteMax
+  +List<String> itemsPartialMax
+  +String? maxillaryModificationdropdownvalue
+  +List<String> itemsModMax
+  +String? mandibularCategorydropdownvalue
+  +List<String> itemsman
+  +String? mandibularSubcategorydropdownvalue
+  +List<String> itemsCompleteman
+  +List<String> itemsPartialman
+  +String? mandibularModificationdropdownvalue
+  +List<String> itemsModman
+  +String? leveldropdownvalue
+  +List<String> items3
+  +GlobalKey<FormState> formkey2
+  +bool isDiabetes
+  +bool isHypertension
+  +bool isCardiac
+  +bool isAllergies
+  +TextEditingController patientNameController
+  +TextEditingController patientAgeController
+  +TextEditingController patientGenderController
+  +TextEditingController patientAdressController
+  +TextEditingController patienPhoneController
+  +TextEditingController otherController
+  +TextEditingController imagesController
+  +TextEditingController currentMedicationsController
+  +TextEditingController allergiesController
+  +List<dynamic> imgs
+  +Widget build()
+}
+
+class "project::modules::doctor::update_case.dart::doctorEditCaseScreen" {
+  +String? maxillaryCategorydropdownvalue
+  +List<String> itemsMax
+  +String? maxillarySubcategorydropdownvalue
+  +List<String> itemsCompleteMax
+  +List<String> itemsPartialMax
+  +String? maxillaryModificationdropdownvalue
+  +List<String> itemsModMax
+  +String? mandibularCategorydropdownvalue
+  +List<String> itemsman
+  +String? mandibularSubcategorydropdownvalue
+  +List<String> itemsCompleteman
+  +List<String> itemsPartialman
+  +String? mandibularModificationdropdownvalue
+  +List<String> itemsModman
+  +String? leveldropdownvalue
+  +List<String> items3
+  +GlobalKey<FormState> formkey3
+  +bool isDiabetes
+  +bool isHypertension
+  +bool isCardiac
+  +bool isAllergies
+  +TextEditingController patientNameController
+  +TextEditingController patientAgeController
+  +TextEditingController patientGenderController
+  +TextEditingController patientAdressController
+  +TextEditingController patienPhoneController
+  +TextEditingController otherController
+  +TextEditingController imagesController
+  +TextEditingController currentMedicationsController
+  +TextEditingController allergiesController
+  +Widget build()
+}
+
+"project::modules::doctor::update_case.dart::doctorEditCaseScreen" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"project::modules::doctor::update_case.dart::doctorEditCaseScreen" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "project::modules::doctor::update_case.dart::doctorEditCaseScreen"
+
+class "project::modules::loginscreen::forget_password.dart::forgetPasswordScreen" {
+  +TextEditingController emailcon
+  +TextEditingController passwordcon
+  +GlobalKey<FormState> formkey
+  +bool ispass
+  +Widget build()
+}
+
+"project::modules::loginscreen::forget_password.dart::forgetPasswordScreen" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"project::modules::loginscreen::forget_password.dart::forgetPasswordScreen" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "project::modules::loginscreen::forget_password.dart::forgetPasswordScreen"
+
+class "project::modules::loginscreen::logincubit.dart::logincubit" {
+  +IconData suffix
+  +bool hidepass
+  {static} +logincubit get()
+  +void userLogin()
+  +void changepassvisibility()
+}
+
+"project::modules::loginscreen::logincubit.dart::logincubit" o-- "flutter::src::widgets::icon_data.dart::IconData"
+"bloc::src::cubit.dart::Cubit" <|-- "project::modules::loginscreen::logincubit.dart::logincubit"
+
+class "project::modules::loginscreen::loginScreen.dart::loginScreen" {
+  +TextEditingController emailcon
+  +TextEditingController passwordcon
+  +GlobalKey<FormState> formkey
+  +bool ispass
+  +Widget build()
+}
+
+"project::modules::loginscreen::loginScreen.dart::loginScreen" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"project::modules::loginscreen::loginScreen.dart::loginScreen" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "project::modules::loginscreen::loginScreen.dart::loginScreen"
+
+abstract class "project::modules::loginscreen::loginstates.dart::loginstates" {
+}
+
+class "project::modules::loginscreen::loginstates.dart::loginIntialState" {
+}
+
+"project::modules::loginscreen::loginstates.dart::loginstates" <|-- "project::modules::loginscreen::loginstates.dart::loginIntialState"
+
+class "project::modules::loginscreen::loginstates.dart::loginLoadingState" {
+}
+
+"project::modules::loginscreen::loginstates.dart::loginstates" <|-- "project::modules::loginscreen::loginstates.dart::loginLoadingState"
+
+class "project::modules::loginscreen::loginstates.dart::loginSucessState" {
+  +String uId
+}
+
+"project::modules::loginscreen::loginstates.dart::loginstates" <|-- "project::modules::loginscreen::loginstates.dart::loginSucessState"
+
+class "project::modules::loginscreen::loginstates.dart::loginErrorState" {
+  +String error
+}
+
+"project::modules::loginscreen::loginstates.dart::loginstates" <|-- "project::modules::loginscreen::loginstates.dart::loginErrorState"
+
+class "project::modules::loginscreen::loginstates.dart::chagePassvisibilitystate" {
+}
+
+"project::modules::loginscreen::loginstates.dart::loginstates" <|-- "project::modules::loginscreen::loginstates.dart::chagePassvisibilitystate"
+
+class "project::modules::loginscreen::loginstates.dart::role" {
+}
+
+"project::modules::loginscreen::loginstates.dart::loginstates" <|-- "project::modules::loginscreen::loginstates.dart::role"
+
+class "project::modules::registerscreen::doctorsregisterScreen.dart::doctorRegisterScreen" {
+  +TextEditingController namecon
+  +TextEditingController phonecon
+  +TextEditingController emailcon
+  +TextEditingController passwordcon
+  +GlobalKey<FormState> formkey
+  +bool ispass
+  +String? doctor
+  +String doctorrole
+  +List<String> items
+  +Widget build()
+}
+
+"project::modules::registerscreen::doctorsregisterScreen.dart::doctorRegisterScreen" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"project::modules::registerscreen::doctorsregisterScreen.dart::doctorRegisterScreen" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "project::modules::registerscreen::doctorsregisterScreen.dart::doctorRegisterScreen"
+
+class "project::modules::registerscreen::registercubit.dart::registercubit" {
+  +IconData suffix
+  +bool hidepass
+  +Map<String, String> supervisors
+  {static} +registercubit get()
+  +void userRegister()
+  +void createUser()
+  +void changepassvisibility()
+  +Future<void> getSupervisorsData()
+}
+
+"project::modules::registerscreen::registercubit.dart::registercubit" o-- "flutter::src::widgets::icon_data.dart::IconData"
+"bloc::src::cubit.dart::Cubit" <|-- "project::modules::registerscreen::registercubit.dart::registercubit"
+
+class "project::modules::registerscreen::registerScreen.dart::registerScreen" {
+  +TextEditingController Idcon
+  +TextEditingController namecon
+  +TextEditingController phonecon
+  +TextEditingController emailcon
+  +TextEditingController passwordcon
+  +GlobalKey<FormState> formkey
+  +bool ispass
+  +dynamic supervisorName
+  +dynamic supervisorId
+  +Widget build()
+}
+
+
+
+
+
+
+class "project::modules::student::edit_profile.dart::editProfileScreen" {
+  +TextEditingController namecon
+  +TextEditingController phonecon
+  +TextEditingController emailcon
+  +TextEditingController passwordcon
+  +GlobalKey<FormState> formkey
+  +GlobalKey<FormState> formkey1
+  +bool emailchaged
+  +dynamic supervisorName
+  +dynamic supervisorId
+  +Widget build()
+}
+
+"project::modules::student::edit_profile.dart::editProfileScreen" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"project::modules::student::edit_profile.dart::editProfileScreen" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "project::modules::student::edit_profile.dart::editProfileScreen"
+
+
+
+class "project::modules::supervisor::change_password.dart::changePasswordScreen" {
+  +TextEditingController oldPasswordcon
+  +TextEditingController newPasswordcon
+  +GlobalKey<FormState> formkey
+  +bool ispass
+  +Widget build()
+}
+
+
+class "project::modules::supervisor::edit_profile.dart::supervisorEditProfileScreen" {
+  +TextEditingController namecon
+  +TextEditingController phonecon
+  +TextEditingController emailcon
+  +TextEditingController passwordcon
+  +GlobalKey<FormState> formkey
+  +GlobalKey<FormState> formkey1
+  +bool emailchaged
+  +Widget build()
+}
+
+
+
+
+class "project::modules::supervisor::update_case.dart::editCaseScreen" {
+  +String? maxillaryCategorydropdownvalue
+  +List<String> itemsMax
+  +String? maxillarySubcategorydropdownvalue
+  +List<String> itemsCompleteMax
+  +List<String> itemsPartialMax
+  +String? maxillaryModificationdropdownvalue
+  +List<String> itemsModMax
+  +String? mandibularCategorydropdownvalue
+  +List<String> itemsman
+  +String? mandibularSubcategorydropdownvalue
+  +List<String> itemsCompleteman
+  +List<String> itemsPartialman
+  +String? mandibularModificationdropdownvalue
+  +List<String> itemsModman
+  +String? leveldropdownvalue
+  +List<String> items3
+  +GlobalKey<FormState> formkey3
+  +bool isDiabetes
+  +bool isHypertension
+  +bool isCardiac
+  +bool isAllergies
+  +TextEditingController patientNameController
+  +TextEditingController patientAgeController
+  +TextEditingController patientGenderController
+  +TextEditingController patientAdressController
+  +TextEditingController patienPhoneController
+  +TextEditingController otherController
+  +TextEditingController imagesController
+  +TextEditingController currentMedicationsController
+  +TextEditingController allergiesController
+  +Widget build()
+}
+
+"project::modules::supervisor::update_case.dart::editCaseScreen" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"project::modules::supervisor::update_case.dart::editCaseScreen" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "project::modules::supervisor::update_case.dart::editCaseScreen"
+
+class "project::shared::components::blocobserver.dart::MyBlocObserver" {
+  +void onCreate()
+  +void onChange()
+  +void onError()
+  +void onClose()
+}
+
+"bloc::src::bloc_observer.dart::BlocObserver" <|-- "project::shared::components::blocobserver.dart::MyBlocObserver"
+
+class "project::shared::components::components.dart::toaststates" {
+  +int index
+  {static} +List<toaststates> values
+  {static} +toaststates SUCCESS
+  {static} +toaststates ERROR
+  {static} +toaststates WARNNING
+}
+
+"project::shared::components::components.dart::toaststates" o-- "project::shared::components::components.dart::toaststates"
+"dart::core::Enum" <|-- "project::shared::components::components.dart::toaststates"
+
+class "project::shared::network::local::cache_helper.dart::cacheHelper" {
+  {static} +SharedPreferences? sp
+  {static} +dynamic init()
+  {static} +Future<bool?> savedata()
+  {static} +dynamic getdata()
+  {static} +Future<bool?> removedata()
+}
+
+"project::shared::network::local::cache_helper.dart::cacheHelper" o-- "shared_preferences::shared_preferences.dart::SharedPreferences"
+
+class "project::shared::styles::colors.dart::cc" {
+  {static} +MaterialColor defcol
+}
+
+"project::shared::styles::colors.dart::cc" o-- "flutter::src::material::colors.dart::MaterialColor"
+
+
+@enduml
