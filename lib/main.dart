@@ -12,6 +12,7 @@ import 'package:project/shared/components/constants.dart';
 import 'package:project/shared/network/local/cache_helper.dart';
 import 'package:project/shared/styles/themes.dart';
 
+import 'layout/doctor/doctorcubit/cubit.dart';
 import 'layout/student/studentcubit/cubit.dart';
 import 'layout/supervisor/supervisorcubit/cubit.dart';
 
@@ -83,6 +84,10 @@ class MyApp extends StatelessWidget {
               ..supervisorGetCases()
               ..getAllDoctors()
               ..getRequestedCases()),
+        BlocProvider(
+          create: (context) => doctorLayoutcubit(), // Or your initial cubit
+          child: MyApp(),
+        ),
       ],
       child: MaterialApp(
         theme: lighttheme, // lightmode

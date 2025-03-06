@@ -72,7 +72,16 @@ class loginScreen extends StatelessWidget {
                   } else if (doc["role"] == 'Doctor') {
                     await doctorLayoutcubit.get(context).getDoctorData();
                     // await  doctorLayoutcubit.get(context). docotrGetCases();
-                    navigate(context, doctorLayoutScreen());
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => BlocProvider.value(
+                          value: BlocProvider.of<doctorLayoutcubit>(
+                              context), // Use the existing cubit
+                          child: doctorLayoutScreen(),
+                        ),
+                      ),
+                    );
                   } else if (doc["role"] == 'Supervisor') {
                     await supervisorLayoutcubit
                         .get(context)
