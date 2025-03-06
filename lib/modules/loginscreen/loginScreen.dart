@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icon_broken/icon_broken.dart';
@@ -15,7 +14,8 @@ import 'package:project/modules/loginscreen/forget_password.dart';
 import 'package:project/modules/registerscreen/registerScreen.dart';
 import 'package:project/shared/network/local/cache_helper.dart';
 import 'package:project/shared/styles/colors.dart';
- import '../../layout/doctor/doctor_Layout_screen.dart';
+
+import '../../layout/doctor/doctor_Layout_screen.dart';
 import '../../shared/components/components.dart';
 import '../../shared/components/constants.dart';
 import '../registerscreen/doctorsregisterScreen.dart';
@@ -27,7 +27,7 @@ class loginScreen extends StatelessWidget {
   var passwordcon = TextEditingController();
   var formkey = GlobalKey<FormState>();
   bool ispass = true;
-   @override
+  @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (BuildContext context) => logincubit(),
@@ -40,53 +40,64 @@ class loginScreen extends StatelessWidget {
               state: toaststates.ERROR,
             );
           }
-          if(state is loginSucessState)
-          {
-            cacheHelper.savedata(key:'uId', value: state.uId,).then((value)
-            {UID=state.uId;
-            FirebaseFirestore.instance
-                .collection('users')
-                .where('uId', isEqualTo: state.uId)
-                .get()
-                .then((QuerySnapshot querySnapshot) {
-              querySnapshot.docs.forEach((doc) async {
-                cacheHelper.savedata(
-                  key:'role',
-                  value: doc["role"] ,
-                ).then((value){
-                  ROLE=doc["role"];
-                }).catchError((error){
-                  print(error);
+          if (state is loginSucessState) {
+            cacheHelper
+                .savedata(
+              key: 'uId',
+              value: state.uId,
+            )
+                .then((value) {
+              UID = state.uId;
+              FirebaseFirestore.instance
+                  .collection('users')
+                  .where('uId', isEqualTo: state.uId)
+                  .get()
+                  .then((QuerySnapshot querySnapshot) {
+                querySnapshot.docs.forEach((doc) async {
+                  cacheHelper
+                      .savedata(
+                    key: 'role',
+                    value: doc["role"],
+                  )
+                      .then((value) {
+                    ROLE = doc["role"];
+                  }).catchError((error) {
+                    print(error);
+                  });
+                  if (doc["role"] == 'student') {
+                    await studentLayoutcubit.get(context).getStudentData();
+                    await studentLayoutcubit.get(context).studentGetCases();
+                    await studentLayoutcubit.get(context).getRequestedCases();
+                    navigate(context, studentLayoutScreen());
+                  } else if (doc["role"] == 'Doctor') {
+                    await doctorLayoutcubit.get(context).getDoctorData();
+                    // await  doctorLayoutcubit.get(context). docotrGetCases();
+                    navigate(context, doctorLayoutScreen());
+                  } else if (doc["role"] == 'Supervisor') {
+                    await supervisorLayoutcubit
+                        .get(context)
+                        .getSupervisorData();
+                    await supervisorLayoutcubit
+                        .get(context)
+                        .supervisorGetCases();
+                    await supervisorLayoutcubit.get(context).getAllDoctors();
+                    await supervisorLayoutcubit
+                        .get(context)
+                        .getRequestedCases();
+                    navigate(context, superviasorLayoutScreen());
+                  } else if (doc["role"] == 'admin') {
+                    await adminLayoutcubit.get(context).getStudents();
+                    await adminLayoutcubit.get(context).getDoctors();
+                    await adminLayoutcubit.get(context).getSupervisors();
+                    navigate(context, adminLayoutScreen());
+                  } else {
+                    print('cant login');
+                  }
                 });
-                if(doc["role"]=='student'){
-                await  studentLayoutcubit.get(context).getStudentData();
-                await  studentLayoutcubit.get(context).studentGetCases();
-                await  studentLayoutcubit.get(context).getRequestedCases();
-                  navigate(context, studentLayoutScreen());
-                }
-                else  if(doc["role"]=='Doctor'){
-                await  doctorLayoutcubit.get(context).getDoctorData();
-                await  doctorLayoutcubit.get(context). docotrGetCases();
-                   navigate(context, doctorLayoutScreen());
-                }else if(doc["role"]=='Supervisor'){
-                 await supervisorLayoutcubit.get(context).getSupervisorData();
-                 await supervisorLayoutcubit.get(context). supervisorGetCases();
-                 await supervisorLayoutcubit.get(context).getAllDoctors();
-                 await supervisorLayoutcubit.get(context).getRequestedCases();
-                   navigate(context, superviasorLayoutScreen());
-                }else if(doc["role"]=='admin'){
-                  await adminLayoutcubit.get(context).getStudents();
-                  await adminLayoutcubit.get(context).getDoctors();
-                  await adminLayoutcubit.get(context).getSupervisors();
-                 navigate(context, adminLayoutScreen());
-              }else {
-                  print('cant login');
-                }
               });
             });
-            });
-        }
-          },
+          }
+        },
         builder: (context, state) {
           return Scaffold(
             body: Container(

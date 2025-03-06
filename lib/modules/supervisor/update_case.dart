@@ -265,7 +265,7 @@ class editCaseScreen extends StatelessWidget {
                             Text(
                               '${model.dateTime}',
                               style:
-                              Theme.of(context).textTheme.caption?.copyWith(
+                              Theme.of(context).textTheme.bodySmall?.copyWith(
                                 height: 1.4,
                               ),
                             ),

@@ -1,20 +1,22 @@
 import 'dart:convert';
 import 'dart:core';
 import 'dart:io';
-  import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/material.dart';
-import 'package:project/modules/student/edit_profile.dart';
- import 'package:project/shared/components/components.dart';
-import 'package:project/shared/network/local/cache_helper.dart';
-import 'package:bloc/bloc.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:http/http.dart' as http;
 import 'package:icon_broken/icon_broken.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:project/layout/student/studentcubit/states.dart';
+import 'package:project/modules/student/edit_profile.dart';
+import 'package:project/shared/components/components.dart';
+import 'package:project/shared/network/local/cache_helper.dart';
+
 import '../../../models/case_model.dart';
 import '../../../models/request.dart';
 import '../../../models/user_model.dart';
@@ -23,16 +25,14 @@ import '../../../modules/student/categories/categories_screen.dart';
 import '../../../modules/student/home_screen.dart';
 import '../../../modules/student/profile_screen.dart';
 import '../../../modules/student/requests_screen.dart';
- import '../../../shared/components/constants.dart';
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-import 'package:http/http.dart' as http;
+import '../../../shared/components/constants.dart';
 
 class studentLayoutcubit extends Cubit<studentLayoutstates> {
   studentLayoutcubit() : super(studentIntialstate());
   static studentLayoutcubit get(context) => BlocProvider.of(context);
   Future<void> studentsetupInteractedMessage(BuildContext context) async {
     RemoteMessage? initialMessage =
-    await FirebaseMessaging.instance.getInitialMessage();
+        await FirebaseMessaging.instance.getInitialMessage();
 
     if (initialMessage != null) {
       handleMessage(context, initialMessage);
@@ -42,19 +42,22 @@ class studentLayoutcubit extends Cubit<studentLayoutstates> {
       handleMessage(context, message);
     });
   }
-  void handleMessage(BuildContext context,RemoteMessage message) {
-    if(message.notification?.body == 'Your supervisor account has been deleted'){
-       Navigator.of(context).push(
+
+  void handleMessage(BuildContext context, RemoteMessage message) {
+    if (message.notification?.body ==
+        'Your supervisor account has been deleted') {
+      Navigator.of(context).push(
         MaterialPageRoute(builder: (_) => editProfileScreen()),
       );
     }
-    if(message.notification?.body == 'your request has been approved'){
+    if (message.notification?.body == 'your request has been approved') {
       changebottom(2);
     }
-    if(message.notification?.body == 'your request has been rejected'){
+    if (message.notification?.body == 'your request has been rejected') {
       changebottom(2);
     }
   }
+
   int currentIndex = 0;
   List<Widget> studentBottomScreens = [
     studentHomeScreen(),
@@ -100,7 +103,7 @@ class studentLayoutcubit extends Cubit<studentLayoutstates> {
   var studentProfileImage;
   var picker = ImagePicker();
   Future<void> getStudentImage() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     studentSelectedImage = null;
     studentProfileImage = null;
     if (pickedFile != null) {
@@ -244,7 +247,6 @@ class studentLayoutcubit extends Cubit<studentLayoutstates> {
     }
   }
 
-
   // suffix icon
   IconData suffix = IconBroken.Show;
   bool hidepass = true;
@@ -379,6 +381,7 @@ class studentLayoutcubit extends Cubit<studentLayoutstates> {
       emit(studentGetCompleteCasesSucessState());
     });
   }
+
   List<caseModel> completeFlatCases = [];
   List<caseModel> completeFlatCasesMax = [];
   List<caseModel> completeFlatCasesMan = [];
@@ -901,20 +904,21 @@ class studentLayoutcubit extends Cubit<studentLayoutstates> {
       showtoast(
           text: ' contact information  Requested successfully',
           state: toaststates.SUCCESS);
-      sendnotification(id: supervisorid,name: studentname);
+      sendnotification(id: supervisorid, name: studentname);
       emit(studentCreateRequestSucessState());
     }).catchError((onError) {
       print(onError.toString());
       emit(studentCreateRequestErrorState(onError.toString()));
     });
   }
-  void sendnotification({String? id,String? name}) async{
+
+  void sendnotification({String? id, String? name}) async {
     await http.post(
       Uri.parse('https://fcm.googleapis.com/fcm/send'),
       headers: <String, String>{
         'Content-Type': 'application/json; charest=UTF-8',
         'Authorization':
-        'key=AAAAjD0HKkI:APA91bGAqH0GdLQ1MAIS7oMamohZe-Bfd_Rm7WEhSlPkC1XRBeXHKV4ze1FSPxexmurSEkZvSLDEysS7Ljz4Z-iJPrfZOdlM4h07jV39BbXhjmGTxF8_hyzC-iOKpDlyP-A2TsUNJEbS'
+            'key=AAAAjD0HKkI:APA91bGAqH0GdLQ1MAIS7oMamohZe-Bfd_Rm7WEhSlPkC1XRBeXHKV4ze1FSPxexmurSEkZvSLDEysS7Ljz4Z-iJPrfZOdlM4h07jV39BbXhjmGTxF8_hyzC-iOKpDlyP-A2TsUNJEbS'
       },
       body: jsonEncode(
         <String, dynamic>{
@@ -926,8 +930,12 @@ class studentLayoutcubit extends Cubit<studentLayoutstates> {
           'data': <String, dynamic>{
             'click_action': 'FLUTTER_NOTIFICATION_CLICK',
           },
-          'to': '/topics/${id}'},),);
-     }
+          'to': '/topics/${id}'
+        },
+      ),
+    );
+  }
+
   List<requestModel> requestedCasesStudent = [];
   Future<void> getRequestedCases() async {
     FirebaseFirestore.instance
@@ -986,14 +994,26 @@ class studentLayoutcubit extends Cubit<studentLayoutstates> {
       search2 = [];
       search3 = [];
       search4 = [];
-      search1 = studentCases .where((item) => item.mandibularCategory!
-              .toLowerCase()!.contains(query.toLowerCase())).toList();
-      search2 = studentCases.where((item) => item.mandibularSubCategory!
-              .toLowerCase()!.contains(query.toLowerCase())).toList();
-      search3 = studentCases.where((item) => item.maxillaryCategory!
-              .toLowerCase()!.contains(query.toLowerCase())).toList();
-      search4 = studentCases.where((item) => item.maxillarySubCategory!
-             .toLowerCase()!.contains(query.toLowerCase())).toList();
+      search1 = studentCases
+          .where((item) => item.mandibularCategory!
+              .toLowerCase()!
+              .contains(query.toLowerCase()))
+          .toList();
+      search2 = studentCases
+          .where((item) => item.mandibularSubCategory!
+              .toLowerCase()!
+              .contains(query.toLowerCase()))
+          .toList();
+      search3 = studentCases
+          .where((item) => item.maxillaryCategory!
+              .toLowerCase()!
+              .contains(query.toLowerCase()))
+          .toList();
+      search4 = studentCases
+          .where((item) => item.maxillarySubCategory!
+              .toLowerCase()!
+              .contains(query.toLowerCase()))
+          .toList();
       search.addAll(search1);
       search.addAll(search2);
       search.addAll(search3);

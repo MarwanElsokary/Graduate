@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:hexcolor/hexcolor.dart';
+
 import 'colors.dart';
+
 /*
 ThemeData darktheme=ThemeData(
   primarySwatch:cc.defcol,
@@ -41,22 +42,22 @@ ThemeData darktheme=ThemeData(
     ),
   ),
 );*/
-ThemeData lighttheme= ThemeData(
-  primarySwatch:  cc.defcol,
+ThemeData lighttheme = ThemeData(
+  primarySwatch: cc.defcol,
   scaffoldBackgroundColor: Colors.white,
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
     type: BottomNavigationBarType.fixed,
-    selectedItemColor:cc.defcol,
+    selectedItemColor: cc.defcol,
     unselectedItemColor: Colors.black,
     elevation: 20,
   ),
   appBarTheme: AppBarTheme(
-    titleSpacing:20  ,
+    titleSpacing: 20,
     iconTheme: IconThemeData(
       color: defaultcol,
-      size:25,
+      size: 25,
     ),
-    titleTextStyle:   TextStyle(
+    titleTextStyle: TextStyle(
       color: defaultcol,
       fontWeight: FontWeight.bold,
       fontSize: 20,
@@ -64,18 +65,16 @@ ThemeData lighttheme= ThemeData(
     backgroundColor: Colors.white,
     elevation: 0.0,
     //backwardsCompatibility: false,
-   systemOverlayStyle: SystemUiOverlayStyle(
+    systemOverlayStyle: SystemUiOverlayStyle(
       statusBarColor: Colors.white,
       statusBarIconBrightness: Brightness.dark,
     ),
-
   ),
   textTheme: TextTheme(
-    bodyText1: TextStyle(
+    bodyMedium: TextStyle(
       color: Colors.black,
       fontSize: 17,
       fontWeight: FontWeight.w600,
     ),
   ),
-
 );

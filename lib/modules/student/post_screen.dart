@@ -78,7 +78,7 @@ class studentPostScreen extends StatelessWidget {
                                     '${model.dateTime}',
                                     style: Theme.of(context)
                                         .textTheme
-                                        .caption
+                                        .bodySmall
                                         ?.copyWith(
                                           height: 1.4,
                                         ),

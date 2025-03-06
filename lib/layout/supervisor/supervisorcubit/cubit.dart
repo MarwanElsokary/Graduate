@@ -1,14 +1,15 @@
 import 'dart:convert';
 import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:project/shared/components/components.dart';
-import 'package:project/shared/network/local/cache_helper.dart';
- import 'package:cloud_firestore/cloud_firestore.dart';
- import 'package:flutter/cupertino.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:http/http.dart' as http;
 import 'package:icon_broken/icon_broken.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:project/layout/supervisor/supervisorcubit/states.dart';
@@ -17,12 +18,13 @@ import 'package:project/models/user_model.dart';
 import 'package:project/modules/loginscreen/loginScreen.dart';
 import 'package:project/modules/supervisor/Home_screen.dart';
 import 'package:project/modules/supervisor/requests_screen.dart';
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
- import '../../../models/case_model.dart';
+import 'package:project/shared/components/components.dart';
+import 'package:project/shared/network/local/cache_helper.dart';
+
+import '../../../models/case_model.dart';
 import '../../../modules/supervisor/doctors_list.dart';
 import '../../../modules/supervisor/profile.dart';
- import '../../../shared/components/constants.dart';
-import 'package:http/http.dart' as http;
+import '../../../shared/components/constants.dart';
 
 class supervisorLayoutcubit extends Cubit<supervisorLayoutstates> {
   supervisorLayoutcubit() : super(intialstate());
@@ -30,7 +32,7 @@ class supervisorLayoutcubit extends Cubit<supervisorLayoutstates> {
   static supervisorLayoutcubit get(context) => BlocProvider.of(context);
   Future<void> supersetupInteractedMessage(BuildContext context) async {
     RemoteMessage? initialMessage =
-    await FirebaseMessaging.instance.getInitialMessage();
+        await FirebaseMessaging.instance.getInitialMessage();
 
     if (initialMessage != null) {
       _handleMessage(context, initialMessage);
@@ -40,9 +42,11 @@ class supervisorLayoutcubit extends Cubit<supervisorLayoutstates> {
       _handleMessage(context, message);
     });
   }
+
   void _handleMessage(BuildContext context, RemoteMessage message) {
     changebottomsupervisor(2);
   }
+
   int currentIndex = 0;
   List<Widget> superbottomScreens = [
     supervisorHomeScreen(),
@@ -110,7 +114,7 @@ class supervisorLayoutcubit extends Cubit<supervisorLayoutstates> {
   Future<void> getSupervisorImage() async {
     supervisorSelectedImage = null;
     supervisorProfileImage = null;
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       supervisorSelectedImage = File(pickedFile.path);
       supervisorProfileImage = await FlutterImageCompress.compressAndGetFile(
@@ -236,7 +240,6 @@ class supervisorLayoutcubit extends Cubit<supervisorLayoutstates> {
     await user!.reauthenticateWithCredential(credentials).then(
       (value) async {
         await value.user?.delete().then((value) async {
-
           //delete requests to user
           await FirebaseFirestore.instance
               .collection('requests')
@@ -262,7 +265,8 @@ class supervisorLayoutcubit extends Cubit<supervisorLayoutstates> {
               .where('supervisorId', isEqualTo: UID)
               .get()
               .then((value) async {
-            await Future.wait(value.docs.map((element) => senddeletenotification(element.id)));
+            await Future.wait(value.docs
+                .map((element) => senddeletenotification(element.id)));
             value.docs.forEach((element) {
               FirebaseFirestore.instance
                   .collection('users')
@@ -299,14 +303,15 @@ class supervisorLayoutcubit extends Cubit<supervisorLayoutstates> {
       emit(supervisorDeleteErrorState(error.toString()));
     });
   }
-  Future<void> senddeletenotification(String? id) async{
+
+  Future<void> senddeletenotification(String? id) async {
     print('object2');
     await http.post(
       Uri.parse('https://fcm.googleapis.com/fcm/send'),
       headers: <String, String>{
         'Content-Type': 'application/json; charest=UTF-8',
         'Authorization':
-        'key=AAAAjD0HKkI:APA91bGAqH0GdLQ1MAIS7oMamohZe-Bfd_Rm7WEhSlPkC1XRBeXHKV4ze1FSPxexmurSEkZvSLDEysS7Ljz4Z-iJPrfZOdlM4h07jV39BbXhjmGTxF8_hyzC-iOKpDlyP-A2TsUNJEbS'
+            'key=AAAAjD0HKkI:APA91bGAqH0GdLQ1MAIS7oMamohZe-Bfd_Rm7WEhSlPkC1XRBeXHKV4ze1FSPxexmurSEkZvSLDEysS7Ljz4Z-iJPrfZOdlM4h07jV39BbXhjmGTxF8_hyzC-iOKpDlyP-A2TsUNJEbS'
       },
       body: jsonEncode(
         <String, dynamic>{
@@ -318,8 +323,12 @@ class supervisorLayoutcubit extends Cubit<supervisorLayoutstates> {
           'data': <String, dynamic>{
             'click_action': 'FLUTTER_NOTIFICATION_CLICK',
           },
-          'to': '/topics/${id}'},),);
-     }
+          'to': '/topics/${id}'
+        },
+      ),
+    );
+  }
+
   IconData suffix = IconBroken.Show;
   bool hidepass = true;
   void changepassvisibility() {
@@ -498,10 +507,8 @@ class supervisorLayoutcubit extends Cubit<supervisorLayoutstates> {
         .doc(requestid)
         .update(model.tomap())
         .then((value) async {
-      if(requeststatus == 'accept')
-        sendnotificationAccept(id: studentid);
-        if(requeststatus == 'ignore')
-          sendnotificationReject(id: studentid);
+      if (requeststatus == 'accept') sendnotificationAccept(id: studentid);
+      if (requeststatus == 'ignore') sendnotificationReject(id: studentid);
       emit(supervisorUpdateRequestedCasesDataSucessState());
     }).catchError((onError) {
       emit(supervisorUpdateRequestedCasesDataErrorState(onError));
@@ -641,19 +648,20 @@ class supervisorLayoutcubit extends Cubit<supervisorLayoutstates> {
         .doc(caseId)
         .update(model.tomap())
         .then((value) {
-      sendnotificationUpdate(id: uId,caseid:  caseId);
+      sendnotificationUpdate(id: uId, caseid: caseId);
       emit(superUpdateCaseSucessState());
     }).catchError((error) {
       emit(superUpdateCaseErrorState(error));
     });
   }
-  void sendnotificationReject({String? id}) async{
+
+  void sendnotificationReject({String? id}) async {
     await http.post(
       Uri.parse('https://fcm.googleapis.com/fcm/send'),
       headers: <String, String>{
         'Content-Type': 'application/json; charest=UTF-8',
         'Authorization':
-        'key=AAAAjD0HKkI:APA91bGAqH0GdLQ1MAIS7oMamohZe-Bfd_Rm7WEhSlPkC1XRBeXHKV4ze1FSPxexmurSEkZvSLDEysS7Ljz4Z-iJPrfZOdlM4h07jV39BbXhjmGTxF8_hyzC-iOKpDlyP-A2TsUNJEbS'
+            'key=AAAAjD0HKkI:APA91bGAqH0GdLQ1MAIS7oMamohZe-Bfd_Rm7WEhSlPkC1XRBeXHKV4ze1FSPxexmurSEkZvSLDEysS7Ljz4Z-iJPrfZOdlM4h07jV39BbXhjmGTxF8_hyzC-iOKpDlyP-A2TsUNJEbS'
       },
       body: jsonEncode(
         <String, dynamic>{
@@ -665,16 +673,19 @@ class supervisorLayoutcubit extends Cubit<supervisorLayoutstates> {
           'data': <String, dynamic>{
             'click_action': 'FLUTTER_NOTIFICATION_CLICK',
           },
-          'to': '/topics/${id}'},),);
+          'to': '/topics/${id}'
+        },
+      ),
+    );
   }
 
-  void sendnotificationAccept({String? id}) async{
+  void sendnotificationAccept({String? id}) async {
     await http.post(
       Uri.parse('https://fcm.googleapis.com/fcm/send'),
       headers: <String, String>{
         'Content-Type': 'application/json; charest=UTF-8',
         'Authorization':
-        'key=AAAAjD0HKkI:APA91bGAqH0GdLQ1MAIS7oMamohZe-Bfd_Rm7WEhSlPkC1XRBeXHKV4ze1FSPxexmurSEkZvSLDEysS7Ljz4Z-iJPrfZOdlM4h07jV39BbXhjmGTxF8_hyzC-iOKpDlyP-A2TsUNJEbS'
+            'key=AAAAjD0HKkI:APA91bGAqH0GdLQ1MAIS7oMamohZe-Bfd_Rm7WEhSlPkC1XRBeXHKV4ze1FSPxexmurSEkZvSLDEysS7Ljz4Z-iJPrfZOdlM4h07jV39BbXhjmGTxF8_hyzC-iOKpDlyP-A2TsUNJEbS'
       },
       body: jsonEncode(
         <String, dynamic>{
@@ -683,12 +694,15 @@ class supervisorLayoutcubit extends Cubit<supervisorLayoutstates> {
             'body': 'your request has been approved',
           },
           'priority': 'high',
-
           'data': <String, dynamic>{
             'click_action': 'FLUTTER_NOTIFICATION_CLICK',
           },
-          'to': '/topics/${id}'},),);
-     }
+          'to': '/topics/${id}'
+        },
+      ),
+    );
+  }
+
   void removeImage(url) {
     print(url);
     for (var i = 0; i < supervisorClickcase!.images.length; i++) {
@@ -698,13 +712,14 @@ class supervisorLayoutcubit extends Cubit<supervisorLayoutstates> {
       }
     }
   }
-  void sendnotificationUpdate({String? id,caseid}) async{
-     await http.post(
+
+  void sendnotificationUpdate({String? id, caseid}) async {
+    await http.post(
       Uri.parse('https://fcm.googleapis.com/fcm/send'),
       headers: <String, String>{
         'Content-Type': 'application/json; charest=UTF-8',
         'Authorization':
-        'key=AAAAjD0HKkI:APA91bGAqH0GdLQ1MAIS7oMamohZe-Bfd_Rm7WEhSlPkC1XRBeXHKV4ze1FSPxexmurSEkZvSLDEysS7Ljz4Z-iJPrfZOdlM4h07jV39BbXhjmGTxF8_hyzC-iOKpDlyP-A2TsUNJEbS'
+            'key=AAAAjD0HKkI:APA91bGAqH0GdLQ1MAIS7oMamohZe-Bfd_Rm7WEhSlPkC1XRBeXHKV4ze1FSPxexmurSEkZvSLDEysS7Ljz4Z-iJPrfZOdlM4h07jV39BbXhjmGTxF8_hyzC-iOKpDlyP-A2TsUNJEbS'
       },
       body: jsonEncode(
         <String, dynamic>{
@@ -713,13 +728,15 @@ class supervisorLayoutcubit extends Cubit<supervisorLayoutstates> {
             'body': 'your case has been updated',
           },
           'priority': 'high',
-
           'data': <String, dynamic>{
             'click_action': 'FLUTTER_NOTIFICATION_CLICK',
-            'case_id' : caseid,
+            'case_id': caseid,
           },
-          'to': '/topics/${id}'},),);
-    }
+          'to': '/topics/${id}'
+        },
+      ),
+    );
+  }
 
   Future<void> logoutSupervisor(context) async {
     await FirebaseAuth.instance.signOut();

@@ -1,5 +1,4 @@
- import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -9,8 +8,7 @@ import 'package:project/layout/student/studentcubit/cubit.dart';
 import 'package:project/layout/supervisor/supervisorcubit/cubit.dart';
 
 import '../../models/case_model.dart';
-import '../../modules/doctor/update_case.dart';
- import '../../modules/supervisor/update_case.dart';
+import '../../modules/supervisor/update_case.dart';
 import '../styles/colors.dart';
 import 'constants.dart';
 
@@ -201,7 +199,7 @@ Widget studentDefaultbuildPost(
 ) =>
     InkWell(
       onTap: () async {
-       await studentLayoutcubit.studentGetCase(model.caseId as String);
+        await studentLayoutcubit.studentGetCase(model.caseId as String);
         navigateto(context, w);
       },
       child: Card(
@@ -259,9 +257,10 @@ Widget studentDefaultbuildPost(
                         ),
                         Text(
                           '${model.dateTime}',
-                          style: Theme.of(context).textTheme.caption?.copyWith(
-                                height: 1.4,
-                              ),
+                          style:
+                              Theme.of(context).textTheme.bodySmall?.copyWith(
+                                    height: 1.4,
+                                  ),
                         ),
                       ],
                     ),
@@ -333,10 +332,11 @@ Widget studentDefaultbuildPost(
                       Text('modification :${model?.maxillaryModification}'),
                   fallback: (context) => SizedBox()),
               ConditionalBuilder(
-                  condition:  model!.mandibularCategory! =='Full Mouth Rehabilitation' || model!.mandibularCategory! =='Maxillofacial Case',
-                  fallback: (context) => Text( '${model?.mandibularCategory}' ),
+                  condition: model!.mandibularCategory! ==
+                          'Full Mouth Rehabilitation' ||
+                      model!.mandibularCategory! == 'Maxillofacial Case',
+                  fallback: (context) => Text('${model?.mandibularCategory}'),
                   builder: (context) => SizedBox()),
-
               ConditionalBuilder(
                   condition: model.mandibularSubCategory!.length > 0 &&
                       model.mandibularSubCategory != ' ',
@@ -374,7 +374,7 @@ Widget studentDefaultbuildPost(
                 ConditionalBuilder(
                   condition: model.images.length == 1,
                   builder: (context) => Container(
-         //       height: 300,
+                    //       height: 300,
                     width: double.infinity,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(
@@ -466,71 +466,73 @@ Widget studentDefaultbuildPost(
               SizedBox(
                 height: 10,
               ),
-              if(model.caseState == 'WAITING'&& !model.studentRequests!.contains(UID) )
+              if (model.caseState == 'WAITING' &&
+                  !model.studentRequests!.contains(UID))
                 defaultbutton(
-                onpress: () {
-                  studentLayoutcubit.getStudentData();
-                  var m = studentLayoutcubit.studentmodel;
-                  if (m!.supervisorId == null)
-                    showtoast(
-                        text:
-                            'currently you don\'t have a supervisor please select one to request contact information',
-                        state: toaststates.ERROR);
-                  else {
-                    studentLayoutcubit.createRequest(
-                      status: 'pending',
-                      supervisorid: m!.supervisorId!,
-                      studentid: UID,
-                      studentname: m!.name!,
-                      studentimage:
-                          m!.image != null ? m!.image as String : null,
-                      requestid: '',
-                      doctorid: model!.uId as String,
-                      doctorname: model!.name as String,
-                      doctorimage:
-                          model!.image != null ? model!.image as String : null,
-                      caseid: model.caseId as String,
-                      patientAge: model!.patientAge as String,
-                      patientName: model!.patientName as String,
-                      patientPhone: model!.patientPhone as String,
-                      gender: model!.gender as String,
-                      currentMedications: model!.currentMedications as String,
-                      dateTime: model!.dateTime as String,
-                      level: model!.level as String,
-                      patientAddress: model!.patientAddress as String,
-                      others: model!.others as String,
-                      images: model!.images,
-                      allergies: model!.allergies as String,
-                      isHypertension: model!.isHypertension,
-                      isAllergies: model!.isAllergies,
-                      isCardiac: model!.isCardiac,
-                      isDiabetes: model!.isDiabetes,
-                      mandibularCategory: model!.mandibularCategory as String,
-                      mandibularModification:
-                          model!.mandibularModification.toString() == 'null'
-                              ? ' '
-                              : model!.mandibularModification.toString(),
-                      mandibularSubCategory:
-                          model!.mandibularSubCategory.toString() == 'null'
-                              ? ' '
-                              : model!.mandibularSubCategory.toString(),
-                      maxillaryCategory: model!.maxillaryCategory.toString(),
-                      maxillaryModification:
-                          model!.maxillaryModification.toString() == 'null'
-                              ? ' '
-                              : model!.maxillaryModification.toString(),
-                      maxillarySubCategory:
-                          model!.maxillarySubCategory.toString() == 'null'
-                              ? ' '
-                              : model!.maxillarySubCategory.toString(),
-                    );
-
-                  }
-                },
-                text: 'Request conatct information',
-                radius: 30,
-              ),
-              if(model.caseState == 'WAITING'&& model.studentRequests!.contains(UID) )
+                  onpress: () {
+                    studentLayoutcubit.getStudentData();
+                    var m = studentLayoutcubit.studentmodel;
+                    if (m!.supervisorId == null)
+                      showtoast(
+                          text:
+                              'currently you don\'t have a supervisor please select one to request contact information',
+                          state: toaststates.ERROR);
+                    else {
+                      studentLayoutcubit.createRequest(
+                        status: 'pending',
+                        supervisorid: m!.supervisorId!,
+                        studentid: UID,
+                        studentname: m!.name!,
+                        studentimage:
+                            m!.image != null ? m!.image as String : null,
+                        requestid: '',
+                        doctorid: model!.uId as String,
+                        doctorname: model!.name as String,
+                        doctorimage: model!.image != null
+                            ? model!.image as String
+                            : null,
+                        caseid: model.caseId as String,
+                        patientAge: model!.patientAge as String,
+                        patientName: model!.patientName as String,
+                        patientPhone: model!.patientPhone as String,
+                        gender: model!.gender as String,
+                        currentMedications: model!.currentMedications as String,
+                        dateTime: model!.dateTime as String,
+                        level: model!.level as String,
+                        patientAddress: model!.patientAddress as String,
+                        others: model!.others as String,
+                        images: model!.images,
+                        allergies: model!.allergies as String,
+                        isHypertension: model!.isHypertension,
+                        isAllergies: model!.isAllergies,
+                        isCardiac: model!.isCardiac,
+                        isDiabetes: model!.isDiabetes,
+                        mandibularCategory: model!.mandibularCategory as String,
+                        mandibularModification:
+                            model!.mandibularModification.toString() == 'null'
+                                ? ' '
+                                : model!.mandibularModification.toString(),
+                        mandibularSubCategory:
+                            model!.mandibularSubCategory.toString() == 'null'
+                                ? ' '
+                                : model!.mandibularSubCategory.toString(),
+                        maxillaryCategory: model!.maxillaryCategory.toString(),
+                        maxillaryModification:
+                            model!.maxillaryModification.toString() == 'null'
+                                ? ' '
+                                : model!.maxillaryModification.toString(),
+                        maxillarySubCategory:
+                            model!.maxillarySubCategory.toString() == 'null'
+                                ? ' '
+                                : model!.maxillarySubCategory.toString(),
+                      );
+                    }
+                  },
+                  text: 'Request conatct information',
+                  radius: 30,
+                ),
+              if (model.caseState == 'WAITING' &&
+                  model.studentRequests!.contains(UID))
                 defaultbutton(
                   onpress: () {
                     studentLayoutcubit.deleteRequest(model.caseId);
@@ -559,7 +561,7 @@ Widget doctorBuildPost(
 ) =>
     InkWell(
       onTap: () {
-        doctorLayoutcubit.doctorGetCase(model.caseId as String);
+        // doctorLayoutcubit.doctorGetCase(model.caseId as String);
         navigateto(context, w);
       },
       child: Card(
@@ -617,9 +619,10 @@ Widget doctorBuildPost(
                         ),
                         Text(
                           ' ${model.dateTime}',
-                          style: Theme.of(context).textTheme.caption?.copyWith(
-                                height: 1.4,
-                              ),
+                          style:
+                              Theme.of(context).textTheme.bodySmall?.copyWith(
+                                    height: 1.4,
+                                  ),
                         ),
                       ],
                     ),
@@ -691,10 +694,11 @@ Widget doctorBuildPost(
                       Text('modification :${model?.maxillaryModification}'),
                   fallback: (context) => SizedBox()),
               ConditionalBuilder(
-                  condition:  model!.mandibularCategory! =='Full Mouth Rehabilitation' || model!.mandibularCategory! =='Maxillofacial Case',
-                  fallback: (context) => Text( '${model?.mandibularCategory}' ),
+                  condition: model!.mandibularCategory! ==
+                          'Full Mouth Rehabilitation' ||
+                      model!.mandibularCategory! == 'Maxillofacial Case',
+                  fallback: (context) => Text('${model?.mandibularCategory}'),
                   builder: (context) => SizedBox()),
-
               ConditionalBuilder(
                   condition: model.mandibularSubCategory!.length > 0 &&
                       model.mandibularSubCategory != ' ',
@@ -894,9 +898,10 @@ Widget supervisorBuildPost(
                         ),
                         Text(
                           '${model!.dateTime}',
-                          style: Theme.of(context).textTheme.caption?.copyWith(
-                                height: 1.4,
-                              ),
+                          style:
+                              Theme.of(context).textTheme.bodySmall?.copyWith(
+                                    height: 1.4,
+                                  ),
                         ),
                       ],
                     ),
@@ -965,8 +970,10 @@ Widget supervisorBuildPost(
                       Text('modification :${model?.maxillaryModification}'),
                   fallback: (context) => SizedBox()),
               ConditionalBuilder(
-                  condition:  model!.mandibularCategory! =='Full Mouth Rehabilitation' || model!.mandibularCategory! =='Maxillofacial Case',
-                  fallback: (context) => Text( '${model?.mandibularCategory}' ),
+                  condition: model!.mandibularCategory! ==
+                          'Full Mouth Rehabilitation' ||
+                      model!.mandibularCategory! == 'Maxillofacial Case',
+                  fallback: (context) => Text('${model?.mandibularCategory}'),
                   builder: (context) => SizedBox()),
 
               ConditionalBuilder(
@@ -1015,7 +1022,6 @@ Widget supervisorBuildPost(
                 ConditionalBuilder(
                   condition: model.images.length == 1,
                   builder: (context) => Container(
-
                     width: double.infinity,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(
@@ -1213,7 +1219,7 @@ Widget doctorBuildPostWithUpdate(
 ) =>
     InkWell(
       onTap: () async {
-        await doctorLayoutcubit.doctorGetCase(model.caseId as String);
+        // await doctorLayoutcubit.doctorGetCase(model.caseId as String);
         navigateto(context, w);
       },
       child: Card(
@@ -1271,55 +1277,59 @@ Widget doctorBuildPostWithUpdate(
                         ),
                         Text(
                           ' ${model.dateTime}',
-                          style: Theme.of(context).textTheme.caption?.copyWith(
-                                height: 1.4,
-                              ),
+                          style:
+                              Theme.of(context).textTheme.bodySmall?.copyWith(
+                                    height: 1.4,
+                                  ),
                         ),
                       ],
                     ),
                   ),
-                  IconButton(onPressed:() {
-                    showDialog(
-                      context: context,
-                      builder: (context) => AlertDialog(
-                        shape: RoundedRectangleBorder(
-                          borderRadius:
-                          BorderRadius.circular(20.0),
-                        ),
-                        title: Text(
-                          'Delete Case',
-                          style: TextStyle(fontSize: 15),
-                        ),
-                        content: Text(
-                            'Are you sure you want to permanently delete this Case ?'),
-                        actions: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            child: Text(
-                              'Cancel',
-                              style: TextStyle(
-                                fontSize: 18.0,
+                  IconButton(
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          title: Text(
+                            'Delete Case',
+                            style: TextStyle(fontSize: 15),
+                          ),
+                          content: Text(
+                              'Are you sure you want to permanently delete this Case ?'),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: Text(
+                                'Cancel',
+                                style: TextStyle(
+                                  fontSize: 18.0,
+                                ),
                               ),
                             ),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              doctorLayoutcubit.deleteCase(model.caseId);
-                              Navigator.pop(context);
-                            },
-                            child: Text(
-                              'Delete',
-                              style: TextStyle(
-                                fontSize: 18.0,
+                            TextButton(
+                              onPressed: () {
+                                // doctorLayoutcubit.deleteCase(model.caseId);
+                                Navigator.pop(context);
+                              },
+                              child: Text(
+                                'Delete',
+                                style: TextStyle(
+                                  fontSize: 18.0,
+                                ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    );
-                  },   icon:Icon(IconBroken.Delete),color: cc.defcol, ),
+                          ],
+                        ),
+                      );
+                    },
+                    icon: Icon(IconBroken.Delete),
+                    color: cc.defcol,
+                  ),
                 ],
               ),
               Padding(
@@ -1387,10 +1397,11 @@ Widget doctorBuildPostWithUpdate(
                       Text('modification :${model?.maxillaryModification}'),
                   fallback: (context) => SizedBox()),
               ConditionalBuilder(
-                  condition:  model!.mandibularCategory! =='Full Mouth Rehabilitation' || model!.mandibularCategory! =='Maxillofacial Case',
-                  fallback: (context) => Text( '${model?.mandibularCategory}' ),
+                  condition: model!.mandibularCategory! ==
+                          'Full Mouth Rehabilitation' ||
+                      model!.mandibularCategory! == 'Maxillofacial Case',
+                  fallback: (context) => Text('${model?.mandibularCategory}'),
                   builder: (context) => SizedBox()),
-
               ConditionalBuilder(
                   condition: model.mandibularSubCategory!.length > 0 &&
                       model.mandibularSubCategory != ' ',
@@ -1428,7 +1439,6 @@ Widget doctorBuildPostWithUpdate(
                 ConditionalBuilder(
                   condition: model.images.length == 1,
                   builder: (context) => Container(
-
                     width: double.infinity,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(
@@ -1520,11 +1530,10 @@ Widget doctorBuildPostWithUpdate(
               SizedBox(
                 height: 10,
               ),
-
               defaultbutton(
                 onpress: () async {
-                  await doctorLayoutcubit.doctorGetCase(model.caseId as String);
-                  navigateto(context, doctorEditCaseScreen());
+                  // await doctorLayoutcubit.doctorGetCase(model.caseId as String);
+                  // navigateto(context, doctorEditCaseScreen());
                 },
                 text: 'Update ',
                 radius: 30,
