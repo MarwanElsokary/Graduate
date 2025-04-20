@@ -2,7 +2,7 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icon_broken/icon_broken.dart';
- import 'package:project/shared/styles/colors.dart';
+import 'package:project/shared/styles/colors.dart';
 import '../../layout/supervisor/supervisorcubit/cubit.dart';
 import '../../layout/supervisor/supervisorcubit/states.dart';
 import '../../shared/components/components.dart';
@@ -17,7 +17,6 @@ class editCaseScreen extends StatelessWidget {
     'Maxillofacial Case',
     'Full Mouth Rehabilitation',
     'Normal Maxillary Arch',
-
   ];
   String? maxillarySubcategorydropdownvalue;
   var itemsCompleteMax = [
@@ -41,7 +40,6 @@ class editCaseScreen extends StatelessWidget {
     'Maxillofacial Case',
     'Full Mouth Rehabilitation',
     'Normal Mandibular Arch',
-
   ];
   String? mandibularSubcategorydropdownvalue;
   var itemsCompleteman = [
@@ -86,8 +84,7 @@ class editCaseScreen extends StatelessWidget {
   var imagesController = TextEditingController();
   var currentMedicationsController = TextEditingController();
   var allergiesController = TextEditingController();
-  String ?pre;
-
+  String? pre;
 
   @override
   Widget build(BuildContext context) {
@@ -103,8 +100,9 @@ class editCaseScreen extends StatelessWidget {
     maxillaryCategorydropdownvalue = model1.maxillaryCategory!;
     maxillaryModificationdropdownvalue = model1.maxillaryModification!;
     maxillarySubcategorydropdownvalue = model1.maxillarySubCategory!;
-    if(maxillaryCategorydropdownvalue == 'Maxillofacial Case' || maxillaryCategorydropdownvalue == 'Full Mouth Rehabilitation' ){
-      pre=maxillaryCategorydropdownvalue;
+    if (maxillaryCategorydropdownvalue == 'Maxillofacial Case' ||
+        maxillaryCategorydropdownvalue == 'Full Mouth Rehabilitation') {
+      pre = maxillaryCategorydropdownvalue;
     }
     return BlocConsumer<supervisorLayoutcubit, supervisorLayoutstates>(
       listener: (context, state) {
@@ -112,7 +110,6 @@ class editCaseScreen extends StatelessWidget {
           showtoast(
               text: ' Case Updated successfully', state: toaststates.SUCCESS);
           Navigator.pop(context);
-
         }
       },
       builder: (context, state) {
@@ -127,80 +124,94 @@ class editCaseScreen extends StatelessWidget {
         leveldropdownvalue = model.level!;
         //  var caseImages = doctorLayoutcubit.get(context).selectedImages;
         return Scaffold(
-
+          backgroundColor: Color(0xFFB8F5FF),
           appBar: AppBar(
-            title:  Text('Update Case',
-
-            ),
-            leading: IconButton(
-              onPressed: () {
-                maxillaryCategorydropdownvalue = null;
-                maxillarySubcategorydropdownvalue = null;
-                mandibularCategorydropdownvalue = null;
-                mandibularSubcategorydropdownvalue = null;
-                mandibularModificationdropdownvalue = null;
-                maxillaryModificationdropdownvalue = null;
-                supervisorLayoutcubit.get(context).showCompleteSubCategoryMAX(false);
-                supervisorLayoutcubit.get(context).showPartialSubCategoryMAX(false);
-                supervisorLayoutcubit.get(context).showCompleteSubCategoryMAN(false);
-                supervisorLayoutcubit.get(context).showPartialSubCategoryMAN(false);
-                supervisorLayoutcubit.get(context).IsFullmouth(false);
-                supervisorLayoutcubit.get(context).IsMaxillofacial(false);
-                Navigator.pop(context);
-              },
-              icon: Icon(IconBroken.Arrow___Left_2),
-            ),
+              backgroundColor: Color(0xFFB8F5FF),
+              title: Text(
+                'Update Case',
+              ),
+              leading: IconButton(
+                onPressed: () {
+                  maxillaryCategorydropdownvalue = null;
+                  maxillarySubcategorydropdownvalue = null;
+                  mandibularCategorydropdownvalue = null;
+                  mandibularSubcategorydropdownvalue = null;
+                  mandibularModificationdropdownvalue = null;
+                  maxillaryModificationdropdownvalue = null;
+                  supervisorLayoutcubit
+                      .get(context)
+                      .showCompleteSubCategoryMAX(false);
+                  supervisorLayoutcubit
+                      .get(context)
+                      .showPartialSubCategoryMAX(false);
+                  supervisorLayoutcubit
+                      .get(context)
+                      .showCompleteSubCategoryMAN(false);
+                  supervisorLayoutcubit
+                      .get(context)
+                      .showPartialSubCategoryMAN(false);
+                  supervisorLayoutcubit.get(context).IsFullmouth(false);
+                  supervisorLayoutcubit.get(context).IsMaxillofacial(false);
+                  Navigator.pop(context);
+                },
+                icon: Icon(IconBroken.Arrow___Left_2),
+              ),
               actions: [
                 IconButton(
                   onPressed: () {
                     if (formkey3.currentState!.validate()) {
                       supervisorLayoutcubit.get(context).updateCase(
-                        dateTime: model.dateTime!,
-                        patientName: patientNameController.text,
-                        patientAge: patientAgeController.text,
-                        gender: patientGenderController.text,
-                        patientAddress: patientAdressController.text,
-                        patientPhone: patienPhoneController.text,
-                        currentMedications: currentMedicationsController.text,
-                        isAllergies: isAllergies,
-                        isCardiac: isCardiac,
-                        isDiabetes: isDiabetes,
-                        isHypertension: isHypertension,
-                        others: otherController.text,
-                        allergies: allergiesController.text,
-                        level: leveldropdownvalue.toString(),
-                        caseState: model.caseState!,
-                        name: model.name!,
-                        uId: model.uId!,
-                        caseId: model.caseId!,
-                        image: model.image != null ? model.image! : null,
-                        images: model.images,
-                        mandibularCategory:
-                        mandibularCategorydropdownvalue.toString(),
-                        mandibularModification:
-                        mandibularModificationdropdownvalue.toString() ==
-                            'null'
-                            ? ' '
-                            : mandibularModificationdropdownvalue
-                            .toString(),
-                        mandibularSubCategory:
-                        mandibularSubcategorydropdownvalue.toString() ==
-                            'null'
-                            ? ' '
-                            : mandibularSubcategorydropdownvalue.toString(),
-                        maxillaryCategory:
-                        maxillaryCategorydropdownvalue.toString(),
-                        maxillaryModification:
-                        maxillaryModificationdropdownvalue.toString() ==
-                            'null'
-                            ? ' '
-                            : maxillaryModificationdropdownvalue.toString(),
-                        maxillarySubCategory:
-                        maxillarySubcategorydropdownvalue.toString() ==
-                            'null'
-                            ? ' '
-                            : maxillarySubcategorydropdownvalue.toString(),
-                      );
+                            dateTime: model.dateTime!,
+                            patientName: patientNameController.text,
+                            patientAge: patientAgeController.text,
+                            gender: patientGenderController.text,
+                            patientAddress: patientAdressController.text,
+                            patientPhone: patienPhoneController.text,
+                            currentMedications:
+                                currentMedicationsController.text,
+                            isAllergies: isAllergies,
+                            isCardiac: isCardiac,
+                            isDiabetes: isDiabetes,
+                            isHypertension: isHypertension,
+                            others: otherController.text,
+                            allergies: allergiesController.text,
+                            level: leveldropdownvalue.toString(),
+                            caseState: model.caseState!,
+                            name: model.name!,
+                            uId: model.uId!,
+                            caseId: model.caseId!,
+                            image: model.image != null ? model.image! : null,
+                            images: model.images,
+                            mandibularCategory:
+                                mandibularCategorydropdownvalue.toString(),
+                            mandibularModification:
+                                mandibularModificationdropdownvalue
+                                            .toString() ==
+                                        'null'
+                                    ? ' '
+                                    : mandibularModificationdropdownvalue
+                                        .toString(),
+                            mandibularSubCategory:
+                                mandibularSubcategorydropdownvalue.toString() ==
+                                        'null'
+                                    ? ' '
+                                    : mandibularSubcategorydropdownvalue
+                                        .toString(),
+                            maxillaryCategory:
+                                maxillaryCategorydropdownvalue.toString(),
+                            maxillaryModification:
+                                maxillaryModificationdropdownvalue.toString() ==
+                                        'null'
+                                    ? ' '
+                                    : maxillaryModificationdropdownvalue
+                                        .toString(),
+                            maxillarySubCategory:
+                                maxillarySubcategorydropdownvalue.toString() ==
+                                        'null'
+                                    ? ' '
+                                    : maxillarySubcategorydropdownvalue
+                                        .toString(),
+                          );
                     } else {
                       print('no validation');
                     }
@@ -209,13 +220,21 @@ class editCaseScreen extends StatelessWidget {
                   icon: Icon(Icons.check),
                 )
               ]),
-
           body: Card(
-            clipBehavior: Clip.antiAliasWithSaveLayer,
-            elevation: 5.0,
-            margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+            color: Color.fromRGBO(255, 255, 255, 0.82),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(30)),
+              side: BorderSide(
+                color: Color.fromRGBO(107, 201, 255, 1),
+                width: 2,
+              ),
+            ),
+            elevation: 0.0,
+            margin: EdgeInsets.symmetric(
+              horizontal: 10.0,
+            ),
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(15.0),
               child: Column(
                 children: [
                   SizedBox(
@@ -240,7 +259,7 @@ class editCaseScreen extends StatelessWidget {
                             CircleAvatar(
                               radius: 25.0,
                               backgroundImage:
-                              AssetImage('images/profileimage.jpg'),
+                                  AssetImage('images/profileimage.jpg'),
                             ),
                           ],
                         ),
@@ -252,21 +271,27 @@ class editCaseScreen extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              '${model.name}',
-                              style: TextStyle(
-                                height: 1.4,
-                                fontSize: 15,
+                            Center(
+                              child: Text(
+                                '${model.name}',
+                                style: TextStyle(
+                                    height: 1.4,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                    color: Color(0xFF004E7F)),
                               ),
                             ),
                             SizedBox(
                               width: 5.0,
                             ),
-                            Text(
-                              '${model.dateTime}',
-                              style:
-                              Theme.of(context).textTheme.bodySmall?.copyWith(
-                                height: 1.4,
+                            Center(
+                              child: Text(
+                                '${model.dateTime}',
+                                style: TextStyle(
+                                    height: 1.4,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w600,
+                                    color: Color(0xFF004E7F)),
                               ),
                             ),
                           ],
@@ -290,83 +315,107 @@ class editCaseScreen extends StatelessWidget {
                         key: formkey3,
                         child: Column(
                           children: [
-                            TextFormField(
-                                controller: patientNameController,
-                                keyboardType: TextInputType.name,
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return 'please enter Patient Name';
-                                  }
-                                },
-                                decoration: InputDecoration(
-                                  hintText: 'patient name',
-                                  border: InputBorder.none,
-                                )),
-                            TextFormField(
-                                controller: patientAgeController,
-                                keyboardType: TextInputType.number,
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return 'please enter Patient Age';
-                                  }
-                                },
-                                decoration: InputDecoration(
-                                  hintText: 'patient age',
-                                  border: InputBorder.none,
-                                )),
-                            TextFormField(
+                            defaulttextformfield(
+                              radius: 30,
+                              controller: patientNameController,
+                              keyboardtype: TextInputType.name,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'please enter Patient Name';
+                                }
+                              },
+                              label: '',
+                              bordercolor: Color(0xFF06A4FF),
+                              labelcolor: Color(0xFF004E7F),
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            defaulttextformfield(
+                              radius: 30,
+                              controller: patientAgeController,
+                              keyboardtype: TextInputType.number,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'please enter Patient Age';
+                                }
+                              },
+                              label: '',
+                              bordercolor: Color(0xFF06A4FF),
+                              labelcolor: Color(0xFF004E7F),
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            defaulttextformfield(
+                                radius: 30,
                                 controller: patientGenderController,
-                                keyboardType: TextInputType.text,
+                                keyboardtype: TextInputType.text,
                                 validator: (value) {
                                   if (value!.isEmpty) {
                                     return 'please enter Patient Gender';
                                   }
                                 },
-                                decoration: InputDecoration(
-                                  hintText: 'gender',
-                                  border: InputBorder.none,
-                                )),
-                            TextFormField(
-                                controller: patientAdressController,
-                                keyboardType: TextInputType.streetAddress,
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return 'please enter Patient Address';
-                                  }
-                                },
-                                decoration: InputDecoration(
-                                  hintText: 'patient address',
-                                  border: InputBorder.none,
-                                )),
-                            TextFormField(
-                                controller: patienPhoneController,
-                                keyboardType: TextInputType.phone,
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return 'please enter Patient phone number';
-                                  }
-                                },
-                                decoration: InputDecoration(
-                                  hintText: 'patient phone',
-                                  border: InputBorder.none,
-                                )),
-                            TextFormField(
-                                controller: currentMedicationsController,
-                                keyboardType: TextInputType.text,
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return 'please enter Patient medication no medication?? write none';
-                                  }
-                                },
-                                decoration: InputDecoration(
-                                  hintText: 'Current medicaton',
-                                  border: InputBorder.none,
-                                )),
+                                label: '',
+                                bordercolor: Color(0xFF06A4FF),
+                                labelcolor: Color(0xFF004E7F)),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            defaulttextformfield(
+                              radius: 30,
+                              controller: patientAdressController,
+                              keyboardtype: TextInputType.streetAddress,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'please enter Patient Address';
+                                }
+                              },
+                              label: '',
+                              bordercolor: Color(0xFF06A4FF),
+                              labelcolor: Color(0xFF004E7F),
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            defaulttextformfield(
+                              radius: 30,
+                              controller: patienPhoneController,
+                              keyboardtype: TextInputType.phone,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'please enter Patient phone number';
+                                }
+                              },
+                              label: '',
+                              bordercolor: Color(0xFF06A4FF),
+                              labelcolor: Color(0xFF004E7F),
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            defaulttextformfield(
+                              radius: 30,
+                              controller: currentMedicationsController,
+                              keyboardtype: TextInputType.text,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'please enter Patient medication no medication?? write none';
+                                }
+                              },
+                              label: '',
+                              bordercolor: Color(0xFF06A4FF),
+                              labelcolor: Color(0xFF004E7F),
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
                             Align(
                               alignment: Alignment.centerLeft,
                               child: Text('Medical History',
                                   style: TextStyle(
                                     fontSize: 15,
+                                    color: cc.defcol,
                                   )),
                             ),
                             Row(
@@ -381,7 +430,12 @@ class editCaseScreen extends StatelessWidget {
                                         .superChangeDiabetes(isDiabetes);
                                   },
                                 ),
-                                Text('Diabetes'),
+                                Text(
+                                  'Diabetes',
+                                  style: TextStyle(
+                                    color: Color(0xFF004E7F),
+                                  ),
+                                ),
                                 SizedBox(
                                   width: 30,
                                 ),
@@ -398,7 +452,12 @@ class editCaseScreen extends StatelessWidget {
                                     print(isCardiac);
                                   },
                                 ),
-                                Text('Cardiac problems'),
+                                Text(
+                                  'Cardiac problems',
+                                  style: TextStyle(
+                                    color: Color(0xFF004E7F),
+                                  ),
+                                ),
                               ],
                             ),
                             Row(
@@ -413,7 +472,12 @@ class editCaseScreen extends StatelessWidget {
                                         .superChangeAllergies(isAllergies);
                                   },
                                 ),
-                                Text('Allergies'),
+                                Text(
+                                  'Allergies',
+                                  style: TextStyle(
+                                    color: Color(0xFF004E7F),
+                                  ),
+                                ),
                                 SizedBox(
                                   width: 30,
                                 ),
@@ -425,10 +489,15 @@ class editCaseScreen extends StatelessWidget {
                                     isHypertension = supervisorLayoutcubit
                                         .get(context)
                                         .superChangeHypertension(
-                                        isHypertension);
+                                            isHypertension);
                                   },
                                 ),
-                                Text('Hypertension'),
+                                Text(
+                                  'Hypertension',
+                                  style: TextStyle(
+                                    color: Color(0xFF004E7F),
+                                  ),
+                                ),
                               ],
                             ),
                             ConditionalBuilder(
@@ -455,11 +524,17 @@ class editCaseScreen extends StatelessWidget {
                                 )),
                             ConditionalBuilder(
                               builder: (context) => SizedBox(),
-                              condition: supervisorLayoutcubit.get(context).isMaxillofacial
-                                  || supervisorLayoutcubit.get(context).isFullmouth
-                                  || maxillaryCategorydropdownvalue =='Maxillofacial Case'
-                                  || maxillaryCategorydropdownvalue =='Full Mouth Rehabilitation' ,
-                              fallback:(context) => Align(
+                              condition: supervisorLayoutcubit
+                                      .get(context)
+                                      .isMaxillofacial ||
+                                  supervisorLayoutcubit
+                                      .get(context)
+                                      .isFullmouth ||
+                                  maxillaryCategorydropdownvalue ==
+                                      'Maxillofacial Case' ||
+                                  maxillaryCategorydropdownvalue ==
+                                      'Full Mouth Rehabilitation',
+                              fallback: (context) => Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text('Maxillary',
                                     style: TextStyle(
@@ -474,7 +549,14 @@ class editCaseScreen extends StatelessWidget {
                             DropdownButtonFormField(
                               value: maxillaryCategorydropdownvalue,
                               decoration: InputDecoration(
-                                label: Text('Choose Category'),
+                                label: Text(
+                                  'Choose Category',
+                                  style: TextStyle(
+                                    color: Color(0xFF06A4FF),
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
                                 border: InputBorder.none,
                                 focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide.none,
@@ -492,74 +574,126 @@ class editCaseScreen extends StatelessWidget {
                               onChanged: (String? newValue) {
                                 maxillaryCategorydropdownvalue = newValue!;
                                 if (newValue == 'Maxillary Complete Denture') {
-                                  supervisorLayoutcubit.get(context).showCompleteSubCategoryMAX(true);
-                                  supervisorLayoutcubit.get(context).IsFullmouth(false);
-                                  supervisorLayoutcubit.get(context).IsMaxillofacial(false);
-                                  supervisorLayoutcubit.get(context).showPartialSubCategoryMAX(false);
+                                  supervisorLayoutcubit
+                                      .get(context)
+                                      .showCompleteSubCategoryMAX(true);
+                                  supervisorLayoutcubit
+                                      .get(context)
+                                      .IsFullmouth(false);
+                                  supervisorLayoutcubit
+                                      .get(context)
+                                      .IsMaxillofacial(false);
+                                  supervisorLayoutcubit
+                                      .get(context)
+                                      .showPartialSubCategoryMAX(false);
                                   maxillaryModificationdropdownvalue = null;
                                   maxillarySubcategorydropdownvalue = null;
-                                  if(pre == 'Maxillofacial Case' || pre =='Full Mouth Rehabilitation'){
+                                  if (pre == 'Maxillofacial Case' ||
+                                      pre == 'Full Mouth Rehabilitation') {
                                     print('object');
-                                    mandibularCategorydropdownvalue=null;
-                                    pre=null;
+                                    mandibularCategorydropdownvalue = null;
+                                    pre = null;
                                   }
-                                }
-                                else if (newValue == 'Maxillary Partial Denture') {
-                                  supervisorLayoutcubit.get(context).showPartialSubCategoryMAX(true);
-                                  supervisorLayoutcubit.get(context).IsFullmouth(false);
-                                  supervisorLayoutcubit.get(context).IsMaxillofacial(false);
-                                  supervisorLayoutcubit.get(context).showCompleteSubCategoryMAX(false);
+                                } else if (newValue ==
+                                    'Maxillary Partial Denture') {
+                                  supervisorLayoutcubit
+                                      .get(context)
+                                      .showPartialSubCategoryMAX(true);
+                                  supervisorLayoutcubit
+                                      .get(context)
+                                      .IsFullmouth(false);
+                                  supervisorLayoutcubit
+                                      .get(context)
+                                      .IsMaxillofacial(false);
+                                  supervisorLayoutcubit
+                                      .get(context)
+                                      .showCompleteSubCategoryMAX(false);
                                   maxillarySubcategorydropdownvalue = null;
-                                  maxillaryModificationdropdownvalue = 'Un Modified';
-                                  if(pre == 'Maxillofacial Case' || pre =='Full Mouth Rehabilitation'){
+                                  maxillaryModificationdropdownvalue =
+                                      'Un Modified';
+                                  if (pre == 'Maxillofacial Case' ||
+                                      pre == 'Full Mouth Rehabilitation') {
                                     print('object');
-                                    mandibularCategorydropdownvalue=null;
-                                    pre=null;
+                                    mandibularCategorydropdownvalue = null;
+                                    pre = null;
                                   }
-                                }
-                                else if (newValue ==  'Maxillofacial Case') {
-                                  pre='Maxillofacial Case';
-                                  print('preis' +pre!);
-                                  mandibularCategorydropdownvalue='Maxillofacial Case';
-                                  supervisorLayoutcubit.get(context).IsMaxillofacial(true);
-                                  supervisorLayoutcubit.get(context).IsFullmouth(false);
-                                  supervisorLayoutcubit.get(context).showCompleteSubCategoryMAX(false);
-                                  supervisorLayoutcubit.get(context).showPartialSubCategoryMAX(false);
-                                  supervisorLayoutcubit.get(context).showCompleteSubCategoryMAN(false);
-                                  supervisorLayoutcubit.get(context).showPartialSubCategoryMAN(false);
+                                } else if (newValue == 'Maxillofacial Case') {
+                                  pre = 'Maxillofacial Case';
+                                  print('preis' + pre!);
+                                  mandibularCategorydropdownvalue =
+                                      'Maxillofacial Case';
+                                  supervisorLayoutcubit
+                                      .get(context)
+                                      .IsMaxillofacial(true);
+                                  supervisorLayoutcubit
+                                      .get(context)
+                                      .IsFullmouth(false);
+                                  supervisorLayoutcubit
+                                      .get(context)
+                                      .showCompleteSubCategoryMAX(false);
+                                  supervisorLayoutcubit
+                                      .get(context)
+                                      .showPartialSubCategoryMAX(false);
+                                  supervisorLayoutcubit
+                                      .get(context)
+                                      .showCompleteSubCategoryMAN(false);
+                                  supervisorLayoutcubit
+                                      .get(context)
+                                      .showPartialSubCategoryMAN(false);
                                   maxillarySubcategorydropdownvalue = null;
                                   maxillaryModificationdropdownvalue = null;
                                   mandibularSubcategorydropdownvalue = null;
                                   mandibularModificationdropdownvalue = null;
-                                }  else if (newValue =='Full Mouth Rehabilitation') {
-                                  pre='Full Mouth Rehabilitation';
-                                  print('preis' +pre!);
-                                  mandibularCategorydropdownvalue='Full Mouth Rehabilitation';
-                                  supervisorLayoutcubit.get(context).IsFullmouth(true);
-                                  supervisorLayoutcubit.get(context).IsMaxillofacial(false);
-                                  supervisorLayoutcubit.get(context).showCompleteSubCategoryMAX(false);
-                                  supervisorLayoutcubit.get(context).showPartialSubCategoryMAX(false);
-                                  supervisorLayoutcubit.get(context).showCompleteSubCategoryMAN(false);
-                                  supervisorLayoutcubit.get(context).showPartialSubCategoryMAN(false);
+                                } else if (newValue ==
+                                    'Full Mouth Rehabilitation') {
+                                  pre = 'Full Mouth Rehabilitation';
+                                  print('preis' + pre!);
+                                  mandibularCategorydropdownvalue =
+                                      'Full Mouth Rehabilitation';
+                                  supervisorLayoutcubit
+                                      .get(context)
+                                      .IsFullmouth(true);
+                                  supervisorLayoutcubit
+                                      .get(context)
+                                      .IsMaxillofacial(false);
+                                  supervisorLayoutcubit
+                                      .get(context)
+                                      .showCompleteSubCategoryMAX(false);
+                                  supervisorLayoutcubit
+                                      .get(context)
+                                      .showPartialSubCategoryMAX(false);
+                                  supervisorLayoutcubit
+                                      .get(context)
+                                      .showCompleteSubCategoryMAN(false);
+                                  supervisorLayoutcubit
+                                      .get(context)
+                                      .showPartialSubCategoryMAN(false);
                                   maxillarySubcategorydropdownvalue = null;
                                   maxillaryModificationdropdownvalue = null;
                                   mandibularSubcategorydropdownvalue = null;
                                   mandibularModificationdropdownvalue = null;
-                                }else {
-                                  supervisorLayoutcubit.get(context).IsFullmouth(false);
-                                  supervisorLayoutcubit.get(context).IsMaxillofacial(false);
-                                  supervisorLayoutcubit.get(context).showCompleteSubCategoryMAX(false);
-                                  supervisorLayoutcubit.get(context).showPartialSubCategoryMAX(false);
+                                } else {
+                                  supervisorLayoutcubit
+                                      .get(context)
+                                      .IsFullmouth(false);
+                                  supervisorLayoutcubit
+                                      .get(context)
+                                      .IsMaxillofacial(false);
+                                  supervisorLayoutcubit
+                                      .get(context)
+                                      .showCompleteSubCategoryMAX(false);
+                                  supervisorLayoutcubit
+                                      .get(context)
+                                      .showPartialSubCategoryMAX(false);
                                   maxillaryModificationdropdownvalue = null;
                                   maxillarySubcategorydropdownvalue = null;
-                                  if(pre == 'Maxillofacial Case' || pre =='Full Mouth Rehabilitation'){
+                                  if (pre == 'Maxillofacial Case' ||
+                                      pre == 'Full Mouth Rehabilitation') {
                                     print('object');
-                                    mandibularCategorydropdownvalue=null;
-                                    pre=null;
+                                    mandibularCategorydropdownvalue = null;
+                                    pre = null;
                                   }
-
                                 }
-
                               },
                               items: itemsMax.map((String items) {
                                 return DropdownMenuItem(
@@ -571,14 +705,21 @@ class editCaseScreen extends StatelessWidget {
                             ConditionalBuilder(
                               fallback: (context) => SizedBox(),
                               condition: supervisorLayoutcubit
-                                  .get(context)
-                                  .isPartialMAX ||
+                                      .get(context)
+                                      .isPartialMAX ||
                                   itemsPartialMax.contains(
                                       maxillarySubcategorydropdownvalue),
                               builder: (context) => DropdownButtonFormField(
                                 value: maxillarySubcategorydropdownvalue,
                                 decoration: InputDecoration(
-                                  label: Text('Choose  Sub Category'),
+                                  label: Text(
+                                    'Choose  Sub Category',
+                                    style: TextStyle(
+                                      color: Color(0xFF06A4FF),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
                                   border: InputBorder.none,
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide.none,
@@ -608,14 +749,21 @@ class editCaseScreen extends StatelessWidget {
                             ConditionalBuilder(
                               fallback: (context) => SizedBox(),
                               condition: supervisorLayoutcubit
-                                  .get(context)
-                                  .isPartialMAX ||
+                                      .get(context)
+                                      .isPartialMAX ||
                                   itemsModMax.contains(
                                       maxillaryModificationdropdownvalue),
                               builder: (context) => DropdownButtonFormField(
                                 value: maxillaryModificationdropdownvalue,
                                 decoration: InputDecoration(
-                                  label: Text('Choose  Modification'),
+                                  label: Text(
+                                    'Choose  Modification',
+                                    style: TextStyle(
+                                      color: Color(0xFF06A4FF),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
                                   border: InputBorder.none,
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide.none,
@@ -632,7 +780,7 @@ class editCaseScreen extends StatelessWidget {
                                 },
                                 onChanged: (String? newValue) {
                                   maxillaryModificationdropdownvalue =
-                                  newValue!;
+                                      newValue!;
                                   print(maxillaryModificationdropdownvalue);
                                 },
                                 items: itemsModMax.map((String items) {
@@ -646,14 +794,21 @@ class editCaseScreen extends StatelessWidget {
                             ConditionalBuilder(
                               fallback: (context) => SizedBox(),
                               condition: supervisorLayoutcubit
-                                  .get(context)
-                                  .isCompleteMAX ||
+                                      .get(context)
+                                      .isCompleteMAX ||
                                   itemsCompleteMax.contains(
                                       maxillarySubcategorydropdownvalue),
                               builder: (context) => DropdownButtonFormField(
                                 value: maxillarySubcategorydropdownvalue,
                                 decoration: InputDecoration(
-                                  label: Text('Choose Sub Category'),
+                                  label: Text(
+                                    'Choose Sub Category',
+                                    style: TextStyle(
+                                      color: Color(0xFF06A4FF),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
                                   border: InputBorder.none,
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide.none,
@@ -682,11 +837,17 @@ class editCaseScreen extends StatelessWidget {
                             ),
                             ConditionalBuilder(
                               builder: (context) => SizedBox(),
-                              condition: supervisorLayoutcubit.get(context).isMaxillofacial
-                                  || supervisorLayoutcubit.get(context).isFullmouth
-                                  || maxillaryCategorydropdownvalue =='Maxillofacial Case'
-                                  || maxillaryCategorydropdownvalue =='Full Mouth Rehabilitation' ,
-                              fallback:(context) => Align(
+                              condition: supervisorLayoutcubit
+                                      .get(context)
+                                      .isMaxillofacial ||
+                                  supervisorLayoutcubit
+                                      .get(context)
+                                      .isFullmouth ||
+                                  maxillaryCategorydropdownvalue ==
+                                      'Maxillofacial Case' ||
+                                  maxillaryCategorydropdownvalue ==
+                                      'Full Mouth Rehabilitation',
+                              fallback: (context) => Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text('Mandibular',
                                     style: TextStyle(
@@ -700,14 +861,27 @@ class editCaseScreen extends StatelessWidget {
                             ),
                             ConditionalBuilder(
                               builder: (context) => SizedBox(),
-                              condition: supervisorLayoutcubit.get(context).isMaxillofacial
-                                  || supervisorLayoutcubit.get(context).isFullmouth
-                                  || maxillaryCategorydropdownvalue =='Maxillofacial Case'
-                                  || maxillaryCategorydropdownvalue =='Full Mouth Rehabilitation' ,
-                              fallback:(context) =>  DropdownButtonFormField(
+                              condition: supervisorLayoutcubit
+                                      .get(context)
+                                      .isMaxillofacial ||
+                                  supervisorLayoutcubit
+                                      .get(context)
+                                      .isFullmouth ||
+                                  maxillaryCategorydropdownvalue ==
+                                      'Maxillofacial Case' ||
+                                  maxillaryCategorydropdownvalue ==
+                                      'Full Mouth Rehabilitation',
+                              fallback: (context) => DropdownButtonFormField(
                                 value: mandibularCategorydropdownvalue,
                                 decoration: InputDecoration(
-                                  label: Text('Choose Category'),
+                                  label: Text(
+                                    'Choose Category',
+                                    style: TextStyle(
+                                      color: Color(0xFF06A4FF),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
                                   border: InputBorder.none,
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide.none,
@@ -725,57 +899,107 @@ class editCaseScreen extends StatelessWidget {
                                 onChanged: (String? newValue) {
                                   mandibularCategorydropdownvalue = newValue!;
                                   print(mandibularCategorydropdownvalue);
-                                  if (newValue == 'Mandibular Complete Denture') {
-                                    supervisorLayoutcubit.get(context).IsMaxillofacial(false);
-                                    supervisorLayoutcubit.get(context).IsFullmouth(false);
-                                    supervisorLayoutcubit.get(context).showPartialSubCategoryMAN(false);
-                                    supervisorLayoutcubit.get(context).showCompleteSubCategoryMAN(true);
+                                  if (newValue ==
+                                      'Mandibular Complete Denture') {
+                                    supervisorLayoutcubit
+                                        .get(context)
+                                        .IsMaxillofacial(false);
+                                    supervisorLayoutcubit
+                                        .get(context)
+                                        .IsFullmouth(false);
+                                    supervisorLayoutcubit
+                                        .get(context)
+                                        .showPartialSubCategoryMAN(false);
+                                    supervisorLayoutcubit
+                                        .get(context)
+                                        .showCompleteSubCategoryMAN(true);
                                     mandibularModificationdropdownvalue = null;
                                     mandibularSubcategorydropdownvalue = null;
-
-                                  } else if (newValue == 'Mandibular Partial Denture') {
-                                    supervisorLayoutcubit.get(context).IsMaxillofacial(false);
-                                    supervisorLayoutcubit.get(context).IsFullmouth(false);
-                                    supervisorLayoutcubit .get(context).showCompleteSubCategoryMAN(false);
-                                    supervisorLayoutcubit.get(context).showPartialSubCategoryMAN(true);
+                                  } else if (newValue ==
+                                      'Mandibular Partial Denture') {
+                                    supervisorLayoutcubit
+                                        .get(context)
+                                        .IsMaxillofacial(false);
+                                    supervisorLayoutcubit
+                                        .get(context)
+                                        .IsFullmouth(false);
+                                    supervisorLayoutcubit
+                                        .get(context)
+                                        .showCompleteSubCategoryMAN(false);
+                                    supervisorLayoutcubit
+                                        .get(context)
+                                        .showPartialSubCategoryMAN(true);
                                     mandibularSubcategorydropdownvalue = null;
-                                    mandibularModificationdropdownvalue = 'Un Modified';
-
-
-                                  }   else if (newValue ==  'Maxillofacial Case') {
-                                    pre='Maxillofacial Case';
-                                    maxillaryCategorydropdownvalue='Maxillofacial Case';
-                                    supervisorLayoutcubit.get(context).IsMaxillofacial(true);
-                                    supervisorLayoutcubit.get(context).IsFullmouth(false);
-                                    supervisorLayoutcubit.get(context).showCompleteSubCategoryMAN(false);
-                                    supervisorLayoutcubit.get(context).showPartialSubCategoryMAN(false);
-                                    supervisorLayoutcubit.get(context).showCompleteSubCategoryMAX(false);
-                                    supervisorLayoutcubit.get(context).showPartialSubCategoryMAX(false);
+                                    mandibularModificationdropdownvalue =
+                                        'Un Modified';
+                                  } else if (newValue == 'Maxillofacial Case') {
+                                    pre = 'Maxillofacial Case';
+                                    maxillaryCategorydropdownvalue =
+                                        'Maxillofacial Case';
+                                    supervisorLayoutcubit
+                                        .get(context)
+                                        .IsMaxillofacial(true);
+                                    supervisorLayoutcubit
+                                        .get(context)
+                                        .IsFullmouth(false);
+                                    supervisorLayoutcubit
+                                        .get(context)
+                                        .showCompleteSubCategoryMAN(false);
+                                    supervisorLayoutcubit
+                                        .get(context)
+                                        .showPartialSubCategoryMAN(false);
+                                    supervisorLayoutcubit
+                                        .get(context)
+                                        .showCompleteSubCategoryMAX(false);
+                                    supervisorLayoutcubit
+                                        .get(context)
+                                        .showPartialSubCategoryMAX(false);
                                     mandibularSubcategorydropdownvalue = null;
                                     mandibularModificationdropdownvalue = null;
                                     maxillaryModificationdropdownvalue = null;
                                     maxillarySubcategorydropdownvalue = null;
-                                  }  else if (newValue =='Full Mouth Rehabilitation') {
-                                    pre='Full Mouth Rehabilitation';
-                                    maxillaryCategorydropdownvalue='Full Mouth Rehabilitation';
-                                    supervisorLayoutcubit.get(context).IsFullmouth(true);
-                                    supervisorLayoutcubit.get(context).IsMaxillofacial(false);
-                                    supervisorLayoutcubit.get(context).showCompleteSubCategoryMAN(false);
-                                    supervisorLayoutcubit.get(context).showPartialSubCategoryMAN(false);
-                                    supervisorLayoutcubit.get(context).showCompleteSubCategoryMAX(false);
-                                    supervisorLayoutcubit.get(context).showPartialSubCategoryMAX(false);
+                                  } else if (newValue ==
+                                      'Full Mouth Rehabilitation') {
+                                    pre = 'Full Mouth Rehabilitation';
+                                    maxillaryCategorydropdownvalue =
+                                        'Full Mouth Rehabilitation';
+                                    supervisorLayoutcubit
+                                        .get(context)
+                                        .IsFullmouth(true);
+                                    supervisorLayoutcubit
+                                        .get(context)
+                                        .IsMaxillofacial(false);
+                                    supervisorLayoutcubit
+                                        .get(context)
+                                        .showCompleteSubCategoryMAN(false);
+                                    supervisorLayoutcubit
+                                        .get(context)
+                                        .showPartialSubCategoryMAN(false);
+                                    supervisorLayoutcubit
+                                        .get(context)
+                                        .showCompleteSubCategoryMAX(false);
+                                    supervisorLayoutcubit
+                                        .get(context)
+                                        .showPartialSubCategoryMAX(false);
                                     mandibularSubcategorydropdownvalue = null;
                                     mandibularModificationdropdownvalue = null;
                                     maxillaryModificationdropdownvalue = null;
                                     maxillarySubcategorydropdownvalue = null;
                                   } else {
-                                    supervisorLayoutcubit.get(context) .showCompleteSubCategoryMAN(false);
-                                    supervisorLayoutcubit .get(context).showPartialSubCategoryMAN(false);
-                                    supervisorLayoutcubit.get(context).IsMaxillofacial(false);
-                                    supervisorLayoutcubit.get(context).IsFullmouth(false);
+                                    supervisorLayoutcubit
+                                        .get(context)
+                                        .showCompleteSubCategoryMAN(false);
+                                    supervisorLayoutcubit
+                                        .get(context)
+                                        .showPartialSubCategoryMAN(false);
+                                    supervisorLayoutcubit
+                                        .get(context)
+                                        .IsMaxillofacial(false);
+                                    supervisorLayoutcubit
+                                        .get(context)
+                                        .IsFullmouth(false);
                                     mandibularModificationdropdownvalue = null;
                                     mandibularSubcategorydropdownvalue = null;
-
                                   }
                                 },
                                 items: itemsman.map((String items) {
@@ -789,14 +1013,21 @@ class editCaseScreen extends StatelessWidget {
                             ConditionalBuilder(
                               fallback: (context) => SizedBox(),
                               condition: supervisorLayoutcubit
-                                  .get(context)
-                                  .isPartialMAN ||
+                                      .get(context)
+                                      .isPartialMAN ||
                                   itemsPartialman.contains(
                                       mandibularSubcategorydropdownvalue),
                               builder: (context) => DropdownButtonFormField(
                                 value: mandibularSubcategorydropdownvalue,
                                 decoration: InputDecoration(
-                                  label: Text('Choose Sub Category'),
+                                  label: Text(
+                                    'Choose Sub Category',
+                                    style: TextStyle(
+                                      color: Color(0xFF06A4FF),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
                                   border: InputBorder.none,
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide.none,
@@ -813,7 +1044,7 @@ class editCaseScreen extends StatelessWidget {
                                 },
                                 onChanged: (String? newValue) {
                                   mandibularSubcategorydropdownvalue =
-                                  newValue!;
+                                      newValue!;
                                   print(mandibularSubcategorydropdownvalue);
                                 },
                                 items: itemsPartialman.map((String items) {
@@ -827,14 +1058,21 @@ class editCaseScreen extends StatelessWidget {
                             ConditionalBuilder(
                               fallback: (context) => SizedBox(),
                               condition: supervisorLayoutcubit
-                                  .get(context)
-                                  .isPartialMAN ||
+                                      .get(context)
+                                      .isPartialMAN ||
                                   itemsModman.contains(
                                       mandibularModificationdropdownvalue),
                               builder: (context) => DropdownButtonFormField(
                                 value: mandibularModificationdropdownvalue,
                                 decoration: InputDecoration(
-                                  label: Text('Choose  Modification'),
+                                  label: Text(
+                                    'Choose  Modification',
+                                    style: TextStyle(
+                                      color: Color(0xFF06A4FF),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
                                   border: InputBorder.none,
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide.none,
@@ -851,7 +1089,7 @@ class editCaseScreen extends StatelessWidget {
                                 },
                                 onChanged: (String? newValue) {
                                   mandibularModificationdropdownvalue =
-                                  newValue!;
+                                      newValue!;
                                   print(mandibularModificationdropdownvalue);
                                 },
                                 items: itemsModman.map((String items) {
@@ -865,14 +1103,21 @@ class editCaseScreen extends StatelessWidget {
                             ConditionalBuilder(
                               fallback: (context) => SizedBox(),
                               condition: supervisorLayoutcubit
-                                  .get(context)
-                                  .isCompleteMAN ||
+                                      .get(context)
+                                      .isCompleteMAN ||
                                   itemsCompleteman.contains(
                                       mandibularSubcategorydropdownvalue),
                               builder: (context) => DropdownButtonFormField(
                                 value: mandibularSubcategorydropdownvalue,
                                 decoration: InputDecoration(
-                                  label: Text('Choose  Sub Category'),
+                                  label: Text(
+                                    'Choose  Sub Category',
+                                    style: TextStyle(
+                                      color: Color(0xFF06A4FF),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
                                   border: InputBorder.none,
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide.none,
@@ -889,7 +1134,7 @@ class editCaseScreen extends StatelessWidget {
                                 },
                                 onChanged: (String? newValue) {
                                   mandibularSubcategorydropdownvalue =
-                                  newValue!;
+                                      newValue!;
                                   print(mandibularSubcategorydropdownvalue);
                                 },
                                 items: itemsCompleteman.map((String items) {
@@ -903,7 +1148,14 @@ class editCaseScreen extends StatelessWidget {
                             DropdownButtonFormField(
                               value: leveldropdownvalue,
                               decoration: InputDecoration(
-                                label: Text('Choose Level'),
+                                label: Text(
+                                  'Choose Level',
+                                  style: TextStyle(
+                                    color: Color(0xFF06A4FF),
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
                                 border: InputBorder.none,
                                 focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide.none,
@@ -945,7 +1197,7 @@ class editCaseScreen extends StatelessWidget {
                                   physics: BouncingScrollPhysics(),
                                   shrinkWrap: true,
                                   gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                      SliverGridDelegateWithFixedCrossAxisCount(
                                     crossAxisCount: 2,
                                     crossAxisSpacing: 5,
                                     mainAxisSpacing: 5,
@@ -970,7 +1222,10 @@ class editCaseScreen extends StatelessWidget {
                                             backgroundColor: Colors.white,
                                           ),
                                           onPressed: () {
-                                            supervisorLayoutcubit.get(context).removeImage( model.images[index]);
+                                            supervisorLayoutcubit
+                                                .get(context)
+                                                .removeImage(
+                                                    model.images[index]);
                                           },
                                         ),
                                       ],

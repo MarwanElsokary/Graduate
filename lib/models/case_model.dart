@@ -7,8 +7,9 @@ class caseModel {
   String? dateTime;
   String? patientName;
   String? patientAge;
-  String? currentMedications;
   String? gender;
+  String? allergies;
+  String? currentMedications;
   String? patientAddress;
   String? patientPhone;
   bool? isDiabetes;
@@ -23,17 +24,15 @@ class caseModel {
   String? mandibularSubCategory;
   String? mandibularModification;
   String? level;
-  String? allergies;
   List<String> images = [];
-  List<String>? studentRequests=[];
-
+  List<String> studentRequests = [];
 
   caseModel({
-    this.name,
-    this.caseState,
-    this.image,
     this.uId,
+    this.caseState,
     this.caseId,
+    this.name,
+    this.image,
     this.dateTime,
     this.patientName,
     this.patientAge,
@@ -55,9 +54,9 @@ class caseModel {
     this.mandibularModification,
     this.level,
     required this.images,
-      this.  studentRequests,
-
+    required this.studentRequests,
   });
+
   caseModel.fromjson(Map<String, dynamic> json) {
     uId = json['uId'];
     caseState = json['caseState'];
@@ -84,26 +83,32 @@ class caseModel {
     mandibularSubCategory = json['mandibularSubCategory'];
     mandibularModification = json['mandibularModification'];
     level = json['level'];
-    for (var value in json['images']) {
-      images.add(value);
-    };
-    if(json['studentRequests'] !=null)
-    for (var value in json['studentRequests']!) {
-      studentRequests?.add(value);
-    };
 
-   }
+    if (json['images'] != null) {
+      for (var value in json['images']) {
+        images.add(value);
+      }
+    }
+
+    if (json['studentRequests'] != null) {
+      for (var value in json['studentRequests']) {
+        studentRequests.add(value);
+      }
+    }
+  }
+
   Map<String, dynamic> tomap() {
     return {
+      'uId': uId,
+      'caseState': caseState,
+      'caseId': caseId,
       'name': name,
       'image': image,
-      'caseState': caseState,
-      'uId': uId,
-      'caseId': caseId,
       'dateTime': dateTime,
       'patientName': patientName,
       'patientAge': patientAge,
       'gender': gender,
+      'allergies': allergies,
       'currentMedications': currentMedications,
       'patientAddress': patientAddress,
       'patientPhone': patientPhone,
@@ -111,7 +116,6 @@ class caseModel {
       'isHypertension': isHypertension,
       'isCardiac': isCardiac,
       'isAllergies': isAllergies,
-      'allergies': allergies,
       'others': others,
       'maxillaryCategory': maxillaryCategory,
       'maxillarySubCategory': maxillarySubCategory,
@@ -121,8 +125,7 @@ class caseModel {
       'mandibularModification': mandibularModification,
       'level': level,
       'images': images,
-      'studentRequests':studentRequests,
-
+      'studentRequests': studentRequests,
     };
   }
 }

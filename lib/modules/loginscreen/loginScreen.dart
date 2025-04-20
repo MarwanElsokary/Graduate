@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icon_broken/icon_broken.dart';
 import 'package:project/layout/admin/admin_Layout_screen.dart';
@@ -14,11 +16,11 @@ import 'package:project/modules/loginscreen/forget_password.dart';
 import 'package:project/modules/registerscreen/registerScreen.dart';
 import 'package:project/shared/network/local/cache_helper.dart';
 import 'package:project/shared/styles/colors.dart';
-
 import '../../layout/doctor/doctor_Layout_screen.dart';
 import '../../shared/components/components.dart';
 import '../../shared/components/constants.dart';
 import '../registerscreen/doctorsregisterScreen.dart';
+import 'ChooseRoleScreen.dart';
 import 'logincubit.dart';
 import 'loginstates.dart';
 
@@ -27,6 +29,7 @@ class loginScreen extends StatelessWidget {
   var passwordcon = TextEditingController();
   var formkey = GlobalKey<FormState>();
   bool ispass = true;
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -110,41 +113,23 @@ class loginScreen extends StatelessWidget {
         builder: (context, state) {
           return Scaffold(
             body: Container(
-              color: defaultcol,
+              width: double.infinity,
+              height: double.infinity,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('images/login_background.png'),
+                  // مسار الصورة من مجلد assets
+                  fit: BoxFit.cover,
+                ),
+              ),
               child: Column(
                 children: [
                   Expanded(
-                    flex: 1,
-                    child: Container(
-                      padding: EdgeInsets.all(20),
-                      color: defaultcol,
-                      width: double.infinity,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Text(
-                            'Sign in ',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontSize: 20,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Expanded(
                     flex: 3,
                     child: Container(
-                      padding: EdgeInsets.all(20),
+                      padding: EdgeInsets.only(top: 159),
                       width: double.infinity,
                       decoration: BoxDecoration(
-                        color: Colors.white,
                         borderRadius: BorderRadiusDirectional.only(
                           topStart: Radius.circular(30),
                           topEnd: Radius.circular(30),
@@ -163,30 +148,34 @@ class loginScreen extends StatelessWidget {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text(
-                                        'Welcome Back',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: defaultcol,
-                                          fontSize: 18,
+                                      Center(
+                                        child: Text(
+                                          'Welcome Back !',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w700,
+                                            color: Color(0xFF004E7F),
+                                            fontSize: 24,
+                                          ),
                                         ),
                                       ),
                                       SizedBox(
-                                        height: 5,
+                                        height: 55,
                                       ),
                                       Text(
-                                        'sign in to continue',
+                                        'Email Address',
                                         style: TextStyle(
-                                          color: Colors.grey,
-                                          fontSize: 10,
+                                          color: Color(0xFF004E7F),
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
                                         ),
                                       ),
                                       SizedBox(
-                                        height: 20,
+                                        height: 10,
                                       ),
                                       defaulttextformfield(
                                         controller: emailcon,
                                         radius: 30,
+                                        bordercolor: Color(0xFF6BC9FF),
                                         keyboardtype:
                                             TextInputType.emailAddress,
                                         validator: (value) {
@@ -194,15 +183,27 @@ class loginScreen extends StatelessWidget {
                                             return 'please enter your email address';
                                           }
                                         },
-                                        label: 'Email Address',
+                                        label: '',
                                         prefix: IconBroken.Message,
                                       ),
                                       SizedBox(
-                                        height: 15,
+                                        height: 20,
+                                      ),
+                                      Text(
+                                        'Password',
+                                        style: TextStyle(
+                                          color: Color(0xFF004E7F),
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 10,
                                       ),
                                       defaulttextformfield(
                                         controller: passwordcon,
                                         radius: 30,
+                                        bordercolor: Color(0xFF6BC9FF),
                                         onsubmit: (p0) {
                                           if (formkey.currentState!
                                               .validate()) {
@@ -220,7 +221,7 @@ class loginScreen extends StatelessWidget {
                                             return 'please enter your  password';
                                           }
                                         },
-                                        label: 'Password',
+                                        label: '',
                                         prefix: IconBroken.Password,
                                         suffix: logincubit.get(context).suffix,
                                         suffixPressed: () => logincubit
@@ -234,10 +235,21 @@ class loginScreen extends StatelessWidget {
                                           navigateto(
                                               context, forgetPasswordScreen());
                                         },
-                                        child: Text('Forget your password ?'),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            Text(
+                                              'Forget your password ?',
+                                              style: TextStyle(
+                                                color: Color(0xFF1877F2),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                       SizedBox(
-                                        height: 5,
+                                        height: 35,
                                       ),
                                       ConditionalBuilder(
                                         condition: state is! loginLoadingState,
@@ -250,7 +262,7 @@ class loginScreen extends StatelessWidget {
                                                   password: passwordcon.text);
                                             }
                                           },
-                                          text: 'sign in ',
+                                          text: 'Login ',
                                           upercase: true,
                                           radius: 30,
                                         ),
@@ -259,38 +271,25 @@ class loginScreen extends StatelessWidget {
                                         ),
                                       ),
                                       SizedBox(
-                                        height: 10,
+                                        height: 15,
                                       ),
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text('Don\'t have an account?'),
-                                          Row(
-                                            children: [
-                                              Expanded(
-                                                child: defaultTextButton(
-                                                  onpress: () {
-                                                    navigateto(context,
-                                                        doctorRegisterScreen());
-                                                  },
-                                                  text: 'sign up as doctor ',
-                                                  size: 13,
-                                                ),
-                                              ),
-                                              Expanded(
-                                                child: defaultTextButton(
-                                                  onpress: () {
-                                                    navigateto(context,
-                                                        registerScreen());
-                                                  },
-                                                  text: 'sign up as Student ',
-                                                  size: 13,
-                                                ),
-                                              ),
-                                            ],
+                                      Center(
+                                        child: TextButton(
+                                          onPressed: () => Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ChooseRoleScreen(),
+                                            ),
                                           ),
-                                        ],
+                                          child: const Text(
+                                            "Don't have an account? Sign Up",
+                                            style: TextStyle(
+                                              color: Color(0xFF004E7F),
+                                              fontSize: 15,
+                                            ),
+                                          ),
+                                        ),
                                       ),
                                     ],
                                   ),

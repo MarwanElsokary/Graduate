@@ -1,4 +1,3 @@
-
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,16 +12,15 @@ class editProfileScreen extends StatelessWidget {
   var namecon = TextEditingController();
   var phonecon = TextEditingController();
   var emailcon = TextEditingController();
-  var passwordcon= TextEditingController();
+  var passwordcon = TextEditingController();
   var formkey = GlobalKey<FormState>();
   var formkey1 = GlobalKey<FormState>();
-var emailchaged=false;
+  var emailchaged = false;
   var supervisorName;
   var supervisorId;
+
   @override
   Widget build(BuildContext context) {
-
-
     return BlocConsumer<studentLayoutcubit, studentLayoutstates>(
       listener: (context, state) {
         if (state is studentUploadProfileImageSucessState) {
@@ -30,20 +28,21 @@ var emailchaged=false;
               text: 'image uploaded sucessfully ', state: toaststates.SUCCESS);
           studentLayoutcubit.get(context).studentSelectedImage = null;
         }
-        if(state is studentUpdateScuessState){
+        if (state is studentUpdateScuessState) {
           showtoast(
-              text: 'profile uploaded sucessfully ', state: toaststates.SUCCESS);
+              text: 'profile uploaded sucessfully ',
+              state: toaststates.SUCCESS);
           studentLayoutcubit.get(context).studentSelectedImage = null;
           studentLayoutcubit.get(context).studentProfileImage = null;
-           emailchaged=false;
+          emailchaged = false;
           passwordcon.clear();
           Navigator.pop(context);
         }
       },
       builder: (context, state) {
-
         var usermodel = studentLayoutcubit.get(context).studentmodel;
-        var studentProfileImage = studentLayoutcubit.get(context).studentProfileImage;
+        var studentProfileImage =
+            studentLayoutcubit.get(context).studentProfileImage;
         var supervisorModel = studentLayoutcubit.get(context).supervisors;
         namecon.text = usermodel!.name!;
         phonecon.text = usermodel.phone!;
@@ -52,70 +51,76 @@ var emailchaged=false;
         supervisorId = usermodel.supervisorId;
         return Scaffold(
           appBar: AppBar(
-            backgroundColor: cc.defcol,
+            backgroundColor: Color(0xFFB8F5FF),
             title: Center(
               child: Text('Edit profile',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Color(0xFF004E7F),
+                    fontSize: 20,
                   )),
             ),
             leading: IconButton(
               onPressed: () {
                 studentLayoutcubit.get(context).studentSelectedImage = null;
                 studentLayoutcubit.get(context).studentProfileImage = null;
-                emailchaged=false;
+                emailchaged = false;
                 passwordcon.clear();
                 Navigator.pop(context);
               },
-              icon: Icon(IconBroken.Arrow___Left_2, color: Colors.white),
+              icon: Icon(
+                IconBroken.Arrow___Left_2,
+                color: Color(0xFF004E7F),
+              ),
             ),
             actions: [
               IconButton(
                 onPressed: () {
                   print(passwordcon.text);
-                  if(emailchaged==true && passwordcon.text.length>0){
-                    if (formkey.currentState!.validate()){
+                  if (emailchaged == true && passwordcon.text.length > 0) {
+                    if (formkey.currentState!.validate()) {
                       studentLayoutcubit.get(context).updateStudentData(
-                        name: namecon.text,
-                        phone: phonecon.text,
-                        email: emailcon.text,
-                        supervisorname: supervisorName,
-                        supervisorid: supervisorId,
-                        password: passwordcon.text,
-                      );
+                            name: namecon.text,
+                            phone: phonecon.text,
+                            email: emailcon.text,
+                            supervisorname: supervisorName,
+                            supervisorid: supervisorId,
+                            password: passwordcon.text,
+                          );
                     }
-                  }else if (emailchaged == false &&
+                  } else if (emailchaged == false &&
                       passwordcon.text.length == 0) {
                     if (formkey.currentState!.validate()) {
                       studentLayoutcubit.get(context).updateStudentData(
-                        name: namecon.text,
-                        phone: phonecon.text,
-                        email: emailcon.text,
-                        supervisorname: supervisorName,
-                        supervisorid: supervisorId,
-                        password: passwordcon.text,
-                      );
+                            name: namecon.text,
+                            phone: phonecon.text,
+                            email: emailcon.text,
+                            supervisorname: supervisorName,
+                            supervisorid: supervisorId,
+                            password: passwordcon.text,
+                          );
                     }
                   } else {
                     showtoast(
                         text:
-                        'you must enter your password if you want to change your email',
+                            'you must enter your password if you want to change your email',
                         state: toaststates.ERROR);
                   }
-
                 },
-                icon: Icon(Icons.check, color: Colors.white),
+                icon: Icon(
+                  Icons.check,
+                  color: Color(0xFF004E7F),
+                ),
               )
             ],
           ),
           body: Container(
-            color: defaultcol,
+            color: Color(0xFFB8F5FF),
             child: Column(
               children: [
                 Expanded(
                   child: Container(
                     padding: EdgeInsets.all(20),
-                    color: defaultcol,
+                    color: Color(0xFFB8F5FF),
                     width: double.infinity,
                     child: SingleChildScrollView(
                       child: Column(
@@ -204,7 +209,7 @@ var emailchaged=false;
                     padding: EdgeInsets.all(20),
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Color.fromRGBO(255, 255, 255, .88),
                       borderRadius: BorderRadiusDirectional.only(
                         topStart: Radius.circular(30),
                         topEnd: Radius.circular(30),
@@ -225,7 +230,7 @@ var emailchaged=false;
                                       child: Column(
                                         children: [
                                           if (studentLayoutcubit
-                                               .get(context)
+                                                  .get(context)
                                                   .studentSelectedImage !=
                                               null)
                                             defaultbutton(
@@ -238,7 +243,7 @@ var emailchaged=false;
                                                         // email: emailcon.text,
                                                         // supervisorname: supervisorName,
                                                         // supervisorid: supervisorId
-                                                    );
+                                                        );
                                               },
                                               text: 'upload profile image',
                                               radius: 30,
@@ -246,7 +251,8 @@ var emailchaged=false;
                                           SizedBox(
                                             height: 5.0,
                                           ),
-                                          if (state is studentUpdateLoadingState)
+                                          if (state
+                                              is studentUpdateLoadingState)
                                             LinearProgressIndicator(),
                                         ],
                                       ),
@@ -259,17 +265,40 @@ var emailchaged=false;
                                 SizedBox(
                                   height: 20.0,
                                 ),
+                                Text(
+                                  'Name',
+                                  style: TextStyle(
+                                    color: Color(0xFF004E7F),
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 20.0,
+                                ),
                                 defaulttextformfield(
                                   controller: namecon,
                                   radius: 30,
+                                  bordercolor: Color(0xFF6BC9FF),
                                   keyboardtype: TextInputType.name,
                                   validator: (String? value) {
                                     if (value!.isEmpty) {
                                       return 'name must not be empty';
                                     }
                                   },
-                                  label: 'Name',
+                                  label: '',
                                   prefix: IconBroken.User,
+                                ),
+                                SizedBox(
+                                  height: 15.0,
+                                ),
+                                Text(
+                                  'Email Address',
+                                  style: TextStyle(
+                                    color: Color(0xFF004E7F),
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
                                 SizedBox(
                                   height: 15.0,
@@ -277,67 +306,68 @@ var emailchaged=false;
                                 defaulttextformfield(
                                   controller: emailcon,
                                   radius: 30,
+                                  bordercolor: Color(0xFF6BC9FF),
                                   onshange: (p0) {
-                                    emailchaged=true;
-
+                                    emailchaged = true;
                                   },
                                   keyboardtype: TextInputType.text,
                                   ontap: () {
-                                    showDialog(context: context,
-                                      builder:(context) => AlertDialog(
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) => AlertDialog(
                                         shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(20.0),
+                                          borderRadius:
+                                              BorderRadius.circular(20.0),
                                         ),
                                         title: Text(
                                           'You have to enter your password to change your email',
-                                          style: TextStyle(
-                                            fontSize: 15
+                                          style: TextStyle(fontSize: 15),
+                                        ),
+                                        content: Form(
+                                          key: formkey1,
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              defaulttextformfield(
+                                                controller: emailcon,
+                                                radius: 30,
+                                                onshange: (p0) {
+                                                  emailchaged = true;
+                                                },
+                                                keyboardtype:
+                                                    TextInputType.text,
+                                                validator: (String? value) {
+                                                  if (value!.isEmpty) {
+                                                    return 'Email must not be empty';
+                                                  }
+                                                },
+                                                label: '',
+                                                prefix: IconBroken.Message,
+                                              ),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              defaulttextformfield(
+                                                controller: passwordcon,
+                                                radius: 30,
+                                                keyboardtype: TextInputType
+                                                    .visiblePassword,
+                                                validator: (value) {
+                                                  if (value!.isEmpty) {
+                                                    return 'please enter your  password';
+                                                  }
+                                                },
+                                                label: '',
+                                                prefix: IconBroken.Password,
+                                              ),
+                                            ],
                                           ),
                                         ),
-                                        content:
-                                            Form(
-                                              key: formkey1,
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: [
-                                                  defaulttextformfield(
-                                                    controller: emailcon,
-                                                    radius: 30,
-                                                    onshange: (p0) {
-                                                      emailchaged=true;
-
-                                                    },
-                                                    keyboardtype: TextInputType.text,
-                                                    validator: (String? value) {
-                                                      if (value!.isEmpty) {
-                                                        return 'Email must not be empty';
-                                                      }
-                                                    },
-                                                    label: 'Email',
-                                                    prefix: IconBroken.Message,
-                                                  ),
-                                                  SizedBox(
-                                                    height: 10,
-                                                  ),
-                                                  defaulttextformfield(
-                                                    controller: passwordcon,
-                                                    radius: 30,
-                                                    keyboardtype: TextInputType.visiblePassword,
-                                                    validator: (value) {
-                                                      if (value!.isEmpty) {
-                                                        return 'please enter your  password';
-                                                      }
-                                                    },
-                                                    label: 'Password',
-                                                    prefix: IconBroken.Password,
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
                                         actions: [
                                           TextButton(
                                             onPressed: () {
-                                              if(formkey1.currentState!.validate()){
+                                              if (formkey1.currentState!
+                                                  .validate()) {
                                                 Navigator.pop(context);
                                               }
                                             },
@@ -348,23 +378,35 @@ var emailchaged=false;
                                               ),
                                             ),
                                           ),
-
-                                        ],),
+                                        ],
+                                      ),
                                     );
-                                    },
+                                  },
                                   validator: (String? value) {
                                     if (value!.isEmpty) {
                                       return 'Email must not be empty';
                                     }
                                   },
-                                  label: 'Email',
+                                  label: '',
                                   prefix: IconBroken.Message,
+                                ),
+                                SizedBox(
+                                  height: 15.0,
+                                ),
+                                Text(
+                                  'Phone',
+                                  style: TextStyle(
+                                    color: Color(0xFF004E7F),
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
                                 SizedBox(
                                   height: 15.0,
                                 ),
                                 defaulttextformfield(
                                   controller: phonecon,
+                                  bordercolor: Color(0xFF6BC9FF),
                                   radius: 30,
                                   keyboardtype: TextInputType.phone,
                                   validator: (String? value) {
@@ -372,28 +414,39 @@ var emailchaged=false;
                                       return 'phone number must not be empty';
                                     }
                                   },
-                                  label: 'Phone',
+                                  label: '',
                                   prefix: IconBroken.Call,
+                                ),
+                                SizedBox(
+                                  height: 15.0,
+                                ),
+                                Text(
+                                  'choose your supervisor',
+                                  style: TextStyle(
+                                    color: Color(0xFF004E7F),
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
                                 SizedBox(
                                   height: 15.0,
                                 ),
                                 DropdownButtonFormField(
                                   //        value:usermodel.supervisorName== '' || usermodel.supervisorName== null ? supervisorName : usermodel.supervisorName,
-                                  value: supervisorName ,
+                                  value: supervisorName,
                                   isExpanded: false,
                                   decoration: InputDecoration(
-                                    label: Text('choose your supervisor'),
+                                    label: Text(''),
                                     border: OutlineInputBorder(
                                       borderSide: BorderSide(
-                                        color: Colors.black,
+                                        color: Color(0xFF6BC9FF),
                                       ),
                                       borderRadius:
                                           BorderRadius.all(Radius.circular(30)),
                                     ),
                                     focusedBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
-                                        color: Colors.black,
+                                        color: Color(0xFF6BC9FF),
                                       ),
                                       borderRadius:
                                           BorderRadius.all(Radius.circular(30)),

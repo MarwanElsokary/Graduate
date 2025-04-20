@@ -2,6 +2,7 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project/models/user_model.dart';
+import 'package:project/modules/student/posts_perDoctor_screen.dart';
 import 'package:project/modules/supervisor/posts_perDoctor_screen.dart';
 import '../../layout/supervisor/supervisorcubit/cubit.dart';
 import '../../layout/supervisor/supervisorcubit/states.dart';
@@ -24,7 +25,7 @@ class doctorsScreen extends StatelessWidget {
               style: TextStyle(
                 color: Color.fromRGBO(0, 78, 127, 1),
                 fontSize: 24,
-                  fontWeight: FontWeight.w600,
+                fontWeight: FontWeight.w600,
               ),
             ),
             backgroundColor: Color(0xFFB8F5FF),
@@ -46,25 +47,24 @@ class doctorsScreen extends StatelessWidget {
               fallback: (context) => Scaffold(
                 body: Container(
                   width: double.infinity,
-                  padding: EdgeInsets.all(18.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image(
-                        image: AssetImage('images/nodataavailable.gif'),
-                        //  width: 250,
-                        //    height: 250,
-                      ),
-                      Text(
-                        'Sorry We Can\'t Find Any Data ',
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: defaultcol,
-                          fontWeight: FontWeight.bold,
+                  child: Container(
+                    color: Color(0xFFB8F5FF),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Center(
+                          child: Text(
+                            "No doctors available",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF004E7F),
+                            ),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -77,25 +77,24 @@ class doctorsScreen extends StatelessWidget {
 
   Widget buildItem(userModel modell, context) {
     return Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding: const EdgeInsets.all(4.0),
       child: Column(
         children: [
           Card(
             color: Color.fromRGBO(255, 255, 255, 0.82),
-            clipBehavior: Clip.antiAliasWithSaveLayer,
-            elevation: 5.0,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15), // الزوايا
+              borderRadius: BorderRadius.all(Radius.circular(30)),
               side: BorderSide(
-                color: Color.fromRGBO(107, 201, 255, 1), // لون البوردر
-                width: 1, // سُمك البوردر
+                color: Color.fromRGBO(107, 201, 255, 1),
+                width: 2,
               ),
             ),
+            elevation: 0,
             margin: EdgeInsets.symmetric(
               horizontal: 10.0,
             ),
             child: Container(
-              color: Color.fromRGBO(255, 255, 255, 0.82),
+              color: Colors.transparent,
               height: 116,
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
@@ -147,17 +146,17 @@ class doctorsScreen extends StatelessWidget {
                                 ),
                                 Center(
                                   child: defaultTextButton(
-                                    onpress: () {
-                                      supervisorLayoutcubit
-                                          .get(context)
-                                          .supervisorGetCasesPerDoctor(
-                                              modell!.uId as String);
-                                      navigateto(
-                                          context, postPerDoctorScreen());
-                                    },
-                                    text: 'View Cases',
-                                    size: 16,
-                                  ),
+                                      onpress: () {
+                                        supervisorLayoutcubit
+                                            .get(context)
+                                            .supervisorGetCasesPerDoctor(
+                                                modell!.uId as String);
+                                        navigateto(
+                                            context, postPerDoctorScreenStudent());
+                                      },
+                                      text: 'View Cases',
+                                      size: 16,
+                                      fontweight: FontWeight.w600),
                                 ),
                               ],
                             ),

@@ -1,7 +1,8 @@
+import 'package:bloc/bloc.dart';
 import 'package:firebase_admin/firebase_admin.dart';
-import 'package:firebase_admin/src/auth/credential.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project/layout/admin/admincubit/cubit.dart';
@@ -11,10 +12,10 @@ import 'package:project/shared/components/components.dart';
 import 'package:project/shared/components/constants.dart';
 import 'package:project/shared/network/local/cache_helper.dart';
 import 'package:project/shared/styles/themes.dart';
-
 import 'layout/doctor/doctorcubit/cubit.dart';
 import 'layout/student/studentcubit/cubit.dart';
 import 'layout/supervisor/supervisorcubit/cubit.dart';
+import 'package:firebase_admin/src/auth/credential.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print("Handling a background message: ${message.messageId}");
@@ -77,24 +78,26 @@ class MyApp extends StatelessWidget {
               ..getStudentData()
               ..studentGetCases()
               ..getRequestedCases()),
-        // BlocProvider(create:  (context) => doctorLayoutcubit()..getDoctorData()..docotrGetCases()..loadClassifier()),
+        BlocProvider(
+            create: (context) => doctorLayoutcubit()
+              ..getDoctorData()
+              ..docotrGetCases()
+              ..loadClassifier()),
         BlocProvider(
             create: (context) => supervisorLayoutcubit()
               ..getSupervisorData()
               ..supervisorGetCases()
               ..getAllDoctors()
               ..getRequestedCases()),
-        BlocProvider(
-          create: (context) => doctorLayoutcubit(), // Or your initial cubit
-          child: MyApp(),
-        ),
       ],
       child: MaterialApp(
         theme: lighttheme, // lightmode
         themeMode: ThemeMode.light,
         debugShowCheckedModeBanner: false,
 
-        home: splashScreen(),
+        home: splashScreen(
+          seenOnboarding: false,
+        ),
       ),
     );
   }

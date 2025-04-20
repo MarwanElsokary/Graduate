@@ -5,17 +5,17 @@ import 'package:icon_broken/icon_broken.dart';
 import 'package:project/layout/doctor/doctorcubit/cubit.dart';
 import 'package:project/layout/doctor/doctorcubit/states.dart';
 import 'package:project/models/case_model.dart';
-
+import 'package:project/modules/doctor/post_screen.dart';
+import '../../shared/components/components.dart';
 import '../../shared/styles/colors.dart';
-
 class doctorSearchScreen extends StatelessWidget {
   var searchcon = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<doctorLayoutcubit, doctorLayoutstates>(
+    return BlocConsumer<doctorLayoutcubit,doctorLayoutstates>(
       listener: (context, state) {},
       builder: (context, state) {
-        // var cubit=doctorLayoutcubit.get(context).search;
+        var cubit=doctorLayoutcubit.get(context).search;
         return Scaffold(
           body: Container(
             color: defaultcol,
@@ -35,7 +35,7 @@ class doctorSearchScreen extends StatelessWidget {
                           children: [
                             IconButton(
                               onPressed: () {
-                                // doctorLayoutcubit.get(context).search = [];
+                                doctorLayoutcubit.get(context).search = [];
                                 Navigator.pop(context);
                               },
                               icon: Icon(
@@ -57,15 +57,14 @@ class doctorSearchScreen extends StatelessWidget {
                           controller: searchcon,
                           keyboardType: TextInputType.text,
                           onChanged: (value) {
-                            // doctorLayoutcubit.get(context).doctorSearch(searchcon.text);
+                            doctorLayoutcubit.get(context).doctorSearch(searchcon.text);
                           },
                           validator: (String? value) {
                             if (value!.isEmpty)
                               return 'search must not be empty';
                           },
                           decoration: InputDecoration(
-                            contentPadding:
-                                EdgeInsets.symmetric(horizontal: 16.0),
+                            contentPadding: EdgeInsets.symmetric( horizontal: 16.0),
                             filled: true,
                             fillColor: Colors.white,
                             hintText: 'Search By Category ,Subcategory',
@@ -76,10 +75,10 @@ class doctorSearchScreen extends StatelessWidget {
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(30),
                               borderSide: BorderSide(
-                                color: defaultcol,
+                                color:defaultcol,
                               ),
                             ),
-                            focusedBorder: OutlineInputBorder(
+                            focusedBorder:  OutlineInputBorder(
                               borderRadius: BorderRadius.circular(30),
                               borderSide: BorderSide(
                                 color: Colors.white,
@@ -92,6 +91,7 @@ class doctorSearchScreen extends StatelessWidget {
                             ),
                           ),
                         ),
+
                       ],
                     ),
                   ),
@@ -108,60 +108,61 @@ class doctorSearchScreen extends StatelessWidget {
                         topEnd: Radius.circular(30),
                       ),
                     ),
-                    // child:  ConditionalBuilder(
-                    //   // condition: cubit.length > 0,
-                    //   builder: (context) => Scaffold(
-                    //     body: SingleChildScrollView(
-                    //       physics: BouncingScrollPhysics(),
-                    //       child: Column(
-                    //         children: [
-                    //           ListView.separated(
-                    //             shrinkWrap: true,
-                    //             physics: BouncingScrollPhysics(),
-                    //             itemBuilder: (context, index) =>
-                    //                 buildsearchitem(cubit[index], context),
-                    //             separatorBuilder: (context, index) => SizedBox(
-                    //               height: 8.0,
-                    //             ),
-                    //             itemCount: cubit.length,
-                    //           ),
-                    //           SizedBox(
-                    //             height: 8.0,
-                    //           ),
-                    //         ],
-                    //       ),
-                    //     ),
-                    //   ),
-                    //   fallback: (context) => Scaffold(
-                    //
-                    //     body: Container(
-                    //       width: double.infinity,
-                    //       padding: EdgeInsets.all(18.0),
-                    //       child: SingleChildScrollView(
-                    //         child: Column(
-                    //
-                    //           crossAxisAlignment: CrossAxisAlignment.center,
-                    //           mainAxisAlignment: MainAxisAlignment.center,
-                    //           children: [
-                    //             Image(
-                    //               image: AssetImage('images/lf20_v7tiqqzx.gif'),
-                    //                width: 300,
-                    //                  height: 250,
-                    //             ),
-                    //             Text(
-                    //               'Sorry We Can\'t Find Any Data ',
-                    //               style: TextStyle(
-                    //                 fontSize: 20,
-                    //                 color: defaultcol,
-                    //                 fontWeight: FontWeight.bold,
-                    //               ),
-                    //             ),
-                    //           ],
-                    //         ),
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
+                    child:  ConditionalBuilder(
+                      condition: cubit.length > 0,
+                      builder: (context) => Scaffold(
+                        body: SingleChildScrollView(
+                          physics: BouncingScrollPhysics(),
+                          child: Column(
+                            children: [
+                              ListView.separated(
+                                shrinkWrap: true,
+                                physics: BouncingScrollPhysics(),
+                                itemBuilder: (context, index) =>
+                                    buildsearchitem(cubit[index], context),
+                                separatorBuilder: (context, index) => SizedBox(
+                                  height: 8.0,
+                                ),
+                                itemCount: cubit.length,
+                              ),
+                              SizedBox(
+                                height: 8.0,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      fallback: (context) => Scaffold(
+
+                        body: Container(
+                          width: double.infinity,
+                          padding: EdgeInsets.all(18.0),
+                          child: SingleChildScrollView(
+                            child: Column(
+
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image(
+                                  image: AssetImage('images/lf20_v7tiqqzx.gif'),
+                                  width: 300,
+                                  height: 250,
+                                ),
+                                Text(
+                                  'Sorry We Can\'t Find Any Data ',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    color: defaultcol,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+
                   ),
                 ),
               ],
@@ -172,17 +173,17 @@ class doctorSearchScreen extends StatelessWidget {
     );
   }
 }
-
 SingleChildScrollView buildsearchitem(caseModel model, context) {
-  return SingleChildScrollView(
+  return   SingleChildScrollView(
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         InkWell(
           onTap: () async {
-            // await doctorLayoutcubit.get( context).doctorGetCase(model.caseId as String);
-            // navigateto(context,  doctorPostScreen());
+            await doctorLayoutcubit.get( context).doctorGetCase(model.caseId as String);
+            navigateto(context,  doctorPostScreen());
           },
+
           child: Card(
             clipBehavior: Clip.antiAliasWithSaveLayer,
             elevation: 5.0,
@@ -195,59 +196,38 @@ SingleChildScrollView buildsearchitem(caseModel model, context) {
                 child: Row(
                   children: [
                     Container(
-                      child: Image(
-                          image: NetworkImage('${model.images[0]}'),
-                          fit: BoxFit.contain),
+                      child: Image(image: NetworkImage( '${model.images[0]}'),fit:BoxFit.contain ),
                       width: 100,
                       height: 100,
                     ),
-                    SizedBox(
-                      width: 10,
-                    ),
+                    SizedBox(width: 10,),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         ConditionalBuilder(
-                            condition: model.maxillaryCategory!.length > 0,
-                            builder: (context) =>
-                                Text('${model.maxillaryCategory}'),
+                            condition: model.maxillaryCategory!.length>0,
+                            builder: (context) => Text( '${model.maxillaryCategory}' ),
                             fallback: (context) => SizedBox()),
                         ConditionalBuilder(
-                            condition: model.maxillarySubCategory!.length > 0 &&
-                                model.maxillarySubCategory != ' ',
-                            builder: (context) =>
-                                Text('${model.maxillarySubCategory}'),
+                            condition: model.maxillarySubCategory!.length>0   && model.maxillarySubCategory !=' ',
+                            builder: (context) => Text( '${model.maxillarySubCategory}' ),
+                            fallback: (context) =>SizedBox()  ),
+                        ConditionalBuilder(
+                            condition: model.maxillaryModification!.length>0 && model.maxillaryModification != 'Un Modified' && model.maxillaryModification !=' ' ,
+                            builder: (context) => Text( 'modification :${model.maxillaryModification}' ),
                             fallback: (context) => SizedBox()),
                         ConditionalBuilder(
-                            condition: model.maxillaryModification!.length >
-                                    0 &&
-                                model.maxillaryModification != 'Un Modified' &&
-                                model.maxillaryModification != ' ',
-                            builder: (context) => Text(
-                                'modification :${model.maxillaryModification}'),
-                            fallback: (context) => SizedBox()),
-                        ConditionalBuilder(
-                            condition: model.mandibularCategory! ==
-                                    'Full Mouth Rehabilitation' ||
-                                model.mandibularCategory! ==
-                                    'Maxillofacial Case',
-                            fallback: (context) =>
-                                Text('${model.mandibularCategory}'),
+                            condition:  model.mandibularCategory! =='Full Mouth Rehabilitation' || model.mandibularCategory! =='Maxillofacial Case',
+                            fallback: (context) => Text( '${model.mandibularCategory}' ),
                             builder: (context) => SizedBox()),
+
                         ConditionalBuilder(
-                            condition:
-                                model.mandibularSubCategory!.length > 0 &&
-                                    model.mandibularSubCategory != ' ',
-                            builder: (context) =>
-                                Text('${model.mandibularSubCategory}'),
+                            condition: model.mandibularSubCategory!.length>0  && model.mandibularSubCategory !=' ' ,
+                            builder: (context) => Text( '${model.mandibularSubCategory}' ),
                             fallback: (context) => SizedBox()),
                         ConditionalBuilder(
-                            condition: model.mandibularModification!.length >
-                                    0 &&
-                                model.mandibularModification != 'Un Modified' &&
-                                model.mandibularModification != ' ',
-                            builder: (context) => Text(
-                                'modification :${model.mandibularModification}'),
+                            condition: model.mandibularModification!.length>0 && model.mandibularModification !='Un Modified' && model.mandibularModification !=' ',
+                            builder: (context) => Text('modification :${model.mandibularModification}' ),
                             fallback: (context) => SizedBox()),
                       ],
                     ),
@@ -260,4 +240,5 @@ SingleChildScrollView buildsearchitem(caseModel model, context) {
       ],
     ),
   );
+
 }

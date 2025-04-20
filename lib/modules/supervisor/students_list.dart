@@ -13,112 +13,119 @@ class studentsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<supervisorLayoutcubit, supervisorLayoutstates>(
-      listener: (context, state) {
-
-      },
-      builder: (context, state)
-      {
-        var   cubit=supervisorLayoutcubit.get(context).supervisorStudents;
-        return   ConditionalBuilder(
-            condition:cubit.length>0 ,
-            builder: (context) =>
-                Scaffold(
-                  appBar: defaultAppBar(
-                    context: context,
-                    title:   'Students List',
+      listener: (context, state) {},
+      builder: (context, state) {
+        var cubit = supervisorLayoutcubit.get(context).supervisorStudents;
+        return ConditionalBuilder(
+          condition: cubit.length > 0,
+          builder: (context) => Scaffold(
+            backgroundColor: Color(0xFFB8F5FF),
+            appBar: defaultAppBar(
+              context: context,
+              title: 'Students List',
+            ),
+            body: SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
+              child: Column(children: [
+                ListView.separated(
+                  shrinkWrap: true,
+                  physics: BouncingScrollPhysics(),
+                  itemBuilder: (context, index) =>
+                      buildItem(cubit[index], context),
+                  separatorBuilder: (context, index) => SizedBox(
+                    height: 8.0,
                   ),
-                  body: SingleChildScrollView(
-                    physics: BouncingScrollPhysics(),
-                    child: Column(children: [
-                      ListView.separated(
-                        shrinkWrap: true,
-                        physics: BouncingScrollPhysics(),
-                        itemBuilder: (context, index) => buildItem(cubit[index],context),
-                        separatorBuilder: (context, index) => SizedBox(
-                          height: 8.0,
-                        ),
-                        itemCount: cubit.length,
-                      ),
-                      SizedBox(
-                        height: 8.0,
-                      ),
-                    ]),
+                  itemCount: cubit.length,
+                ),
+                SizedBox(
+                  height: 8.0,
+                ),
+              ]),
+            ),
+          ),
+          fallback: (context) => Scaffold(
+            appBar: defaultAppBar(
+              context: context,
+              title: 'Students List',
+            ),
+            body: Container(
+              width: double.infinity,
+              padding: EdgeInsets.all(18.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image(
+                    image: AssetImage('images/nodataavailable.gif'),
+                    //  width: 250,
+                    //    height: 250,
                   ),
-                ),
-            fallback:(context) => Scaffold(
-              appBar: defaultAppBar(
-                context: context,
-                title:   'Students List',
-              ),
-              body: Container(
-                width: double.infinity,
-                padding: EdgeInsets.all(18.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image(
-                      image: AssetImage('images/nodataavailable.gif'),
-                      //  width: 250,
-                      //    height: 250,
+                  Text(
+                    'Sorry We Can\'t Find Any Data ',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: defaultcol,
+                      fontWeight: FontWeight.bold,
                     ),
-                    Text(
-                      'Sorry We Can\'t Find Any Data ',
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: defaultcol,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
-
-          );
-
-
-
+          ),
+        );
       },
     );
   }
-  Widget buildItem(userModel modell ,context){
-     return Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
-          children: [
-            Card(
-              clipBehavior: Clip.antiAliasWithSaveLayer,
-              elevation: 5.0,
-              margin: EdgeInsets.symmetric(
-                horizontal: 10.0,
+
+  Widget buildItem(userModel modell, context) {
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Column(
+        children: [
+          Card(
+            color: Color.fromRGBO(255, 255, 255, 0.82),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(30)),
+              side: BorderSide(
+                color: Color.fromRGBO(107, 201, 255, 1),
+                width: 2,
               ),
+            ),
+            elevation: 0.0,
+            margin: EdgeInsets.symmetric(
+              horizontal: 10.0,
+            ),
+            child: Container(
+              color: Colors.transparent,
+              height: 116,
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Column(
                   children: [
                     Row(
                       children: [
-                        ConditionalBuilder(condition: modell?.image!=null,
+                        ConditionalBuilder(
+                          condition: modell?.image != null,
                           builder: (context) => Stack(
                             children: [
-                                CircleAvatar(
-                                  radius: 35.0,
-                                   backgroundImage: NetworkImage(
-                                    '${modell?.image}',
-                                  ),
+                              CircleAvatar(
+                                radius: 40.0,
+                                backgroundImage: NetworkImage(
+                                  '${modell?.image}',
                                 ),
+                              ),
                             ],
                           ),
                           fallback: (context) => Stack(
                             children: [
                               CircleAvatar(
-                                  radius: 35.0,
-                                backgroundImage: AssetImage('images/profileimage.jpg'),
-                                ),
-
+                                radius: 40.0,
+                                backgroundImage:
+                                    AssetImage('images/profileimage.jpg'),
+                              ),
                             ],
-                          ), ),
+                          ),
+                        ),
                         SizedBox(
                           width: 10.0,
                         ),
@@ -130,23 +137,32 @@ class studentsScreen extends StatelessWidget {
                                 SizedBox(
                                   height: 5,
                                 ),
-                                Text(
-                                  '${modell?.name}',
-                                  style: TextStyle(
-                                    height: 1.4,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w600,
+                                Center(
+                                  child: Text(
+                                    '${modell?.name}',
+                                    style: TextStyle(
+                                      height: 1.4,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w600,
+                                      color: Color.fromRGBO(0, 78, 127, 1),
+                                    ),
                                   ),
                                 ),
-                                defaultTextButton(
-                                  onpress: () async {
-                             await   supervisorLayoutcubit.get(context).getRequestsPerStudent(modell!.uId as String);
-                             navigateto(context, requestScreenPerStudent());
-                                  },
-                                  text: 'View StudentRequests',
-                                  size: 12,textalign: TextAlign.center,
+                                Center(
+                                  child: defaultTextButton(
+                                      onpress: () async {
+                                        await supervisorLayoutcubit
+                                            .get(context)
+                                            .getRequestsPerStudent(
+                                                modell!.uId as String);
+                                        navigateto(
+                                            context, requestScreenPerStudent());
+                                      },
+                                      text: 'View StudentRequests',
+                                      size: 16,
+                                      textalign: TextAlign.center,
+                                      fontweight: FontWeight.w600),
                                 ),
-
                               ],
                             ),
                           ),
@@ -157,10 +173,9 @@ class studentsScreen extends StatelessWidget {
                 ),
               ),
             ),
-          ],
-        ),
-
-      );
-
+          ),
+        ],
+      ),
+    );
   }
 }

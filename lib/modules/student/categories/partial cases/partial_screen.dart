@@ -25,28 +25,32 @@ class partialScreen extends StatelessWidget {
               title: 'Partial denture Cases',
             ),
             body: Container(
-              width: double.infinity,
-              padding: EdgeInsets.all(18.0),
+              color: Color(0xFFb8f5ff),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image(
-                    image: AssetImage('images/nodataavailable.gif'),
-                    //  width: 250,
-                    //    height: 250,
+                  Expanded(
+                    child: Image.asset(
+                      'images/no_data_found1.png',
+                      width: double.infinity, // تحكمي في الحجم حسب الحاجة
+                      height: 347,
+                    ),
                   ),
-                  Text(
-                    'Sorry We Can\'t Find Any Data ',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: defaultcol,
-                      fontWeight: FontWeight.bold,
+                  SizedBox(height: 20), // مسافة بين الصورة والنص
+                  Expanded(
+                    child: Text(
+                      "Sorry We Can’t Find Any Data!",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                        color: Color(0xFF004E7F),
+                      ),
                     ),
                   ),
                 ],
               ),
-            ),
+            )
           ),
           builder:  (context) => Scaffold(
             appBar:  defaultAppBar(

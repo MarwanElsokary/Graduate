@@ -25,28 +25,32 @@ class completeDentureScreen extends StatelessWidget {
                 title: 'Complete Denture Cases',
               ),
               body: Container(
-                width: double.infinity,
-                padding: EdgeInsets.all(18.0),
+                color: Color(0xFFb8f5ff),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Image(
-                      image: AssetImage('images/nodataavailable.gif'),
-                      //  width: 250,
-                      //    height: 250,
+                    Expanded(
+                      child: Image.asset(
+                        'images/no_data_found1.png',
+                        width: double.infinity, // تحكمي في الحجم حسب الحاجة
+                        height: 347,
+                      ),
                     ),
-                    Text(
-                      'Sorry We Can\'t Find Any Data ',
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: defaultcol,
-                        fontWeight: FontWeight.bold,
+                    SizedBox(height: 20), // مسافة بين الصورة والنص
+                    Expanded(
+                      child: Text(
+                        "Sorry We Can’t Find Any Data!",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xFF004E7F),
+                        ),
                       ),
                     ),
                   ],
                 ),
-              ),
+              )
             ),
             builder: (context) {
               return Scaffold(
@@ -57,46 +61,7 @@ class completeDentureScreen extends StatelessWidget {
                 body: SingleChildScrollView(
                   physics: BouncingScrollPhysics(),
                   child: Column(children: [
-                    Container(
-                      padding: EdgeInsets.all(10.0),
-                      height: 60,
-                      width: double.infinity,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            child: defaultbutton(
-                              onpress: () async {
-                                await    studentLayoutcubit
-                                    .get(context)
-                                    .getCompleteFlatCases();
-                                navigateto(context, completeFlatScreen());
-                              },
-                              text: 'Flat Ridge',
-                              textalign: TextAlign.center,
-                              radius: 30,
-                              width: 20,
-                            ),
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Expanded(
-                            child: defaultbutton(
-                              onpress: () async {
-                                await  studentLayoutcubit
-                                    .get(context)
-                                    .getCompleteWellCases();
-                                navigateto(context, completeWellScreen());
-                              },
-                              text: 'Well Developed Ridge',
-                              textalign: TextAlign.center,
-                              radius: 30,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+
                     ListView.separated(
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),

@@ -23,37 +23,51 @@ Widget defaultTextButton({
         onPressed: onpress,
         child: Text(
           text.toUpperCase(),
-          style: TextStyle(fontSize: size, fontWeight: fontweight),
+          style: TextStyle(
+              fontSize: size, fontWeight: fontweight, color: Color(0xFF2382FC)),
           textAlign: textalign,
         ));
+
 Widget defaultbutton({
   double width = double.infinity,
   required void Function() onpress,
   required String text,
   bool upercase = true,
-  double radius = 0.0,
+  double radius = 30.0,
   TextAlign? textalign,
-  double? hight,
+  double? hight = 55.0,
 }) =>
     Container(
       width: width,
       height: hight,
+      decoration: BoxDecoration(
+        color: Color(0xFF004E7F), // تأكد إن defaultcol هو اللون الأزرق الغامق
+        borderRadius: BorderRadius.circular(radius),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.25),
+            blurRadius: 8,
+            offset: Offset(0, 4), // ظل للأسفل
+          ),
+        ],
+      ),
       child: MaterialButton(
         onPressed: onpress,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(radius),
+        ),
         child: Text(
           upercase ? text.toUpperCase() : text,
           style: TextStyle(
             color: Colors.white,
-            fontSize: 15,
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
           ),
           textAlign: textalign,
         ),
       ),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(radius),
-        color: defaultcol,
-      ),
     );
+
 Widget defaulttextformfield({
   required TextEditingController controller,
   required TextInputType keyboardtype,
@@ -73,7 +87,12 @@ Widget defaulttextformfield({
   void Function()? suffixPressed,
   bool? enabled,
 }) =>
-    TextFormField(
+    Container(
+      decoration: BoxDecoration(
+        boxShadow: [],
+        borderRadius: BorderRadius.circular(radius),
+      ),
+      child: TextFormField(
         controller: controller,
         maxLength: maxLength,
         keyboardType: keyboardtype,
@@ -83,31 +102,53 @@ Widget defaulttextformfield({
         enabled: enabled,
         validator: validator,
         obscureText: hidepassword,
+        style: TextStyle(color: Colors.black),
         decoration: InputDecoration(
-          //  hintText:'Email',
+          filled: true,
+          fillColor: Colors.white,
           labelText: label,
           counterText: '',
-
           labelStyle: TextStyle(
             color: labelcolor,
+            fontWeight: FontWeight.bold,
           ),
-          //     border: OutlineInputBorder(),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(radius),
             borderSide: BorderSide(
               color: bordercolor,
             ),
           ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(radius),
+            borderSide: BorderSide(
+              color: Colors.blue,
+            ),
+          ),
+          errorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(radius),
+            borderSide: BorderSide(
+              color: Colors.red,
+            ),
+          ),
+          focusedErrorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(radius),
+            borderSide: BorderSide(
+              color: Colors.red,
+            ),
+          ),
           prefixIcon: Icon(
             prefix,
+            color: Colors.blue,
           ),
           suffixIcon: suffix != null
               ? IconButton(
                   onPressed: suffixPressed,
-                  icon: Icon(suffix),
+                  icon: Icon(suffix, color: Colors.blue),
                 )
               : null,
-        ));
+        ),
+      ),
+    );
 
 PreferredSizeWidget? defaultAppBar({
   required BuildContext context,
@@ -116,6 +157,7 @@ PreferredSizeWidget? defaultAppBar({
   IconData? icon,
 }) =>
     AppBar(
+      backgroundColor: Colors.transparent,
       leading: IconButton(
         onPressed: () {
           Navigator.pop(context);
@@ -130,6 +172,7 @@ PreferredSizeWidget? defaultAppBar({
       ),
       actions: actions,
     );
+
 Widget rowItmes({
   required String text1,
   required String text2,
@@ -143,16 +186,27 @@ Widget rowItmes({
         children: <TextSpan>[
           TextSpan(
             text: text1,
-            style: TextStyle(color: HexColor('#5394AD'), fontSize: 15),
+            style: TextStyle(
+              color: HexColor('#004E7F'),
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+            ),
           ),
-          TextSpan(text: text2, style: TextStyle(color: Colors.black)),
+          TextSpan(
+              text: text2,
+              style: TextStyle(
+                  color: HexColor("#06A4FF"),
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500)),
         ],
       ),
     );
+
 void navigateto(context, widget) => Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => widget),
     );
+
 void navigate(context, widget) => Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(builder: (context) => widget),
@@ -204,7 +258,6 @@ Widget studentDefaultbuildPost(
       },
       child: Card(
         clipBehavior: Clip.antiAliasWithSaveLayer,
-        elevation: 5.0,
         margin: EdgeInsets.symmetric(
           horizontal: 10.0,
         ),
@@ -247,20 +300,21 @@ Widget studentDefaultbuildPost(
                         Text(
                           '${model.name}',
                           style: TextStyle(
-                            height: 1.4,
-                            fontSize: 15,
-                            fontWeight: FontWeight.w600,
-                          ),
+                              height: 1.4,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: Color(0xFF004E7F)),
                         ),
                         SizedBox(
                           width: 5.0,
                         ),
                         Text(
                           '${model.dateTime}',
-                          style:
-                              Theme.of(context).textTheme.bodySmall?.copyWith(
-                                    height: 1.4,
-                                  ),
+                          style: TextStyle(
+                              height: 1.4,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: Color(0xFF004E7F)),
                         ),
                       ],
                     ),
@@ -545,6 +599,7 @@ Widget studentDefaultbuildPost(
         ),
       ),
     );
+
 dynamic getcount(int count) {
   if (count > 4) {
     return 4;
@@ -566,7 +621,6 @@ Widget doctorBuildPost(
       },
       child: Card(
         clipBehavior: Clip.antiAliasWithSaveLayer,
-        elevation: 5.0,
         margin: EdgeInsets.symmetric(
           horizontal: 10.0,
         ),
@@ -832,6 +886,7 @@ Widget doctorBuildPost(
         ),
       ),
     );
+
 Widget supervisorBuildPost(
   caseModel model,
   context,
@@ -845,7 +900,8 @@ Widget supervisorBuildPost(
       },
       child: Card(
         clipBehavior: Clip.antiAliasWithSaveLayer,
-        elevation: 5.0,
+        color: Color.fromRGBO(255, 255, 255, 0.62),
+        elevation: 0,
         margin: EdgeInsets.symmetric(
           horizontal: 10.0,
         ),
@@ -861,7 +917,7 @@ Widget supervisorBuildPost(
                     builder: (context) => Stack(
                       children: [
                         CircleAvatar(
-                          radius: 25.0,
+                          radius: 35.0,
                           backgroundImage: NetworkImage(
                             '${model?.image}',
                           ),
@@ -871,7 +927,7 @@ Widget supervisorBuildPost(
                     fallback: (context) => Stack(
                       children: [
                         CircleAvatar(
-                          radius: 25.0,
+                          radius: 35.0,
                           backgroundImage:
                               AssetImage('images/profileimage.jpg'),
                         ),
@@ -885,23 +941,28 @@ Widget supervisorBuildPost(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          '${model!.name}',
-                          style: TextStyle(
-                            height: 1.4,
-                            fontSize: 15,
-                            fontWeight: FontWeight.w600,
+                        Center(
+                          child: Text(
+                            '${model!.name}',
+                            style: TextStyle(
+                                height: 1.4,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                                color: Color(0xFF004E7F)),
                           ),
                         ),
                         SizedBox(
                           width: 5.0,
                         ),
-                        Text(
-                          '${model!.dateTime}',
-                          style:
-                              Theme.of(context).textTheme.bodySmall?.copyWith(
-                                    height: 1.4,
-                                  ),
+                        Center(
+                          child: Text(
+                            '${model!.dateTime}',
+                            style: TextStyle(
+                                height: 1.4,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: Color(0xFF004E7F)),
+                          ),
                         ),
                       ],
                     ),
@@ -920,19 +981,40 @@ Widget supervisorBuildPost(
               ),
               Text(
                 'Medical history:',
-                style: TextStyle(color: HexColor('#5394AD'), fontSize: 15),
+                style: TextStyle(
+                  color: HexColor('#004E7F'),
+                  fontSize: 16,
+                ),
               ),
               ConditionalBuilder(
                   condition: model.isDiabetes! as bool,
-                  builder: (context) => Text('diabetes'),
+                  builder: (context) => Text(
+                        'diabetes',
+                        style: TextStyle(
+                          color: HexColor('#06A4FF'),
+                          fontSize: 15,
+                        ),
+                      ),
                   fallback: (context) => SizedBox()),
               ConditionalBuilder(
                   condition: model.isCardiac! as bool,
-                  builder: (context) => Text('cardiac problems'),
+                  builder: (context) => Text(
+                        'cardiac problems',
+                        style: TextStyle(
+                          color: HexColor('#06A4FF'),
+                          fontSize: 15,
+                        ),
+                      ),
                   fallback: (context) => SizedBox()),
               ConditionalBuilder(
                   condition: model.isHypertension! as bool,
-                  builder: (context) => Text('hypertension'),
+                  builder: (context) => Text(
+                        'hypertension',
+                        style: TextStyle(
+                          color: HexColor('#06A4FF'),
+                          fontSize: 15,
+                        ),
+                      ),
                   fallback: (context) => SizedBox()),
               SizedBox(
                 height: 5,
@@ -951,42 +1033,63 @@ Widget supervisorBuildPost(
               ),
               Text(
                 'Diagnosis :',
-                style: TextStyle(color: HexColor('#5394AD'), fontSize: 15),
+                style: TextStyle(
+                  color: HexColor('#004E7F'),
+                  fontSize: 16,
+                ),
               ),
               ConditionalBuilder(
                   condition: model!.maxillaryCategory!.length! > 0,
-                  builder: (context) => Text('${model?.maxillaryCategory}'),
+                  builder: (context) => Text('${model?.maxillaryCategory}',style: TextStyle(
+                    color: HexColor('#06A4FF'),
+                    fontSize: 15,
+                  ),),
                   fallback: (context) => SizedBox()),
               ConditionalBuilder(
                   condition: model.maxillarySubCategory!.length > 0 &&
                       model.maxillarySubCategory != ' ',
-                  builder: (context) => Text('${model?.maxillarySubCategory}'),
+                  builder: (context) => Text('${model?.maxillarySubCategory}',style: TextStyle(
+                    color: HexColor('#06A4FF'),
+                    fontSize: 15,
+                  ),),
                   fallback: (context) => SizedBox()),
               ConditionalBuilder(
                   condition: model.maxillaryModification!.length > 0 &&
                       model.maxillaryModification != 'Un Modified' &&
                       model.maxillaryModification != ' ',
                   builder: (context) =>
-                      Text('modification :${model?.maxillaryModification}'),
+                      Text('modification :${model?.maxillaryModification}',style: TextStyle(
+                        color: HexColor('#06A4FF'),
+                        fontSize: 15,
+                      ),),
                   fallback: (context) => SizedBox()),
               ConditionalBuilder(
                   condition: model!.mandibularCategory! ==
                           'Full Mouth Rehabilitation' ||
                       model!.mandibularCategory! == 'Maxillofacial Case',
-                  fallback: (context) => Text('${model?.mandibularCategory}'),
+                  fallback: (context) => Text('${model?.mandibularCategory}',style: TextStyle(
+                    color: HexColor('#06A4FF'),
+                    fontSize: 15,
+                  ),),
                   builder: (context) => SizedBox()),
 
               ConditionalBuilder(
                   condition: model.mandibularSubCategory!.length > 0 &&
                       model.mandibularSubCategory != ' ',
-                  builder: (context) => Text('${model?.mandibularSubCategory}'),
+                  builder: (context) => Text('${model?.mandibularSubCategory}',style: TextStyle(
+                    color: HexColor('#06A4FF'),
+                    fontSize: 15,
+                  ),),
                   fallback: (context) => SizedBox()),
               ConditionalBuilder(
                   condition: model.mandibularModification!.length > 0 &&
                       model.mandibularModification != 'Un Modified' &&
                       model.mandibularModification != ' ',
                   builder: (context) =>
-                      Text('modification :${model?.mandibularModification}'),
+                      Text('modification :${model?.mandibularModification}',style: TextStyle(
+                        color: HexColor('#06A4FF'),
+                        fontSize: 15,
+                      ),),
                   fallback: (context) => SizedBox()),
               rowItmes(
                 text1: 'Current medications: ',
@@ -1193,18 +1296,18 @@ Widget supervisorBuildPost(
               SizedBox(
                 height: 10,
               ),
-              defaultbutton(
-                onpress: () async {
-                  await supervisorLayoutcubit
-                      .supervisorGetCase(model.caseId as String);
-                  navigateto(context, editCaseScreen());
-                  /*  showtoast(
-                  text: ' Reported successfully',
-                  state: toaststates. ERROR);*/
-                },
-                text: 'Report Wrong Diagnosis',
-                radius: 30,
-              ),
+              // defaultbutton(
+              //   onpress: () async {
+              //     await supervisorLayoutcubit
+              //         .supervisorGetCase(model.caseId as String);
+              //     navigateto(context, editCaseScreen());
+              //     /*  showtoast(
+              //     text: ' Reported successfully',
+              //     state: toaststates. ERROR);*/
+              //   },
+              //   text: 'Report Wrong Diagnosis',
+              //   radius: 30,
+              // ),
             ],
           ),
         ),
@@ -1223,8 +1326,16 @@ Widget doctorBuildPostWithUpdate(
         navigateto(context, w);
       },
       child: Card(
+        color: Color.fromRGBO(255, 255, 255, 0.82),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(30)),
+          side: BorderSide(
+            color: Color.fromRGBO(107, 201, 255, 1),
+            width: 2,
+          ),
+        ),
         clipBehavior: Clip.antiAliasWithSaveLayer,
-        elevation: 5.0,
+        elevation: 0.0,
         margin: EdgeInsets.symmetric(
           horizontal: 10.0,
         ),
@@ -1240,7 +1351,7 @@ Widget doctorBuildPostWithUpdate(
                     builder: (context) => Stack(
                       children: [
                         CircleAvatar(
-                          radius: 25.0,
+                          radius: 35.0,
                           backgroundImage: NetworkImage(
                             '${model?.image}',
                           ),
@@ -1250,7 +1361,7 @@ Widget doctorBuildPostWithUpdate(
                     fallback: (context) => Stack(
                       children: [
                         CircleAvatar(
-                          radius: 25.0,
+                          radius: 35.0,
                           backgroundImage:
                               AssetImage('images/profileimage.jpg'),
                         ),
@@ -1267,20 +1378,24 @@ Widget doctorBuildPostWithUpdate(
                         Text(
                           ' ${model.name}',
                           style: TextStyle(
-                            height: 1.4,
-                            fontSize: 15,
-                            fontWeight: FontWeight.w600,
-                          ),
+                              height: 1.4,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: Color(0xFF004E7F)),
                         ),
                         SizedBox(
                           width: 5.0,
                         ),
                         Text(
                           ' ${model.dateTime}',
-                          style:
-                              Theme.of(context).textTheme.bodySmall?.copyWith(
-                                    height: 1.4,
-                                  ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall
+                              ?.copyWith(
+                                  height: 1.4,
+                                  color: Color(0xFF004E7F),
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600),
                         ),
                       ],
                     ),
@@ -1347,19 +1462,41 @@ Widget doctorBuildPostWithUpdate(
               ),
               Text(
                 'Medical history:',
-                style: TextStyle(color: HexColor('#5394AD'), fontSize: 15),
+                style: TextStyle(
+                  color: HexColor('#004E7F'),
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
               ConditionalBuilder(
                   condition: model.isDiabetes as bool,
-                  builder: (context) => Text('diabetes'),
+                  builder: (context) => Text(
+                        'diabetes',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Color(0xFF06A4FF),
+                        ),
+                      ),
                   fallback: (context) => SizedBox()),
               ConditionalBuilder(
                   condition: model.isCardiac as bool,
-                  builder: (context) => Text('cardiac problems'),
+                  builder: (context) => Text(
+                        'cardiac problems',
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: Color(0xFF06A4FF),
+                        ),
+                      ),
                   fallback: (context) => SizedBox()),
               ConditionalBuilder(
                   condition: model.isHypertension as bool,
-                  builder: (context) => Text('hypertension'),
+                  builder: (context) => Text(
+                        'hypertension',
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: Color(0xFF06A4FF),
+                        ),
+                      ),
                   fallback: (context) => SizedBox()),
               SizedBox(
                 height: 5,
@@ -1378,41 +1515,79 @@ Widget doctorBuildPostWithUpdate(
               ),
               Text(
                 'Diagnosis :',
-                style: TextStyle(color: HexColor('#5394AD'), fontSize: 15),
+                style: TextStyle(
+                  color: HexColor('#004E7F'),
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
               ConditionalBuilder(
                   condition: model!.maxillaryCategory!.length! > 0,
-                  builder: (context) => Text('${model?.maxillaryCategory}'),
+                  builder: (context) => Text(
+                        '${model?.maxillaryCategory}',
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: Color(0xFF06A4FF),
+                        ),
+                      ),
                   fallback: (context) => SizedBox()),
               ConditionalBuilder(
                   condition: model.maxillarySubCategory!.length > 0 &&
                       model.maxillarySubCategory != ' ',
-                  builder: (context) => Text('${model?.maxillarySubCategory}'),
+                  builder: (context) => Text(
+                        '${model?.maxillarySubCategory}',
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: Color(0xFF06A4FF),
+                        ),
+                      ),
                   fallback: (context) => SizedBox()),
               ConditionalBuilder(
                   condition: model.maxillaryModification!.length > 0 &&
                       model.maxillaryModification != 'Un Modified' &&
                       model.maxillaryModification != ' ',
-                  builder: (context) =>
-                      Text('modification :${model?.maxillaryModification}'),
+                  builder: (context) => Text(
+                        'modification :${model?.maxillaryModification}',
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: Color(0xFF06A4FF),
+                        ),
+                      ),
                   fallback: (context) => SizedBox()),
               ConditionalBuilder(
                   condition: model!.mandibularCategory! ==
                           'Full Mouth Rehabilitation' ||
                       model!.mandibularCategory! == 'Maxillofacial Case',
-                  fallback: (context) => Text('${model?.mandibularCategory}'),
+                  fallback: (context) => Text(
+                        '${model?.mandibularCategory}',
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: Color(0xFF06A4FF),
+                        ),
+                      ),
                   builder: (context) => SizedBox()),
               ConditionalBuilder(
                   condition: model.mandibularSubCategory!.length > 0 &&
                       model.mandibularSubCategory != ' ',
-                  builder: (context) => Text('${model?.mandibularSubCategory}'),
+                  builder: (context) => Text(
+                        '${model?.mandibularSubCategory}',
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: Color(0xFF06A4FF),
+                        ),
+                      ),
                   fallback: (context) => SizedBox()),
               ConditionalBuilder(
                   condition: model.mandibularModification!.length > 0 &&
                       model.mandibularModification != 'Un Modified' &&
                       model.mandibularModification != ' ',
-                  builder: (context) =>
-                      Text('modification :${model?.mandibularModification}'),
+                  builder: (context) => Text(
+                        'modification :${model?.mandibularModification}',
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: Color(0xFF06A4FF),
+                        ),
+                      ),
                   fallback: (context) => SizedBox()),
               rowItmes(
                 text1: 'Current medications: ',

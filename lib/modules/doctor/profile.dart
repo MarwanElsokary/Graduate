@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:icon_broken/icon_broken.dart';
-
 import '../../layout/doctor/doctorcubit/cubit.dart';
 import '../../layout/doctor/doctorcubit/states.dart';
 import '../../shared/components/components.dart';
 import '../../shared/styles/colors.dart';
+import 'cases-of-Doctor_screen.dart';
 import 'change_password.dart';
 import 'edit_profile.dart';
 
@@ -20,28 +20,46 @@ class doctorProfileScreen extends StatelessWidget {
         var userModel = doctorLayoutcubit.get(context).doctormodel;
         return Scaffold(
           body: Container(
-            color: defaultcol,
+            color: Color(0xFFB8F5FF),
             child: Column(
               children: [
                 Expanded(
                   //  flex: 2,
                   child: Container(
                     padding: EdgeInsets.all(20),
-                    color: defaultcol,
+                    color: Color(0xFFB8F5FF),
                     width: double.infinity,
                     child: SingleChildScrollView(
                       child: Column(
                         children: [
                           SizedBox(
-                            height: 70,
+                            height: 80,
                           ),
                           ConditionalBuilder(
+                            condition: userModel?.image != null,
+                            builder: (context) => Stack(
+                              alignment: AlignmentDirectional.center,
+                              children: [
+                                CircleAvatar(
+                                  radius: 68.0,
+                                  backgroundColor:
+                                      Color.fromRGBO(255, 255, 255, 0.66),
+                                  child: CircleAvatar(
+                                    radius: 64.0,
+                                    backgroundImage: NetworkImage(
+                                      'Dr${userModel?.image}',
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                             fallback: (context) => Stack(
                               alignment: AlignmentDirectional.center,
                               children: [
                                 CircleAvatar(
                                   radius: 68.0,
-                                  backgroundColor: Colors.white,
+                                  backgroundColor:
+                                      Color.fromRGBO(255, 255, 255, 0.66),
                                   child: CircleAvatar(
                                     radius: 64.0,
                                     backgroundImage:
@@ -50,32 +68,16 @@ class doctorProfileScreen extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            condition: userModel?.image != null,
-                            builder: (context) => Stack(
-                              alignment: AlignmentDirectional.center,
-                              children: [
-                                CircleAvatar(
-                                  radius: 68.0,
-                                  backgroundColor: Colors.white,
-                                  child: CircleAvatar(
-                                    radius: 64.0,
-                                    backgroundImage: NetworkImage(
-                                      '${userModel?.image}',
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
                           ),
                           SizedBox(
-                            height: 5,
+                            height: 15,
                           ),
                           Text(
                             '${userModel?.name}',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontSize: 18,
+                              color: Color(0xFF003E65),
+                              fontSize: 20,
                             ),
                           ),
                           SizedBox(
@@ -92,7 +94,7 @@ class doctorProfileScreen extends StatelessWidget {
                     padding: EdgeInsets.all(20),
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Color.fromRGBO(255, 255, 255, 0.66),
                       borderRadius: BorderRadiusDirectional.only(
                         topStart: Radius.circular(30),
                         topEnd: Radius.circular(30),
@@ -114,9 +116,11 @@ class doctorProfileScreen extends StatelessWidget {
                                   children: [
                                     CircleAvatar(
                                       radius: 15,
-                                      backgroundColor: cc.defcol,
-                                      child: Icon(IconBroken.Edit,
-                                          color: Colors.white),
+                                      backgroundColor: Colors.transparent,
+                                      child: Icon(
+                                        IconBroken.Edit,
+                                        color: Color(0xFF003E65),
+                                      ),
                                     ),
                                     SizedBox(
                                       width: 8,
@@ -124,7 +128,7 @@ class doctorProfileScreen extends StatelessWidget {
                                     Text('Edit Profile',
                                         style: TextStyle(
                                           fontSize: 19,
-                                          color: HexColor('#87b4c6'),
+                                          color: Color(0xFF003E65),
                                         )),
                                     Spacer(),
                                     IconButton(
@@ -133,24 +137,26 @@ class doctorProfileScreen extends StatelessWidget {
                                               doctorEditProfileScreen());
                                         },
                                         icon: Icon(
-                                          IconBroken.Arrow___Right,
-                                          color: defaultcol,
+                                          IconBroken.Arrow___Right_2,
+                                          color: Color(0xFF003E65),
                                         ))
                                   ],
                                 ),
                               ),
                               InkWell(
                                 onTap: () {
-                                  // doctorLayoutcubit.get(context). getCasesOfDoctor();
-                                  // navigateto(context,  casesOfDoctor());
+                                  doctorLayoutcubit
+                                      .get(context)
+                                      .getCasesOfDoctor();
+                                  navigateto(context, casesOfDoctor());
                                 },
                                 child: Row(
                                   children: [
                                     CircleAvatar(
+                                      backgroundColor: Colors.transparent,
                                       radius: 15,
-                                      backgroundColor: cc.defcol,
                                       child: Icon(IconBroken.Paper,
-                                          color: Colors.white),
+                                        color: Color(0xFF003E65)),
                                     ),
                                     SizedBox(
                                       width: 8,
@@ -158,17 +164,19 @@ class doctorProfileScreen extends StatelessWidget {
                                     Text('Your Cases',
                                         style: TextStyle(
                                           fontSize: 19,
-                                          color: HexColor('#87b4c6'),
+                                          color: Color(0xFF003E65),
                                         )),
                                     Spacer(),
                                     IconButton(
                                         onPressed: () {
-                                          // doctorLayoutcubit.get(context). getCasesOfDoctor();
-                                          // navigateto(context,  casesOfDoctor());
+                                          doctorLayoutcubit
+                                              .get(context)
+                                              .getCasesOfDoctor();
+                                          navigateto(context, casesOfDoctor());
                                         },
                                         icon: Icon(
-                                          IconBroken.Arrow___Right,
-                                          color: defaultcol,
+                                          IconBroken.Arrow___Right_2,
+                                          color: Color(0xFF003E65),
                                         ))
                                   ],
                                 ),
@@ -181,9 +189,10 @@ class doctorProfileScreen extends StatelessWidget {
                                   children: [
                                     CircleAvatar(
                                       radius: 15,
-                                      backgroundColor: cc.defcol,
+                                      backgroundColor: Colors.transparent,
                                       child: Icon(IconBroken.Password,
-                                          color: Colors.white),
+                                          color: Color(0xFF003E65)),
+
                                     ),
                                     SizedBox(
                                       width: 8,
@@ -191,7 +200,7 @@ class doctorProfileScreen extends StatelessWidget {
                                     Text('Change Password',
                                         style: TextStyle(
                                           fontSize: 19,
-                                          color: HexColor('#87b4c6'),
+                                          color: Color(0xFF003E65),
                                         )),
                                     Spacer(),
                                     IconButton(
@@ -200,23 +209,25 @@ class doctorProfileScreen extends StatelessWidget {
                                               context, changePasswordScreen());
                                         },
                                         icon: Icon(
-                                          IconBroken.Arrow___Right,
-                                          color: defaultcol,
+                                          IconBroken.Arrow___Right_2,
+                                          color: Color(0xFF003E65),
                                         ))
                                   ],
                                 ),
                               ),
                               InkWell(
                                 onTap: () {
-                                  // doctorLayoutcubit.get(context). logoutdoctor(context);
+                                  doctorLayoutcubit
+                                      .get(context)
+                                      .logoutdoctor(context);
                                 },
                                 child: Row(
                                   children: [
                                     CircleAvatar(
                                       radius: 15,
-                                      backgroundColor: cc.defcol,
+                                      backgroundColor: Colors.transparent,
                                       child: Icon(IconBroken.Logout,
-                                          color: Colors.white),
+                                          ),
                                     ),
                                     SizedBox(
                                       width: 8,
@@ -224,16 +235,18 @@ class doctorProfileScreen extends StatelessWidget {
                                     Text('Logout',
                                         style: TextStyle(
                                           fontSize: 19,
-                                          color: HexColor('#87b4c6'),
+                                            color: Color(0xFF003E65),
                                         )),
                                     Spacer(),
                                     IconButton(
                                         onPressed: () {
-                                          // doctorLayoutcubit.get(context). logoutdoctor(context);
+                                          doctorLayoutcubit
+                                              .get(context)
+                                              .logoutdoctor(context);
                                         },
                                         icon: Icon(
-                                          IconBroken.Arrow___Right,
-                                          color: defaultcol,
+                                          IconBroken.Arrow___Right_2,
+                                          color: Color(0xFF003E65),
                                         ))
                                   ],
                                 ),

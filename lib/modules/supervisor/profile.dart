@@ -1,4 +1,3 @@
-
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,12 +16,14 @@ import 'edit_profile.dart';
 class supervisorProfileScreen extends StatelessWidget {
   var passwordcon = TextEditingController();
   var formkey1 = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<supervisorLayoutcubit, supervisorLayoutstates>(
       listener: (context, state) {
         if (state is supervisorDeleteSucessState) {
-          showtoast(text: 'Account Deleted Successfully', state: toaststates.SUCCESS);
+          showtoast(
+              text: 'Account Deleted Successfully', state: toaststates.SUCCESS);
           passwordcon.clear();
           navigate(context, loginScreen());
         }
@@ -32,14 +33,14 @@ class supervisorProfileScreen extends StatelessWidget {
         //  supervisorLayoutcubit dialogs = new supervisorLayoutcubit();
         return Scaffold(
           body: Container(
-            color: defaultcol,
+            color: Color(0xFFB8F5FF),
             child: Column(
               children: [
                 Expanded(
                   //  flex: 2,
                   child: Container(
                     padding: EdgeInsets.all(20),
-                    color: defaultcol,
+                    color: Color(0xFFB8F5FF),
                     width: double.infinity,
                     child: SingleChildScrollView(
                       child: Column(
@@ -86,8 +87,8 @@ class supervisorProfileScreen extends StatelessWidget {
                             '${userModel?.name}',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontSize: 18,
+                              color: Color(0xFF003E65),
+                              fontSize: 20,
                             ),
                           ),
                           SizedBox(
@@ -104,7 +105,7 @@ class supervisorProfileScreen extends StatelessWidget {
                     padding: EdgeInsets.all(20),
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Color.fromRGBO(255, 255, 255, 0.66),
                       borderRadius: BorderRadiusDirectional.only(
                         topStart: Radius.circular(30),
                         topEnd: Radius.circular(30),
@@ -126,9 +127,11 @@ class supervisorProfileScreen extends StatelessWidget {
                                   children: [
                                     CircleAvatar(
                                       radius: 15,
-                                      backgroundColor: cc.defcol,
-                                      child: Icon(IconBroken.Edit,
-                                          color: Colors.white),
+                                      backgroundColor: Colors.transparent,
+                                      child: Icon(
+                                        IconBroken.Edit,
+                                        color: Color(0xFF003E65),
+                                      ),
                                     ),
                                     SizedBox(
                                       width: 8,
@@ -136,7 +139,7 @@ class supervisorProfileScreen extends StatelessWidget {
                                     Text('Edit Profile',
                                         style: TextStyle(
                                           fontSize: 19,
-                                          color: HexColor('#87b4c6'),
+                                          color: Color(0xFF003E65),
                                         )),
                                     Spacer(),
                                     IconButton(
@@ -145,8 +148,8 @@ class supervisorProfileScreen extends StatelessWidget {
                                               supervisorEditProfileScreen());
                                         },
                                         icon: Icon(
-                                          IconBroken.Arrow___Right,
-                                          color: defaultcol,
+                                          IconBroken.Arrow___Right_2,
+                                          color: Color(0xFF003E65),
                                         ))
                                   ],
                                 ),
@@ -162,9 +165,11 @@ class supervisorProfileScreen extends StatelessWidget {
                                   children: [
                                     CircleAvatar(
                                       radius: 15,
-                                      backgroundColor: cc.defcol,
-                                      child: Icon(IconBroken.User1,
-                                          color: Colors.white),
+                                      backgroundColor: Colors.transparent,
+                                      child: Icon(
+                                        IconBroken.User1,
+                                        color: Color(0xFF003E65),
+                                      ),
                                     ),
                                     SizedBox(
                                       width: 8,
@@ -172,7 +177,7 @@ class supervisorProfileScreen extends StatelessWidget {
                                     Text('student list',
                                         style: TextStyle(
                                           fontSize: 19,
-                                          color: HexColor('#87b4c6'),
+                                          color: Color(0xFF003E65),
                                         )),
                                     Spacer(),
                                     IconButton(
@@ -183,8 +188,8 @@ class supervisorProfileScreen extends StatelessWidget {
                                           navigateto(context, studentsScreen());
                                         },
                                         icon: Icon(
-                                          IconBroken.Arrow___Right,
-                                          color: defaultcol,
+                                          IconBroken.Arrow___Right_2,
+                                          color: Color(0xFF003E65),
                                         ))
                                   ],
                                 ),
@@ -197,9 +202,11 @@ class supervisorProfileScreen extends StatelessWidget {
                                   children: [
                                     CircleAvatar(
                                       radius: 15,
-                                      backgroundColor: cc.defcol,
-                                      child: Icon(IconBroken.Password,
-                                          color: Colors.white),
+                                      backgroundColor: Colors.transparent,
+                                      child: Icon(
+                                        IconBroken.Password,
+                                        color: Color(0xFF003E65),
+                                      ),
                                     ),
                                     SizedBox(
                                       width: 8,
@@ -207,7 +214,7 @@ class supervisorProfileScreen extends StatelessWidget {
                                     Text('Change Password',
                                         style: TextStyle(
                                           fontSize: 19,
-                                          color: HexColor('#87b4c6'),
+                                          color: Color(0xFF003E65),
                                         )),
                                     Spacer(),
                                     IconButton(
@@ -216,8 +223,8 @@ class supervisorProfileScreen extends StatelessWidget {
                                               context, changePasswordScreen());
                                         },
                                         icon: Icon(
-                                          IconBroken.Arrow___Right,
-                                          color: defaultcol,
+                                          IconBroken.Arrow___Right_2,
+                                          color: Color(0xFF003E65),
                                         ))
                                   ],
                                 ),
@@ -229,45 +236,45 @@ class supervisorProfileScreen extends StatelessWidget {
                                     builder: (context) => AlertDialog(
                                       shape: RoundedRectangleBorder(
                                         borderRadius:
-                                        BorderRadius.circular(20.0),
+                                            BorderRadius.circular(20.0),
                                       ),
                                       title: Text(
                                         'Delete Account',
-                                        style: TextStyle(fontSize:18),
+                                        style: TextStyle(fontSize: 18),
                                       ),
-
                                       content: Form(
                                         key: formkey1,
                                         child: Column(
                                           mainAxisSize: MainAxisSize.min,
-                                           children: [
-                                            Text('Are you sure you want to permanently delete your account ?',style: TextStyle(
-
-                                            )),
-                                            SizedBox( height: 10,),
+                                          children: [
+                                            Text(
+                                                'Are you sure you want to permanently delete your account ?',
+                                                style: TextStyle()),
+                                            SizedBox(
+                                              height: 10,
+                                            ),
                                             defaulttextformfield(
                                               controller: passwordcon,
                                               radius: 30,
                                               keyboardtype:
-                                              TextInputType
-                                                  .visiblePassword,
+                                                  TextInputType.visiblePassword,
                                               validator: (value) {
                                                 if (value!.isEmpty) {
                                                   return 'You have to enter your password to delete your account';
                                                 }
                                               },
                                               label: 'Password',
-                                              prefix:
-                                              IconBroken.Password,
+                                              prefix: IconBroken.Password,
                                             ),
                                           ],
                                         ),
                                       ),
                                       actions: [
                                         TextButton(
-                                          onPressed: () { passwordcon.clear();
-                                          Navigator.pop(context);},
-
+                                          onPressed: () {
+                                            passwordcon.clear();
+                                            Navigator.pop(context);
+                                          },
                                           child: Text(
                                             'Cancel',
                                             style: TextStyle(
@@ -282,9 +289,8 @@ class supervisorProfileScreen extends StatelessWidget {
                                               supervisorLayoutcubit
                                                   .get(context)
                                                   .deleteSupervisorData(
-                                                  password:
-                                                  passwordcon
-                                                      .text);
+                                                      password:
+                                                          passwordcon.text);
                                             }
                                           },
                                           child: Text(
@@ -301,18 +307,19 @@ class supervisorProfileScreen extends StatelessWidget {
                                 child: Row(
                                   children: [
                                     CircleAvatar(
-                                      radius: 15,
-                                      backgroundColor: cc.defcol,
-                                      child: Icon(IconBroken.Delete,
-                                          color: Colors.white),
-                                    ),
+                                        radius: 15,
+                                        backgroundColor: Colors.transparent,
+                                        child: Icon(
+                                          IconBroken.Delete,
+                                          color: Color(0xFF003E65),
+                                        )),
                                     SizedBox(
                                       width: 8,
                                     ),
                                     Text('Delete account',
                                         style: TextStyle(
                                           fontSize: 19,
-                                          color: HexColor('#87b4c6'),
+                                          color: Color(0xFF003E65),
                                         )),
                                     Spacer(),
                                     IconButton(
@@ -354,9 +361,10 @@ class supervisorProfileScreen extends StatelessWidget {
                                               ),
                                               actions: [
                                                 TextButton(
-                                                  onPressed: () { passwordcon.clear();
-                                          Navigator.pop(context);},
-
+                                                  onPressed: () {
+                                                    passwordcon.clear();
+                                                    Navigator.pop(context);
+                                                  },
                                                   child: Text(
                                                     'Cancel',
                                                     style: TextStyle(
@@ -388,8 +396,8 @@ class supervisorProfileScreen extends StatelessWidget {
                                           );
                                         },
                                         icon: Icon(
-                                          IconBroken.Arrow___Right,
-                                          color: defaultcol,
+                                          IconBroken.Arrow___Right_2,
+                                          color: Color(0xFF003E65),
                                         ))
                                   ],
                                 ),
@@ -403,18 +411,19 @@ class supervisorProfileScreen extends StatelessWidget {
                                 child: Row(
                                   children: [
                                     CircleAvatar(
-                                      radius: 15,
-                                      backgroundColor: cc.defcol,
-                                      child: Icon(IconBroken.Logout,
-                                          color: Colors.white),
-                                    ),
+                                        radius: 15,
+                                        backgroundColor: Colors.transparent,
+                                        child: Icon(
+                                          IconBroken.Logout,
+                                          color: Color(0xFF003E65),
+                                        )),
                                     SizedBox(
                                       width: 8,
                                     ),
                                     Text('Logout',
                                         style: TextStyle(
                                           fontSize: 19,
-                                          color: HexColor('#87b4c6'),
+                                          color: Color(0xFF003E65),
                                         )),
                                     Spacer(),
                                     IconButton(
@@ -424,8 +433,8 @@ class supervisorProfileScreen extends StatelessWidget {
                                               .logoutSupervisor(context);
                                         },
                                         icon: Icon(
-                                          IconBroken.Arrow___Right,
-                                          color: defaultcol,
+                                          IconBroken.Arrow___Right_2,
+                                          color: Color(0xFF003E65),
                                         ))
                                   ],
                                 ),

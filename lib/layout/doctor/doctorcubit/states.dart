@@ -64,10 +64,10 @@ class casePostImageCapturedSuccessState extends doctorLayoutstates{}
 class casePostImageCapturedErrorState extends doctorLayoutstates{}
 
 // get cases
- class doctorGetCasesLoadingState extends doctorLayoutstates{}
- class doctorGetCasesSucessState extends doctorLayoutstates{}
- class doctorGetCasesErrorState extends doctorLayoutstates{ final String error ;
- doctorGetCasesErrorState(this.error);}
+class doctorGetCasesLoadingState extends doctorLayoutstates{}
+class doctorGetCasesSucessState extends doctorLayoutstates{}
+class doctorGetCasesErrorState extends doctorLayoutstates{ final String error ;
+doctorGetCasesErrorState(this.error);}
 // update cases
 class doctorUpdateCasesLoadingState extends doctorLayoutstates{}
 class doctorUpdateCasesSucessState extends doctorLayoutstates{}
@@ -76,7 +76,7 @@ doctorUpdateCasesErrorState(this.error);}
 class doctorDeleteCasesSucessState extends doctorLayoutstates{}
 class doctorDeleteCasesErrorState extends doctorLayoutstates{ final String error ;
 doctorDeleteCasesErrorState(this.error);}
- // get clickedcase
+// get clickedcase
 class doctorGetClickedCaseLoadingState extends doctorLayoutstates{}
 class doctorGetClickedCaseSucessState extends doctorLayoutstates{}
 class doctorGetClickedCaseErrorState extends doctorLayoutstates{ final String error ;

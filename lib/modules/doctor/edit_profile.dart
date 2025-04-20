@@ -16,6 +16,7 @@ class doctorEditProfileScreen extends StatelessWidget {
   var formkey = GlobalKey<FormState>();
   var formkey1 = GlobalKey<FormState>();
   var emailchaged = false;
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<doctorLayoutcubit, doctorLayoutstates>(
@@ -48,22 +49,23 @@ class doctorEditProfileScreen extends StatelessWidget {
 
         return Scaffold(
           appBar: AppBar(
-            backgroundColor: cc.defcol,
+            backgroundColor: Color(0xFFB8F5FF),
             title: Center(
               child: Text('Edit profile',
-                  style: TextStyle(
-                    color: Colors.white,
-                  )),
+                  style: TextStyle(color: Color(0xFF004E7F), fontSize: 20)),
             ),
             leading: IconButton(
               onPressed: () {
                 doctorLayoutcubit.get(context).doctorProfileImage = null;
                 doctorLayoutcubit.get(context).doctorSelectedImage = null;
-                emailchaged=false;
+                emailchaged = false;
                 passwordcon.clear();
                 Navigator.pop(context);
               },
-              icon: Icon(IconBroken.Arrow___Left_2, color: Colors.white),
+              icon: Icon(
+                IconBroken.Arrow___Left_2,
+                color: Color(0xFF004E7F),
+              ),
             ),
             actions: [
               IconButton(
@@ -76,7 +78,6 @@ class doctorEditProfileScreen extends StatelessWidget {
                             phone: phonecon.text,
                             email: emailcon.text,
                             password: passwordcon.text,
-
                           );
                     }
                   } else if (emailchaged == false &&
@@ -96,18 +97,21 @@ class doctorEditProfileScreen extends StatelessWidget {
                         state: toaststates.ERROR);
                   }
                 },
-                icon: Icon(Icons.check, color: Colors.white),
+                icon: Icon(
+                  Icons.check,
+                  color: Color(0xFF004E7F),
+                ),
               )
             ],
           ),
           body: Container(
-            color: defaultcol,
+            color: Color(0xFFB8F5FF),
             child: Column(
               children: [
                 Expanded(
                   child: Container(
                     padding: EdgeInsets.all(20),
-                    color: defaultcol,
+                    color: Color(0xFFB8F5FF),
                     width: double.infinity,
                     child: SingleChildScrollView(
                       child: Column(
@@ -195,7 +199,7 @@ class doctorEditProfileScreen extends StatelessWidget {
                     padding: EdgeInsets.all(20),
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Color.fromRGBO(255, 255, 255, .88),
                       borderRadius: BorderRadiusDirectional.only(
                         topStart: Radius.circular(30),
                         topEnd: Radius.circular(30),
@@ -223,10 +227,7 @@ class doctorEditProfileScreen extends StatelessWidget {
                                               onpress: () {
                                                 doctorLayoutcubit
                                                     .get(context)
-                                                    .uploadDoctorProfileImage(
-
-
-                                                );
+                                                    .uploadDoctorProfileImage();
                                               },
                                               text: 'upload profile image',
                                               radius: 30,
@@ -244,20 +245,40 @@ class doctorEditProfileScreen extends StatelessWidget {
                                     ),
                                   ],
                                 ),
+                                Text(
+                                  'Name',
+                                  style: TextStyle(
+                                    color: Color(0xFF004E7F),
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
                                 SizedBox(
                                   height: 20.0,
                                 ),
                                 defaulttextformfield(
                                   controller: namecon,
                                   radius: 30,
+                                  bordercolor: Color(0xFF6BC9FF),
                                   keyboardtype: TextInputType.name,
                                   validator: (String? value) {
                                     if (value!.isEmpty) {
                                       return 'name must not be empty';
                                     }
                                   },
-                                  label: 'Name',
+                                  label: '',
                                   prefix: IconBroken.User,
+                                ),
+                                SizedBox(
+                                  height: 15.0,
+                                ),
+                                Text(
+                                  'Email Address',
+                                  style: TextStyle(
+                                    color: Color(0xFF004E7F),
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
                                 SizedBox(
                                   height: 15.0,
@@ -299,8 +320,10 @@ class doctorEditProfileScreen extends StatelessWidget {
                                                     return 'Email must not be empty';
                                                   }
                                                 },
-                                                label: 'Email',
+                                                label: '',
                                                 prefix: IconBroken.Message,
+                                                bordercolor: Color(0xFF6BC9FF),
+
                                               ),
                                               SizedBox(
                                                 height: 10,
@@ -315,8 +338,10 @@ class doctorEditProfileScreen extends StatelessWidget {
                                                     return 'please enter your  password';
                                                   }
                                                 },
-                                                label: 'Password',
+                                                label: '',
                                                 prefix: IconBroken.Password,
+                                                bordercolor: Color(0xFF6BC9FF),
+
                                               ),
                                             ],
                                           ),
@@ -345,8 +370,19 @@ class doctorEditProfileScreen extends StatelessWidget {
                                       return 'Email must not be empty';
                                     }
                                   },
-                                  label: 'Email',
+                                  label: '',
                                   prefix: IconBroken.Message,
+                                ),
+                                SizedBox(
+                                  height: 15.0,
+                                ),
+                                Text(
+                                  'Phone',
+                                  style: TextStyle(
+                                    color: Color(0xFF004E7F),
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
                                 SizedBox(
                                   height: 15.0,
@@ -360,8 +396,10 @@ class doctorEditProfileScreen extends StatelessWidget {
                                       return 'phone number must not be empty';
                                     }
                                   },
-                                  label: 'Phone',
+                                  label: '',
                                   prefix: IconBroken.Call,
+                                  bordercolor: Color(0xFF6BC9FF),
+
                                 ),
                                 SizedBox(
                                   height: 15.0,

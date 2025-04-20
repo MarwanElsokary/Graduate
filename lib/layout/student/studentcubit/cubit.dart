@@ -14,6 +14,7 @@ import 'package:icon_broken/icon_broken.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:project/layout/student/studentcubit/states.dart';
 import 'package:project/modules/student/edit_profile.dart';
+import 'package:project/modules/supervisor/students_list.dart';
 import 'package:project/shared/components/components.dart';
 import 'package:project/shared/network/local/cache_helper.dart';
 
@@ -22,7 +23,7 @@ import '../../../models/request.dart';
 import '../../../models/user_model.dart';
 import '../../../modules/loginscreen/loginScreen.dart';
 import '../../../modules/student/categories/categories_screen.dart';
-import '../../../modules/student/home_screen.dart';
+import '../../../modules/student/doctors_list.dart';
 import '../../../modules/student/profile_screen.dart';
 import '../../../modules/student/requests_screen.dart';
 import '../../../shared/components/constants.dart';
@@ -60,8 +61,8 @@ class studentLayoutcubit extends Cubit<studentLayoutstates> {
 
   int currentIndex = 0;
   List<Widget> studentBottomScreens = [
-    studentHomeScreen(),
     categoriesScreen(),
+    doctorsScreen(),
     studentRequestScreen(),
     studentProfileScreen(),
   ];

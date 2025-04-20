@@ -16,33 +16,56 @@ class superviasorLayoutScreen extends StatelessWidget {
       },builder: (context, state) {
       var cubit =supervisorLayoutcubit.get(context);
    return Scaffold(
+     backgroundColor: Color(0xFFB8F5FF),
         body:  cubit.superbottomScreens[cubit.currentIndex],
-        bottomNavigationBar:BottomNavigationBar(
-          items: [
-            BottomNavigationBarItem(
-              icon:Icon(
-                IconBroken.Home,
+        bottomNavigationBar:Container(
+          decoration: BoxDecoration(
+            color: Color.fromRGBO(255, 255, 255, 0.88),
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(30),
+              topRight: Radius.circular(30),
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black12,
+                blurRadius: 10,
+                offset: Offset(0, -1),
               ),
-              label: 'home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon( Icons.list),
-              label: 'doctors',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon( IconBroken.Message),
-              label: 'requests',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon( IconBroken.Profile),
-              label: 'Profile',
-            ),
-          ] ,
-          currentIndex: cubit.currentIndex,
-          onTap: (index)
-          {
-            cubit.changebottomsupervisor(index);
-          },
+            ],
+          ),
+          child: BottomNavigationBar(
+            backgroundColor: Colors.transparent, // مهم علشان ياخد لون الـ Container
+            type: BottomNavigationBarType.fixed,
+            elevation: 0,
+            items: [
+              BottomNavigationBarItem(
+                icon:
+                  Image.asset("images/home.icon.png", height: 24),
+                activeIcon: Image.asset("images/home.icon.png", height: 28),
+                label: "Home",
+              ),
+              BottomNavigationBarItem(
+                icon: Image.asset("images/doctors.icon.png", height: 24),
+                activeIcon: Image.asset("images/doctors.icon.png", height: 28),
+                label: "Doctors",
+              ),
+              BottomNavigationBarItem(
+                icon: Image.asset("images/requests.icon.png", height: 24),
+                activeIcon: Image.asset("images/requests.icon.png", height: 28),
+                label: "Requests",
+              ),
+              BottomNavigationBarItem(
+                icon: Image.asset("images/profile.icon.png", height: 24),
+                activeIcon: Image.asset("images/profile.icon.png", height: 28),
+                label: "Profile",
+              ),
+            ] ,
+            currentIndex: cubit.currentIndex,
+            onTap: (index)
+            {
+              cubit.changebottomsupervisor(index);
+            },
+          ),
         ),
       );
     },

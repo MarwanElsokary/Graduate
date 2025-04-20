@@ -1,4 +1,3 @@
-
 abstract class loginstates {}
 class loginIntialState extends loginstates {}
 class loginLoadingState extends loginstates {}

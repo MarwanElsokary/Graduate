@@ -9,62 +9,69 @@ import 'package:page_transition/page_transition.dart';
 import '../layout/admin/admin_Layout_screen.dart';
 import '../layout/student/Layout_screen.dart';
 import '../shared/components/constants.dart';
+import 'loginscreen/onboarding.dart';
 
 class splashScreen extends StatelessWidget {
-  late Widget widget;
+  final bool seenOnboarding;
+
+  const splashScreen({super.key, required this.seenOnboarding});
+
+  @override
   Widget build(BuildContext context) {
     return AnimatedSplashScreen(
-
-        splash: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Image(image: AssetImage('images/131818-dental-clinic-color.gif'),
-              width: 250,
-              height: 250,
-
+      splash: Stack(
+        fit: StackFit.expand,
+        children: [
+          Image.asset(
+            'images/splash.png',
+            fit: BoxFit.cover,
+          ),
+          Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Image.asset(
+                  'images/HELLO !.png',
+                  height: 30,
+                ),
+                SizedBox(height: 20),
+                Text(
+                  'Easy medical solutions',
+                  style: TextStyle(
+                    fontSize: 24,
+                    color: Color(0xFF004E7F),
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
             ),
-            Text('Easy Patient Finder', style: TextStyle(
-              fontSize: 20,
-              color: defaultcol,
-              fontWeight: FontWeight.bold,
-            ),),
-
-
-    ],
-        ),
-      nextScreen: widget=getwidget(),
-        splashTransition: SplashTransition.fadeTransition,
-        pageTransitionType: PageTransitionType.fade,
-        backgroundColor: Colors.white,
-        splashIconSize: 300,
-        duration: 1500
-
+          ),
+        ],
+      ),
+      nextScreen: _getNextScreen(),
+      splashTransition: SplashTransition.fadeTransition,
+      pageTransitionType: PageTransitionType.fade,
+      backgroundColor: Colors.white,
+      splashIconSize: double.infinity,
+      duration: 3000,
     );
   }
 
- Widget  getwidget() {
+  Widget _getNextScreen() {
+    print('Onboarding Status: $seenOnboarding');
+    print('User Status: UID=$UID, ROLE=$ROLE');
 
-   print('role is $ROLE');
-   print('uid is $UID');
-   if(UID != null && ROLE != null ){
-
-        if (ROLE == 'student') {
-          return studentLayoutScreen();
-        }
-        else if (ROLE == 'Doctor') {
-          return doctorLayoutScreen();
-        } else if (ROLE == 'Supervisor') {
-          return superviasorLayoutScreen();
-        }
-        else if (ROLE == 'admin') {
-          return adminLayoutScreen();
-        }
+    // إذا كان المستخدم مسجل دخول
+    if (UID != null && ROLE != null) {
+      switch (ROLE) {
+        case 'student': return studentLayoutScreen();
+        case 'Doctor': return doctorLayoutScreen();
+        case 'Supervisor': return superviasorLayoutScreen();
+        case 'admin': return adminLayoutScreen();
       }
-   else{
-          return loginScreen();
     }
-    throw('there is an error look at splash screen');
 
+    // إذا لم يكن مسجل دخول
+    return seenOnboarding ? loginScreen() : OnboardingScreen();
   }
-
 }

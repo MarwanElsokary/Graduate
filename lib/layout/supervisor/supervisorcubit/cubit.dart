@@ -641,7 +641,7 @@ class supervisorLayoutcubit extends Cubit<supervisorLayoutstates> {
       level: level,
       images: images,
       caseId: caseId,
-      caseState: caseState,
+      caseState: caseState, studentRequests: [],
     );
     FirebaseFirestore.instance
         .collection('cases')

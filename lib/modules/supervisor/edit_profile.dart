@@ -1,4 +1,3 @@
-
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,13 +16,15 @@ class supervisorEditProfileScreen extends StatelessWidget {
   var formkey = GlobalKey<FormState>();
   var formkey1 = GlobalKey<FormState>();
   var emailchaged = false;
+
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<supervisorLayoutcubit,supervisorLayoutstates>(
+    return BlocConsumer<supervisorLayoutcubit, supervisorLayoutstates>(
       listener: (context, state) {
-        if(state is supervisorUploadProfileImageSucessState){
-          showtoast(text: 'image uploaded sucessfully ', state: toaststates.SUCCESS);
-          supervisorLayoutcubit.get(context).supervisorSelectedImage=null;
+        if (state is supervisorUploadProfileImageSucessState) {
+          showtoast(
+              text: 'image uploaded sucessfully ', state: toaststates.SUCCESS);
+          supervisorLayoutcubit.get(context).supervisorSelectedImage = null;
         }
         if (state is supervisorUpdatesucessState) {
           showtoast(
@@ -38,29 +39,34 @@ class supervisorEditProfileScreen extends StatelessWidget {
       },
       builder: (context, state) {
         print(passwordcon.text);
-        print(emailchaged);        var userModel = supervisorLayoutcubit.get(context).supervisormodel;
-        var supervisorProfileImage = supervisorLayoutcubit.get(context).supervisorProfileImage;
-        namecon.text = userModel!.name! ;
+        print(emailchaged);
+        var userModel = supervisorLayoutcubit.get(context).supervisormodel;
+        var supervisorProfileImage =
+            supervisorLayoutcubit.get(context).supervisorProfileImage;
+        namecon.text = userModel!.name!;
         phonecon.text = userModel.phone!;
         emailcon.text = userModel.email!;
         return Scaffold(
           appBar: AppBar(
-            backgroundColor: cc.defcol,
+            backgroundColor: Color(0xFFB8F5FF),
             title: Center(
               child: Text('Edit profile',
-                  style: TextStyle(
-                    color: Colors.white,
-                  )),
+                  style: TextStyle(color: Color(0xFF004E7F), fontSize: 20)),
             ),
             leading: IconButton(
               onPressed: () {
-                supervisorLayoutcubit .get(context). supervisorProfileImage =null;
-                supervisorLayoutcubit .get(context). supervisorSelectedImage=null;
-                emailchaged=false;
+                supervisorLayoutcubit.get(context).supervisorProfileImage =
+                    null;
+                supervisorLayoutcubit.get(context).supervisorSelectedImage =
+                    null;
+                emailchaged = false;
                 passwordcon.clear();
                 Navigator.pop(context);
               },
-              icon: Icon(IconBroken.Arrow___Left_2, color: Colors.white),
+              icon: Icon(
+                IconBroken.Arrow___Left_2,
+                color: Color(0xFF004E7F),
+              ),
             ),
             actions: [
               IconButton(
@@ -69,48 +75,51 @@ class supervisorEditProfileScreen extends StatelessWidget {
                   if (emailchaged == true && passwordcon.text.length > 0) {
                     if (formkey.currentState!.validate()) {
                       supervisorLayoutcubit.get(context).updateSupervisorData(
-                        name: namecon.text,
-                        phone: phonecon.text,
-                        email: emailcon.text,
-                        password: passwordcon.text,
-                      );
+                            name: namecon.text,
+                            phone: phonecon.text,
+                            email: emailcon.text,
+                            password: passwordcon.text,
+                          );
                     }
-                  } else if (emailchaged == false && passwordcon.text.length == 0) {
+                  } else if (emailchaged == false &&
+                      passwordcon.text.length == 0) {
                     if (formkey.currentState!.validate()) {
                       supervisorLayoutcubit.get(context).updateSupervisorData(
-                        name: namecon.text,
-                        phone: phonecon.text,
-                        email: emailcon.text,
-                        password: passwordcon.text,
-                      );
+                            name: namecon.text,
+                            phone: phonecon.text,
+                            email: emailcon.text,
+                            password: passwordcon.text,
+                          );
                     }
                   } else {
                     showtoast(
                         text:
-                        'you must enter your password if you want to change your email',
-
+                            'you must enter your password if you want to change your email',
                         state: toaststates.ERROR);
                   }
                 },
-                icon: Icon(Icons.check, color: Colors.white),
+                icon: Icon(
+                  Icons.check,
+                  color: Color(0xFF004E7F),
+                ),
               )
             ],
           ),
           body: Container(
-            color: defaultcol,
+            color: Color(0xFFB8F5FF),
             child: Column(
               children: [
                 Expanded(
                   child: Container(
                     padding: EdgeInsets.all(20),
-                    color: defaultcol,
+                    color: Color(0xFFB8F5FF),
                     width: double.infinity,
                     child: SingleChildScrollView(
                       child: Column(
                         children: [
                           // SizedBox(height: 70,),
                           ConditionalBuilder(
-                            condition: userModel.image !=null,
+                            condition: userModel.image != null,
                             builder: (context) => Stack(
                               alignment: Alignment.bottomRight,
                               children: [
@@ -122,9 +131,13 @@ class supervisorEditProfileScreen extends StatelessWidget {
                                   backgroundColor: Colors.white,
                                   child: CircleAvatar(
                                     radius: 50.0,
-                                    backgroundImage: supervisorProfileImage == null ?
-                                    NetworkImage('${userModel.image}' ,)
-                                        : FileImage(supervisorProfileImage) as ImageProvider,
+                                    backgroundImage:
+                                        supervisorProfileImage == null
+                                            ? NetworkImage(
+                                                '${userModel.image}',
+                                              )
+                                            : FileImage(supervisorProfileImage)
+                                                as ImageProvider,
                                   ),
                                 ),
                                 IconButton(
@@ -137,8 +150,9 @@ class supervisorEditProfileScreen extends StatelessWidget {
                                     ),
                                   ),
                                   onPressed: () {
-                                    supervisorLayoutcubit.get(context).getSupervisorImage();
-
+                                    supervisorLayoutcubit
+                                        .get(context)
+                                        .getSupervisorImage();
                                   },
                                 ),
                               ],
@@ -154,10 +168,11 @@ class supervisorEditProfileScreen extends StatelessWidget {
                                   backgroundColor: Colors.white,
                                   child: CircleAvatar(
                                     radius: 50.0,
-                                    backgroundImage: supervisorProfileImage == null
-                                        ?   AssetImage('images/profileimage.jpg')
+                                    backgroundImage: supervisorProfileImage ==
+                                            null
+                                        ? AssetImage('images/profileimage.jpg')
                                         : FileImage(supervisorProfileImage)
-                                    as ImageProvider,
+                                            as ImageProvider,
                                   ),
                                 ),
                                 IconButton(
@@ -189,7 +204,7 @@ class supervisorEditProfileScreen extends StatelessWidget {
                     padding: EdgeInsets.all(20),
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Color.fromRGBO(255, 255, 255, .88),
                       borderRadius: BorderRadiusDirectional.only(
                         topStart: Radius.circular(30),
                         topEnd: Radius.circular(30),
@@ -209,19 +224,24 @@ class supervisorEditProfileScreen extends StatelessWidget {
                                     Expanded(
                                       child: Column(
                                         children: [
-                                          if (supervisorLayoutcubit.get(context).supervisorSelectedImage != null)
+                                          if (supervisorLayoutcubit
+                                                  .get(context)
+                                                  .supervisorSelectedImage !=
+                                              null)
                                             defaultbutton(
                                               onpress: () {
-                                                supervisorLayoutcubit.get(context).uploadSupervisorProfileImage();
+                                                supervisorLayoutcubit
+                                                    .get(context)
+                                                    .uploadSupervisorProfileImage();
                                               },
                                               text: 'upload profile image',
                                               radius: 30,
                                             ),
-
                                           SizedBox(
                                             height: 5.0,
                                           ),
-                                          if (state is supervisorUpdateLoadingState)
+                                          if (state
+                                              is supervisorUpdateLoadingState)
                                             LinearProgressIndicator(),
                                         ],
                                       ),
@@ -231,12 +251,23 @@ class supervisorEditProfileScreen extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-
+                                SizedBox(
+                                  height: 20.0,
+                                ),
+                                Text(
+                                  'Name',
+                                  style: TextStyle(
+                                    color: Color(0xFF004E7F),
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
                                 SizedBox(
                                   height: 20.0,
                                 ),
                                 defaulttextformfield(
                                   controller: namecon,
+                                  bordercolor: Color(0xFF6BC9FF),
                                   radius: 30,
                                   keyboardtype: TextInputType.name,
                                   validator: (String? value) {
@@ -244,11 +275,22 @@ class supervisorEditProfileScreen extends StatelessWidget {
                                       return 'name must not be empty';
                                     }
                                   },
-                                  label: 'Name',
+                                  label: '',
                                   prefix: IconBroken.User,
                                 ),
                                 SizedBox(
-                                  height: 15.0,
+                                  height: 20.0,
+                                ),
+                                Text(
+                                  'Email',
+                                  style: TextStyle(
+                                    color: Color(0xFF004E7F),
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 20.0,
                                 ),
                                 defaulttextformfield(
                                   controller: emailcon,
@@ -263,7 +305,7 @@ class supervisorEditProfileScreen extends StatelessWidget {
                                       builder: (context) => AlertDialog(
                                         shape: RoundedRectangleBorder(
                                           borderRadius:
-                                          BorderRadius.circular(20.0),
+                                              BorderRadius.circular(20.0),
                                         ),
                                         title: Text(
                                           'You have to enter your password to change your email',
@@ -276,12 +318,13 @@ class supervisorEditProfileScreen extends StatelessWidget {
                                             children: [
                                               defaulttextformfield(
                                                 controller: emailcon,
+                                                bordercolor: Color(0xFF6BC9FF),
                                                 radius: 30,
                                                 onshange: (p0) {
                                                   emailchaged = true;
                                                 },
                                                 keyboardtype:
-                                                TextInputType.text,
+                                                    TextInputType.text,
                                                 validator: (String? value) {
                                                   if (value!.isEmpty) {
                                                     return 'Email must not be empty';
@@ -295,6 +338,7 @@ class supervisorEditProfileScreen extends StatelessWidget {
                                               ),
                                               defaulttextformfield(
                                                 controller: passwordcon,
+                                                bordercolor: Color(0xFF6BC9FF),
                                                 radius: 30,
                                                 keyboardtype: TextInputType
                                                     .visiblePassword,
@@ -312,7 +356,8 @@ class supervisorEditProfileScreen extends StatelessWidget {
                                         actions: [
                                           TextButton(
                                             onPressed: () {
-                                              if (formkey1.currentState!.validate()) {
+                                              if (formkey1.currentState!
+                                                  .validate()) {
                                                 Navigator.pop(context);
                                               }
                                             },
@@ -332,28 +377,40 @@ class supervisorEditProfileScreen extends StatelessWidget {
                                       return 'Email must not be empty';
                                     }
                                   },
-                                  label: 'Email',
+                                  bordercolor: Color(0xFF6BC9FF),
+                                  label: '',
                                   prefix: IconBroken.Message,
                                 ),
                                 SizedBox(
-                                  height: 15.0,
+                                  height: 20.0,
+                                ),
+                                Text(
+                                  'Phone',
+                                  style: TextStyle(
+                                    color: Color(0xFF004E7F),
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 20.0,
                                 ),
                                 defaulttextformfield(
                                   controller: phonecon,
                                   radius: 30,
+                                  bordercolor: Color(0xFF6BC9FF),
                                   keyboardtype: TextInputType.phone,
                                   validator: (String? value) {
                                     if (value!.isEmpty) {
                                       return 'phone number must not be empty';
                                     }
                                   },
-                                  label: 'Phone',
+                                  label: '',
                                   prefix: IconBroken.Call,
                                 ),
                                 SizedBox(
                                   height: 15.0,
                                 ),
-
                               ],
                             ),
                           ),
@@ -367,9 +424,6 @@ class supervisorEditProfileScreen extends StatelessWidget {
           ),
         );
       },
-
     );
-
-
   }
 }

@@ -11,105 +11,136 @@ import 'package:project/shared/styles/colors.dart';
 import '../../shared/components/components.dart';
 
 class supervisorHomeScreen extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer< supervisorLayoutcubit, supervisorLayoutstates>(
+    return BlocConsumer<supervisorLayoutcubit, supervisorLayoutstates>(
       listener: (context, state) {},
-      builder: (context, state)
-      {
-        return
-          ConditionalBuilder(
-            condition: supervisorLayoutcubit.get(context).supervisorCases.length>0,
-            fallback: (context) =>  Scaffold(
-              appBar: AppBar(
-              title: Text(
-              'Home',
-            ),
-              actions: [
-                IconButton(
-                  onPressed: () {
-                    navigateto(context, supervisorSearchScreen());
-                  },
-                  icon: Icon(IconBroken.Search),
+      builder: (context, state) {
+        return ConditionalBuilder(
+          condition:
+              supervisorLayoutcubit.get(context).supervisorCases.length > 0,
+          fallback: (context) => Scaffold(
+            appBar: AppBar(
+                title: Text(
+                  'Home',
                 ),
-              ]),
-              body: SingleChildScrollView(
-                physics: NeverScrollableScrollPhysics(),
-                child: Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.all(18.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(height: 100 ,),
-                      Image(
-                        image: AssetImage('images/nodataavailable.gif'),
-                        //  width: 250,
-                        //    height: 250,
+                actions: [
+                  IconButton(
+                    onPressed: () {
+                      navigateto(context, supervisorSearchScreen());
+                    },
+                    icon: Icon(IconBroken.Search),
+                  ),
+                ]),
+            body: SingleChildScrollView(
+              physics: NeverScrollableScrollPhysics(),
+              child: Container(
+                color: Color(0xFFb8f5ff),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      flex: 2,
+                      child: Image.asset(
+                        'images/no_data_found1.png',
+                        width: double.infinity,
+                        // تحكمي في الحجم حسب الحاجة
+                        height: 347,
                       ),
-                      Text(
-                        'Sorry We Can\'t Find Any Data ',
+                    ),
+                    SizedBox(height: 20), // مسافة بين الصورة والنص
+                    Expanded(
+                      child: Text(
+                        "Sorry We Can’t Find Any Data!",
                         style: TextStyle(
                           fontSize: 20,
-                          color: defaultcol,
                           fontWeight: FontWeight.bold,
+                          color: Color(0xFF004E7F),
                         ),
                       ),
-                    ],
-
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
-              builder: (context) {
-            return    Scaffold(
-                  appBar: AppBar(
-                      title: Text(
-                        'Home',
+          ),
+          builder: (context) {
+            return Scaffold(
+              backgroundColor: Color(0xFFB8F5FF),
+              appBar: AppBar(
+                  title: Text(
+                    'Home',
+                  ),
+                  backgroundColor: Color(0xFFB8F5FF),
+                  ),
+              body: SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
+                child: Column(children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 14.0),
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(30),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.1),
+                            spreadRadius: 1,
+                            blurRadius: 5,
+                            offset: Offset(0, 2),
+                          ),
+                        ],
                       ),
-                      actions: [
-                        IconButton(
-                          onPressed: () {
-                            navigateto(context, supervisorSearchScreen());
-                          },
-                          icon: Icon(IconBroken.Search),
-                        ),
-                      ]),
-                  body: SingleChildScrollView(
-                    physics: BouncingScrollPhysics(),
-                    child: Column(
-                        children:
-                        [
-                          ListView.separated(
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            itemBuilder: (context, index) => supervisorBuildPost(
-                              supervisorLayoutcubit.get(context).supervisorCases[index],
-                              context,
-                              superPostScreen(),
-                              supervisorLayoutcubit.get(context),
+                      child: Row(
+                        children: [
+                          Icon(IconBroken.Search, color: Colors.grey),
+                          SizedBox(width: 10),
+                          Expanded(
+                            child: TextField(
+                              decoration: InputDecoration(
+                                hintText: 'Search...',
+                                hintStyle: TextStyle(color: Colors.grey),
+                                border: InputBorder.none,
+                              ),
+                              onTap: () {
+                                navigateto(context, supervisorSearchScreen());
+                              },
                             ),
-                            separatorBuilder: (context, index) => SizedBox(
-                              height: 8.0,
-                            ),
-                            itemCount: supervisorLayoutcubit.get(context).supervisorCases.length,
                           ),
-                          SizedBox(
-                            height: 8.0,
-                          ),
-                        ]
+                        ],
+                      ),
                     ),
                   ),
-                );
-              },
+                  SizedBox( height: 15,),
 
-          );
-
+                  ListView.separated(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) => supervisorBuildPost(
+                      supervisorLayoutcubit.get(context).supervisorCases[index],
+                      context,
+                      superPostScreen(),
+                      supervisorLayoutcubit.get(context),
+                    ),
+                    separatorBuilder: (context, index) => SizedBox(
+                      height: 8.0,
+                    ),
+                    itemCount: supervisorLayoutcubit
+                        .get(context)
+                        .supervisorCases
+                        .length,
+                  ),
+                  SizedBox(
+                    height: 8.0,
+                  ),
+                ]),
+              ),
+            );
+          },
+        );
       },
     );
   }
-
-
 }

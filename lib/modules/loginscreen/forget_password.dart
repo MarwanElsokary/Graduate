@@ -14,6 +14,7 @@ class forgetPasswordScreen extends StatelessWidget {
   var passwordcon = TextEditingController();
   var formkey = GlobalKey<FormState>();
   bool ispass = true;
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -22,55 +23,65 @@ class forgetPasswordScreen extends StatelessWidget {
         listener: (context, state) {},
         builder: (context, state) {
           return Scaffold(
-            appBar: AppBar(
-              backgroundColor:  cc.defcol,
-              leading: IconButton(
-                onPressed: ()
-                {
-                  Navigator.pop(context);
-                },
-                icon: Icon(
-                  IconBroken.Arrow___Left_2,color: Colors.white,
+            resizeToAvoidBottomInset: true,
+            body: Container(
+              width: double.infinity,
+              height: double.infinity,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('images/login_background'),
+                  // مسار الصورة من مجلد assets
+                  fit: BoxFit.fill,
                 ),
               ),
-              titleSpacing: 5.0,
-            ),
-            body: Container(
-              color: defaultcol,
               child: Column(
                 children: [
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      padding: EdgeInsets.all(20),
-                      color: defaultcol,
-                      width: double.infinity,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Text(
-                            'Forget Password ',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontSize: 20,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                        ],
+                  Positioned(
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    child: AppBar(
+                      backgroundColor: Colors.transparent, // شفافة
+                      elevation: 0, // إزالة الظل
+                      leading: IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: Icon(
+                          IconBroken.Arrow___Left_2,
+                          color: Colors.black,
+                        ),
+                      ),
+                      title: Text(
+                        "Forget password",
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: Color(0xFF004E7F),
+                            fontWeight: FontWeight.w400),
                       ),
                     ),
                   ),
+                  Container(
+                    padding: EdgeInsets.all(20),
+                    child: Column(
+                      children: [
+                        Center(
+                            child: Image.asset(
+                          'images/forget_password',
+                          width: 245,
+                          height: 245,
+                        )),
+                        SizedBox(
+                          height: 10,
+                        ),
+                      ],
+                    ),
+                  ),
                   Expanded(
-                    flex: 3,
                     child: Container(
                       padding: EdgeInsets.all(20),
                       width: double.infinity,
                       decoration: BoxDecoration(
-                        color: Colors.white,
                         borderRadius: BorderRadiusDirectional.only(
                           topStart: Radius.circular(30),
                           topEnd: Radius.circular(30),
@@ -85,75 +96,93 @@ class forgetPasswordScreen extends StatelessWidget {
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Column(
-                             //       crossAxisAlignment: CrossAxisAlignment.center,
+                                  //       crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    SizedBox(
-                                      height:30,
-                                    ),
                                     Text(
-                                      'Mail Address Here',
+                                      'Forget your password ?',
                                       style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: defaultcol,
-                                        fontSize: 20,
+                                        fontWeight: FontWeight.w600,
+                                        color: Color(0xFF003E65),
+                                        fontSize: 24,
                                       ),
                                     ),
                                     SizedBox(
                                       height: 5,
                                     ),
                                     Text(
-                                      'enter the email address associated with your account',
+                                      '''Please  write your email to recieve
+ a confirm code to set a new password''',
                                       style: TextStyle(
-                                        color: Colors.grey,
+                                        color: Color(0xFF003E65),
                                         fontSize: 15,
-
-                                      ),textAlign:  TextAlign.center,
+                                      ),
+                                      textAlign: TextAlign.center,
                                     ),
                                     SizedBox(
-                                      height: 20,
+                                      height: 25,
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          'Email Address',
+                                          style: TextStyle(
+                                            color: Color(0xFF004E7F),
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                          textAlign: TextAlign.start,
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 10,
                                     ),
                                     defaulttextformfield(
                                       controller: emailcon,
                                       radius: 30,
-                                      keyboardtype:
-                                          TextInputType.emailAddress,
+                                      bordercolor: Color(0xFF6BC9FF),
+                                      keyboardtype: TextInputType.emailAddress,
                                       validator: (value) {
                                         if (value!.isEmpty) {
                                           return 'please enter your email address';
                                         }
                                       },
-                                      label: 'Email Address',
+                                      label: '',
                                       prefix: IconBroken.Message,
                                     ),
                                     SizedBox(
-                                      height: 10,
+                                      height: 20,
                                     ),
                                     ConditionalBuilder(
-                                      condition:
-                                          state is! loginLoadingState,
+                                      condition: state is! loginLoadingState,
                                       builder: (context) => defaultbutton(
                                         onpress: () async {
                                           if (formkey.currentState!
                                               .validate()) {
-                                        await  FirebaseAuth.instance.sendPasswordResetEmail(email: emailcon.text).then((value){
-                                            showtoast(text: 'check your email', state: toaststates.SUCCESS);
-                                            navigate(context, loginScreen());
-                                          }).catchError((onError){
-                                            print(onError.toString());
-                                            showtoast(text: 'can\'t rest your password make sure that you entered your email right', state: toaststates.ERROR);
-                                          });
+                                            await FirebaseAuth.instance
+                                                .sendPasswordResetEmail(
+                                                    email: emailcon.text)
+                                                .then((value) {
+                                              showtoast(
+                                                  text: 'check your email',
+                                                  state: toaststates.SUCCESS);
+                                              navigate(context, loginScreen());
+                                            }).catchError((onError) {
+                                              print(onError.toString());
+                                              showtoast(
+                                                  text:
+                                                      'can\'t rest your password make sure that you entered your email right',
+                                                  state: toaststates.ERROR);
+                                            });
                                           }
                                         },
-                                        text: 'recover password  ',
+                                        text: 'Confirm mail',
                                         upercase: true,
                                         radius: 30,
                                       ),
                                       fallback: (context) => Center(
                                         child: CircularProgressIndicator(),
                                       ),
-                                    ),
-                                    SizedBox(
-                                      height: 5,
                                     ),
                                   ],
                                 ),

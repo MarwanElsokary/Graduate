@@ -15,33 +15,33 @@ class doctorLayoutScreen extends StatelessWidget {
 
       },builder: (context, state) {
       var cubit =doctorLayoutcubit.get(context);
-        return Scaffold(
-          body:  cubit.doctorbottomScreens[cubit.currentIndex],
-          bottomNavigationBar:BottomNavigationBar(
-            items: [
-              BottomNavigationBarItem(
-               icon:Icon(
-          IconBroken.Home,
-          ),
-                label: 'home',
+      return Scaffold(
+        body:  cubit.doctorbottomScreens[cubit.currentIndex],
+        bottomNavigationBar:BottomNavigationBar(
+          items: [
+            BottomNavigationBarItem(
+              icon:Icon(
+                IconBroken.Home,
               ),
+              label: 'home',
+            ),
 
-              BottomNavigationBarItem(
-                icon: Icon( IconBroken.Paper_Plus),
-                label: 'new Case',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon( IconBroken.Profile),
-                label: 'Profile',
-              ),
-            ] ,
-            currentIndex: cubit.currentIndex,
-            onTap: (index)
-            {
-              cubit.changebottomdoctor(index);
-            },
-          ),
-        );
+            BottomNavigationBarItem(
+              icon: Icon( IconBroken.Paper_Plus),
+              label: 'new Case',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon( IconBroken.Profile),
+              label: 'Profile',
+            ),
+          ] ,
+          currentIndex: cubit.currentIndex,
+          onTap: (index)
+          {
+            cubit.changebottomdoctor(index);
+          },
+        ),
+      );
     },
 
     );
