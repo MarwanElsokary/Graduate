@@ -1,4 +1,7 @@
 import 'dart:io';
+import 'dart:typed_data';
+import 'package:dio/dio.dart';
+import 'package:image/image.dart' as img;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -7,33 +10,60 @@ import 'package:project/shared/network/local/cache_helper.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:icon_broken/icon_broken.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:project/layout/doctor/doctorcubit/states.dart';
-import 'package:project/modules/doctor/home_screen.dart';
 import 'package:project/modules/doctor/profile.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:project/shared/components/constants.dart';
 import '../../../models/case_model.dart';
 import '../../../models/user_model.dart';
+import '../../../modules/doctor/cases-of-Doctor_screen.dart';
 import '../../../modules/doctor/deep/classifier.dart';
 import '../../../modules/doctor/newpost_screen1.dart';
 import '../../../modules/doctor/post_screen.dart';
 import '../../../modules/loginscreen/loginScreen.dart';
-import 'package:image/image.dart' as img;
+import '../doctor_Layout_screen.dart';
+Future<Uint8List?> getPredictionImageFromAI(File imageFile) async {
+  const url = 'https://82a9-156-211-113-188.ngrok-free.app/predict';
 
-import '../../../modules/supervisor/profile.dart';
+  try {
+    Dio dio = Dio();
+    dio.options.responseType = ResponseType.bytes;
+
+    FormData formData = FormData.fromMap({
+      'image': await MultipartFile.fromFile(imageFile.path),
+    });
+
+    Response response = await dio.post(url, data: formData);
+
+    print('🔵 حالة الاستجابة: ${response.statusCode}');
+    print('🔵 نوع المحتوى: ${response.headers['content-type']}');
+    print('🔵 حجم البيانات: ${response.data.length} bytes');
+
+    if (response.statusCode == 200) {
+      return response.data;
+    } else {
+      print('🔴 خطأ في الخادم: ${response.statusCode}');
+      return null;
+    }
+  } catch (e) {
+    print('🔴 خطأ في الاتصال: $e');
+    return null;
+  }
+}
+
 
 class doctorLayoutcubit extends Cubit<doctorLayoutstates> {
   doctorLayoutcubit() : super(intialstate());
 
   static doctorLayoutcubit get(context) => BlocProvider.of(context);
+
   Future<void> doctorsetupInteractedMessage(BuildContext context) async {
     RemoteMessage? initialMessage =
-    await FirebaseMessaging.instance.getInitialMessage();
+        await FirebaseMessaging.instance.getInitialMessage();
 
     if (initialMessage != null) {
       _handleMessage(context, initialMessage);
@@ -43,21 +73,23 @@ class doctorLayoutcubit extends Cubit<doctorLayoutstates> {
       _handleMessage(context, message);
     });
   }
-  Future<void> _handleMessage(BuildContext context, RemoteMessage message) async {
-    if(message.data['case_id']!= null){
-      await doctorGetCase(message.data['case_id']);
-      Navigator.of(context).push(
-        MaterialPageRoute(builder: (_) => doctorPostScreen()),
-      );
-    }
 
-  }
   int currentIndex = 0;
   List<Widget> doctorbottomScreens = [
     casesOfDoctor(),
     newPostScreen1(),
     doctorProfileScreen(),
   ];
+
+  Future<void> _handleMessage(
+      BuildContext context, RemoteMessage message) async {
+    if (message.data['case_id'] != null) {
+      await doctorGetCase(message.data['case_id']);
+      Navigator.of(context).push(
+        MaterialPageRoute(builder: (_) => doctorPostScreen()),
+      );
+    }
+  }
 
 // get function
   void changebottomdoctor(int index) {
@@ -105,6 +137,7 @@ class doctorLayoutcubit extends Cubit<doctorLayoutstates> {
 
 // upload image function
   String? imageurl;
+
   void uploadDoctorProfileImage() {
     imageurl = null;
     emit(doctorUpdateLoadingState());
@@ -300,6 +333,7 @@ class doctorLayoutcubit extends Cubit<doctorLayoutstates> {
 
   List<XFile> selectedImages = [];
   final ImagePicker picker2 = ImagePicker();
+
   Future<void> selectImages() async {
     try {
       final List<XFile>? pickedFile = await picker2.pickMultiImage();
@@ -316,6 +350,7 @@ class doctorLayoutcubit extends Cubit<doctorLayoutstates> {
   }
 
   List<String> imagesUrl = [];
+
   Future<void> uploadFunction(List<XFile> images) async {
     for (int i = 0; i < images.length; i++) {
       var imageUrl = await uploadFile(images[i]);
@@ -329,7 +364,7 @@ class doctorLayoutcubit extends Cubit<doctorLayoutstates> {
         quality: 40);
 
     Reference reference =
-    FirebaseStorage.instance.ref().child('cases/${image.name}');
+        FirebaseStorage.instance.ref().child('cases/${image.name}');
     UploadTask uploadTask = reference.putFile(File(compresedimage!.path));
     await uploadTask.whenComplete(() {});
     return await reference.getDownloadURL();
@@ -340,11 +375,10 @@ class doctorLayoutcubit extends Cubit<doctorLayoutstates> {
 
   Future<void> takeImages() async {
     try {
-      final XFile? img =
-      await picker3.pickImage(source: ImageSource.camera);
+      final XFile? img = await picker3.pickImage(source: ImageSource.camera);
       if (img != null) {
         takedImages.add(img as PickedFile);
-        analyzeImage(takedImages);
+        analyzeImage(takedImages.cast<XFile>());
         emit(casePostImageTakedSuccessState());
       }
     } catch (e) {
@@ -355,12 +389,13 @@ class doctorLayoutcubit extends Cubit<doctorLayoutstates> {
 
   static const _labelsFileName = 'assets/labels.txt';
   static const _modelFileName = 'DentalModel.tflite';
-  late   Classifier _classifier;
+  late Classifier _classifier;
+
   Future<void> loadClassifier() async {
     debugPrint(
       'Start loading of Classifier with '
-          'labels at $_labelsFileName, '
-          'model at $_modelFileName',
+      'labels at $_labelsFileName, '
+      'model at $_modelFileName',
     );
 
     final classifier = await Classifier.loadWith(
@@ -370,16 +405,42 @@ class doctorLayoutcubit extends Cubit<doctorLayoutstates> {
     _classifier = classifier!;
   }
 
-  var labels = <String, String>{};
-  Future<void> analyzeImage(List images) async {
+  Map<String, String> aiPredictions = {};
+
+  Map<String, String> labels = {}; // لتخزين النتائج النصية
+  Map<String, Uint8List> analyzedImages = {}; // لتخزين الصور المحللة
+
+  Future<void> analyzeImage(List<XFile> images) async {
     emit(loadingLabels());
+
     for (final image in images) {
-      final bytes = await image.readAsBytes();
-      final imageInput = img.decodeImage(bytes)!;
-      final resultCategory = _classifier.predict(imageInput);
-      final claificationLabel = resultCategory.label;
-      labels[image.path] = claificationLabel;
+      try {
+        // 1. إرسال الصورة للخادم
+        final response = await Dio().post(
+          'https://r2a9-156-211-113-18a.ngrok-free.app/predict',
+          data: FormData.fromMap({
+            'image': await MultipartFile.fromFile(image.path),
+          }),
+          options: Options(
+            responseType: ResponseType.bytes,
+            headers: {'Accept': 'image/jpeg'},
+          ),
+        );
+
+        // 2. التحقق من الاستجابة
+        if (response.statusCode == 200 && response.data != null) {
+          analyzedImages[image.path] = response.data;
+          labels[image.path] = 'تم التحليل بنجاح';
+
+          // 3. تحديث الواجهة فوراً
+          emit(imageAnalysisUpdateState());
+        }
+      } catch (e) {
+        labels[image.path] = 'خطأ في التحليل';
+        print('Error: $e');
+      }
     }
+
     emit(sucessloadingLabels());
   }
 
@@ -403,6 +464,7 @@ class doctorLayoutcubit extends Cubit<doctorLayoutstates> {
   }
 
   late String globalcaseid;
+
   Future<void> uploadCaseImage({
     required String dateTime,
     required String patientName,
@@ -532,6 +594,7 @@ class doctorLayoutcubit extends Cubit<doctorLayoutstates> {
 
   //Diabetes check box
   bool isDiabetes = false;
+
   bool changeDiabetes() {
     isDiabetes = !isDiabetes;
     emit(changeDiabetesSuccess());
@@ -540,6 +603,7 @@ class doctorLayoutcubit extends Cubit<doctorLayoutstates> {
 
   //cardiac check box
   bool isCardiac = false;
+
   bool changeCardiac() {
     isCardiac = !isCardiac;
     emit(changeCardiacSuccess());
@@ -548,6 +612,7 @@ class doctorLayoutcubit extends Cubit<doctorLayoutstates> {
 
   //hypertension check box
   bool isHypertension = false;
+
   bool changeHypertension() {
     isHypertension = !isHypertension;
     emit(changeHypertensionSuccess());
@@ -556,6 +621,7 @@ class doctorLayoutcubit extends Cubit<doctorLayoutstates> {
 
   //allergies check box
   bool isAllergies = false;
+
   bool changeAllergies() {
     isAllergies = !isAllergies;
     emit(changeAllergiesSuccess());
@@ -579,6 +645,7 @@ class doctorLayoutcubit extends Cubit<doctorLayoutstates> {
   }
 
   caseModel? doctorClickcase;
+
   Future<void> doctorGetCase(String uidpost) async {
     emit(doctorGetuserLoadingState());
     await FirebaseFirestore.instance
@@ -602,6 +669,7 @@ class doctorLayoutcubit extends Cubit<doctorLayoutstates> {
         print(takedImages[i].path);
         takedImages.removeAt(i);
         labels.remove(path);
+        analyzedImages.remove(path); // أضف هذا السطر
         emit(caseRemoveImageSuccessState());
       }
     }
@@ -610,12 +678,14 @@ class doctorLayoutcubit extends Cubit<doctorLayoutstates> {
         print(selectedImages[i].path);
         selectedImages.removeAt(i);
         labels.remove(path);
+        analyzedImages.remove(path); // أضف هذا السطر
         emit(caseRemoveImageSuccessState());
       }
     }
   }
 
   List<caseModel> casesperdoctor = [];
+
   void getCasesOfDoctor() {
     FirebaseFirestore.instance
         .collection('cases')
@@ -632,6 +702,7 @@ class doctorLayoutcubit extends Cubit<doctorLayoutstates> {
   }
 
   bool isCompleteMAX = false;
+
   bool showCompleteSubCategoryMAX(value) {
     isCompleteMAX = value;
     emit(showCompleteSubcategoryMAX());
@@ -639,6 +710,7 @@ class doctorLayoutcubit extends Cubit<doctorLayoutstates> {
   }
 
   bool isPartialMAX = false;
+
   bool showPartialSubCategoryMAX(value) {
     isPartialMAX = value;
     emit(showPartialSubcategoryMAX());
@@ -646,6 +718,7 @@ class doctorLayoutcubit extends Cubit<doctorLayoutstates> {
   }
 
   bool isCompleteMAN = false;
+
   bool showCompleteSubCategoryMAN(value) {
     isCompleteMAN = value;
     emit(showCompleteSubcategoryMAN());
@@ -653,6 +726,7 @@ class doctorLayoutcubit extends Cubit<doctorLayoutstates> {
   }
 
   bool isPartialMAN = false;
+
   bool showPartialSubCategoryMAN(value) {
     isPartialMAN = value;
     emit(showPartialSubcategoryMAN());
@@ -660,6 +734,7 @@ class doctorLayoutcubit extends Cubit<doctorLayoutstates> {
   }
 
   bool isMaxillofacial = false;
+
   bool IsMaxillofacial(value) {
     isMaxillofacial = value;
     emit(isMaxilloFacial());
@@ -667,6 +742,7 @@ class doctorLayoutcubit extends Cubit<doctorLayoutstates> {
   }
 
   bool isFullmouth = false;
+
   bool IsFullmouth(value) {
     isFullmouth = value;
     emit(isfullmouth());
@@ -756,7 +832,8 @@ class doctorLayoutcubit extends Cubit<doctorLayoutstates> {
       level: level,
       images: images,
       caseId: caseId,
-      caseState: caseState, studentRequests: [],
+      caseState: caseState,
+      studentRequests: [],
     );
     FirebaseFirestore.instance
         .collection('cases')
@@ -797,6 +874,7 @@ class doctorLayoutcubit extends Cubit<doctorLayoutstates> {
   List<caseModel> search2 = [];
   List<caseModel> search3 = [];
   List<caseModel> search4 = [];
+
   void doctorSearch(String query) {
     if (query.isNotEmpty) {
       search = [];
@@ -806,23 +884,23 @@ class doctorLayoutcubit extends Cubit<doctorLayoutstates> {
       search4 = [];
       search1 = doctorCases
           .where((item) => item.mandibularCategory!
-          .toLowerCase()!
-          .contains(query.toLowerCase()))
+              .toLowerCase()!
+              .contains(query.toLowerCase()))
           .toList();
       search2 = doctorCases
           .where((item) => item.mandibularSubCategory!
-          .toLowerCase()!
-          .contains(query.toLowerCase()))
+              .toLowerCase()!
+              .contains(query.toLowerCase()))
           .toList();
       search3 = doctorCases
           .where((item) => item.maxillaryCategory!
-          .toLowerCase()!
-          .contains(query.toLowerCase()))
+              .toLowerCase()!
+              .contains(query.toLowerCase()))
           .toList();
       search4 = doctorCases
           .where((item) => item.maxillarySubCategory!
-          .toLowerCase()!
-          .contains(query.toLowerCase()))
+              .toLowerCase()!
+              .contains(query.toLowerCase()))
           .toList();
       search.addAll(search1);
       search.addAll(search2);

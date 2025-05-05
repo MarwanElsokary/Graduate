@@ -790,12 +790,13 @@ class newPostScreen2 extends StatelessWidget {
                               DropdownButtonFormField(
                                 value: maxillaryCategorydropdownvalue,
                                 decoration: InputDecoration(
-                                  label: Text('Choose Category', style:
-                                  TextStyle(
-                                    color: Color(0xFF06A4FF),
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
-                                  ),
+                                  label: Text(
+                                    'Choose Category',
+                                    style: TextStyle(
+                                      color: Color(0xFF06A4FF),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                    ),
                                   ),
                                   border: InputBorder.none,
                                   focusedBorder: OutlineInputBorder(
@@ -946,12 +947,14 @@ class newPostScreen2 extends StatelessWidget {
                                 builder: (context) => DropdownButtonFormField(
                                   value: maxillarySubcategorydropdownvalue,
                                   decoration: InputDecoration(
-                                    label: Text('Choose  Sub Category',style:
-                                    TextStyle(
-                                      color: Color(0xFF06A4FF),
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
-                                    ),),
+                                    label: Text(
+                                      'Choose  Sub Category',
+                                      style: TextStyle(
+                                        color: Color(0xFF06A4FF),
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
                                     border: InputBorder.none,
                                     focusedBorder: OutlineInputBorder(
                                       borderSide: BorderSide.none,
@@ -986,12 +989,14 @@ class newPostScreen2 extends StatelessWidget {
                                 builder: (context) => DropdownButtonFormField(
                                   value: maxillaryModificationdropdownvalue,
                                   decoration: InputDecoration(
-                                    label: Text('Choose  Modification',style:
-                                    TextStyle(
-                                      color: Color(0xFF06A4FF),
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
-                                    ),),
+                                    label: Text(
+                                      'Choose  Modification',
+                                      style: TextStyle(
+                                        color: Color(0xFF06A4FF),
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
                                     border: InputBorder.none,
                                     focusedBorder: OutlineInputBorder(
                                       borderSide: BorderSide.none,
@@ -1027,12 +1032,14 @@ class newPostScreen2 extends StatelessWidget {
                                 builder: (context) => DropdownButtonFormField(
                                   value: maxillarySubcategorydropdownvalue,
                                   decoration: InputDecoration(
-                                    label: Text('Choose Sub Category',style:
-                                    TextStyle(
-                                      color: Color(0xFF06A4FF),
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
-                                    ),),
+                                    label: Text(
+                                      'Choose Sub Category',
+                                      style: TextStyle(
+                                        color: Color(0xFF06A4FF),
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
                                     border: InputBorder.none,
                                     focusedBorder: OutlineInputBorder(
                                       borderSide: BorderSide.none,
@@ -1087,12 +1094,14 @@ class newPostScreen2 extends StatelessWidget {
                                 fallback: (context) => DropdownButtonFormField(
                                   value: mandibularCategorydropdownvalue,
                                   decoration: InputDecoration(
-                                    label: Text('Choose Category',style:
-                                    TextStyle(
-                                      color: Color(0xFF06A4FF),
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
-                                    ),),
+                                    label: Text(
+                                      'Choose Category',
+                                      style: TextStyle(
+                                        color: Color(0xFF06A4FF),
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
                                     border: InputBorder.none,
                                     focusedBorder: OutlineInputBorder(
                                       borderSide: BorderSide.none,
@@ -1233,12 +1242,14 @@ class newPostScreen2 extends StatelessWidget {
                                 builder: (context) => DropdownButtonFormField(
                                   value: mandibularSubcategorydropdownvalue,
                                   decoration: InputDecoration(
-                                    label: Text('Choose Sub Category',style:
-                                    TextStyle(
-                                      color: Color(0xFF06A4FF),
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
-                                    ),),
+                                    label: Text(
+                                      'Choose Sub Category',
+                                      style: TextStyle(
+                                        color: Color(0xFF06A4FF),
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
                                     border: InputBorder.none,
                                     focusedBorder: OutlineInputBorder(
                                       borderSide: BorderSide.none,
@@ -1273,12 +1284,14 @@ class newPostScreen2 extends StatelessWidget {
                                 builder: (context) => DropdownButtonFormField(
                                   value: mandibularModificationdropdownvalue,
                                   decoration: InputDecoration(
-                                    label: Text('Choose  Modification',style:
-                                    TextStyle(
-                                      color: Color(0xFF06A4FF),
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
-                                    ),),
+                                    label: Text(
+                                      'Choose  Modification',
+                                      style: TextStyle(
+                                        color: Color(0xFF06A4FF),
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
                                     border: InputBorder.none,
                                     focusedBorder: OutlineInputBorder(
                                       borderSide: BorderSide.none,
@@ -1314,12 +1327,14 @@ class newPostScreen2 extends StatelessWidget {
                                 builder: (context) => DropdownButtonFormField(
                                   value: mandibularSubcategorydropdownvalue,
                                   decoration: InputDecoration(
-                                    label: Text('Choose  Sub Category',style:
-                                    TextStyle(
-                                      color: Color(0xFF06A4FF),
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
-                                    ),),
+                                    label: Text(
+                                      'Choose  Sub Category',
+                                      style: TextStyle(
+                                        color: Color(0xFF06A4FF),
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
                                     border: InputBorder.none,
                                     focusedBorder: OutlineInputBorder(
                                       borderSide: BorderSide.none,
@@ -1350,12 +1365,14 @@ class newPostScreen2 extends StatelessWidget {
                               DropdownButtonFormField(
                                 value: leveldropdownvalue,
                                 decoration: InputDecoration(
-                                  label: Text('Choose Level',style:
-                                  TextStyle(
-                                    color: Color(0xFF06A4FF),
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
-                                  ),),
+                                  label: Text(
+                                    'Choose Level',
+                                    style: TextStyle(
+                                      color: Color(0xFF06A4FF),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
                                   border: InputBorder.none,
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide.none,
@@ -1433,63 +1450,113 @@ class newPostScreen2 extends StatelessWidget {
                                   //         );
                                   //   },
                                   // ),
-                                  child: GridView.builder(
-                                    physics: BouncingScrollPhysics(),
-                                    shrinkWrap: true,
-                                    gridDelegate:
-                                        SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 2,
-                                      crossAxisSpacing: 5,
-                                      mainAxisSpacing: 5,
-                                    ),
-                                    itemCount: imgs.length,
-                                    itemBuilder: (context, index) {
-                                      return Stack(
-                                        alignment: AlignmentDirectional.topEnd,
-                                        children: [
-                                          Image.file(
-                                            File(imgs[index].key),
-                                            fit: BoxFit.cover,
-                                            width: double.infinity,
-                                          ),
-                                          IconButton(
-                                            icon: CircleAvatar(
-                                              radius: 15.0,
-                                              child: Icon(
-                                                Icons.close,
-                                                size: 16.0,
+                                  child: Container(
+                                    color: Colors.blue,
+                                    height: 400,
+                                    width: 300,
+                                    child: GridView.builder(
+                                      physics: BouncingScrollPhysics(),
+                                      shrinkWrap: true,
+                                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 1,
+                                        crossAxisSpacing: 5,
+                                        mainAxisSpacing: 5,
+                                      ),
+                                      itemCount: imgs.length,
+                                      itemBuilder: (context, index) {
+                                        final cubit = doctorLayoutcubit.get(context);
+                                        final imageKey = imgs[index].key;
+                                        final analyzedImage = cubit.analyzedImages[imageKey];
+
+                                        return Card(
+                                          elevation: 3,
+                                          clipBehavior: Clip.antiAliasWithSaveLayer,
+                                          margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+                                          child: Stack(
+                                            fit: StackFit.expand,
+                                            children: [
+                                              // الصورة الأصلية
+                                              Image.file(
+                                                File(imageKey),
+                                                fit: BoxFit.cover,
                                               ),
-                                              backgroundColor: Colors.white,
-                                            ),
-                                            onPressed: () {
-                                              doctorLayoutcubit
-                                                  .get(context)
-                                                  .removePostImage(
-                                                      imgs[index].key);
-                                            },
-                                          ),
-                                          Positioned(
-                                            bottom: 0,
-                                            left: 0,
-                                            right: 0,
-                                            child: Container(
-                                              color:
-                                                  Colors.white.withOpacity(1),
-                                              child: Center(
-                                                child: Text(
-                                                  imgs[index].value,
-                                                  style: TextStyle(
-                                                    color: cc.defcol,
-                                                    fontSize: 16.0,
-                                                  ),
+
+                                              // زر الإزالة
+                                              Positioned(
+                                                top: 10,
+                                                right: 10,
+                                                child: IconButton(
+                                                  icon: Icon(Icons.close, color: Colors.blue),
+                                                  onPressed: () => cubit.removePostImage(imageKey),
                                                 ),
                                               ),
-                                            ),
+
+                                              // عرض الصورة المحللة (إذا كانت متوفرة)
+                                              if (analyzedImage != null)
+                                                Positioned.fill(
+                                                  child: Container(
+                                                    color: Colors.black.withOpacity(0.3),
+                                                    child: Center(
+                                                      child: Column(
+                                                        mainAxisAlignment: MainAxisAlignment.center,
+                                                        children: [
+                                                          Text(
+                                                            'AI Diagnostics',
+                                                            style: TextStyle(
+                                                              color: Colors.white,
+                                                              fontSize: 18,
+                                                              fontWeight: FontWeight.bold,
+                                                            ),
+                                                          ),
+                                                          SizedBox(height: 10),
+                                                          Container(
+                                                            width: 250,
+                                                            height: 250,
+                                                            decoration: BoxDecoration(
+                                                              border: Border.all(color: Colors.amber, width: 2),
+                                                              boxShadow: [
+                                                                BoxShadow(
+                                                                  color: Colors.black.withOpacity(0.5),
+                                                                  spreadRadius: 2,
+                                                                  blurRadius: 5,
+                                                                ),
+                                                              ],
+                                                            ),
+                                                            child:Container(
+                                                              width: double.infinity,
+                                                              height: double.infinity,
+                                                              decoration: BoxDecoration(
+                                                                border: Border.all(color: Colors.blue, width: 2),
+                                                              ),
+                                                              child: analyzedImage != null
+                                                                  ? Image.memory(
+                                                                analyzedImage!,
+                                                                fit: BoxFit.contain,
+                                                                frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+                                                                  if (frame == null) {
+                                                                    return Center(child: CircularProgressIndicator());
+                                                                  }
+                                                                  return child;
+                                                                },
+                                                                errorBuilder: (context, error, stackTrace) {
+                                                                  print('❌ Failed to display image: $error');
+                                                                  return Center(child: Icon(Icons.error));
+                                                                },
+                                                              )
+                                                                  : Center(child: CircularProgressIndicator()),
+                                                            )
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                            ],
                                           ),
-                                        ],
-                                      );
-                                    },
-                                  ),
+                                        );
+                                      },
+                                    ),
+                                  )
                                 ),
                               SizedBox(
                                 height: 10.0,
@@ -1511,6 +1578,7 @@ class newPostScreen2 extends StatelessWidget {
                               children: [
                                 Icon(
                                   IconBroken.Image,
+
                                 ),
                                 SizedBox(
                                   width: 5.0,

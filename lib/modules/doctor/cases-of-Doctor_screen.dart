@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project/layout/doctor/doctorcubit/cubit.dart';
 import 'package:project/layout/doctor/doctorcubit/states.dart';
 import 'package:project/modules/doctor/post_screen.dart';
-import 'package:project/shared/styles/colors.dart';
 import '../../shared/components/components.dart';
 
 class casesOfDoctor extends StatelessWidget {
@@ -52,38 +51,37 @@ class casesOfDoctor extends StatelessWidget {
             ),
           ),
           fallback: (context) => Scaffold(
-            appBar: defaultAppBar(
-              context: context,
-              title: 'Doctor Cases',
-            ),
-            body: Container(
-              color: Color(0xFFb8f5ff),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: Image.asset(
-                      'images/no_data_found1.png',
-                      width: double.infinity, // تحكمي في الحجم حسب الحاجة
-                      height: 347,
-                    ),
-                  ),
-                  SizedBox(height: 20), // مسافة بين الصورة والنص
-                  Expanded(
-                    child: Text(
-                      "Sorry We Can’t Find Any Data!",
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
-                        color: Color(0xFF004E7F),
+              appBar: defaultAppBar(
+                context: context,
+                title: 'Doctor Cases',
+              ),
+              body: Container(
+                color: Color(0xFFb8f5ff),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: Image.asset(
+                        'images/no_data_found1.png',
+                        width: double.infinity, // تحكمي في الحجم حسب الحاجة
+                        height: 347,
                       ),
                     ),
-                  ),
-                ],
-              ),
-            )
-          ),
+                    SizedBox(height: 20), // مسافة بين الصورة والنص
+                    Expanded(
+                      child: Text(
+                        "Sorry We Can’t Find Any Data!",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xFF004E7F),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )),
         );
       },
     );
