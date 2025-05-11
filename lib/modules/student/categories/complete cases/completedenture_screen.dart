@@ -10,16 +10,14 @@ import 'complete_flat.dart';
 import 'complete_well_screen.dart';
 
 class completeDentureScreen extends StatelessWidget {
-
-
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<studentLayoutcubit, studentLayoutstates>(
       listener: (context, state) {},
       builder: (context, state) {
-           return ConditionalBuilder(
-            condition:studentLayoutcubit.get(context).completeCases.length > 0,
-            fallback: (context) => Scaffold(
+        return ConditionalBuilder(
+          condition: studentLayoutcubit.get(context).completeCases.length > 0,
+          fallback: (context) => Scaffold(
               appBar: defaultAppBar(
                 context: context,
                 title: 'Complete Denture Cases',
@@ -50,42 +48,40 @@ class completeDentureScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-              )
-            ),
-            builder: (context) {
-              return Scaffold(
-                appBar: defaultAppBar(
-                  context: context,
-                  title: 'Complete Denture Cases',
-                ),
-                body: SingleChildScrollView(
-                  physics: BouncingScrollPhysics(),
-                  child: Column(children: [
-
-                    ListView.separated(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) => studentDefaultbuildPost(
-                        studentLayoutcubit.get(context).completeCases[index],
-                        context,
-                        studentPostScreen(),
-                        studentLayoutcubit.get(context),
-                      ),
-                      separatorBuilder: (context, index) => SizedBox(
-                        height: 8.0,
-                      ),
-                      itemCount:
-                      studentLayoutcubit.get(context).completeCases.length,
+              )),
+          builder: (context) {
+            return Scaffold(
+              backgroundColor: Color(0xFFB8F5FF),
+              appBar: defaultAppBar(
+                context: context,
+                title: 'Complete Denture Cases',
+              ),
+              body: SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
+                child: Column(children: [
+                  ListView.separated(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) => studentDefaultbuildPost(
+                      studentLayoutcubit.get(context).completeCases[index],
+                      context,
+                      studentPostScreen(),
+                      studentLayoutcubit.get(context),
                     ),
-                    SizedBox(
+                    separatorBuilder: (context, index) => SizedBox(
                       height: 8.0,
                     ),
-                  ]),
-                ),
-              );
-            },
-          );
-
+                    itemCount:
+                        studentLayoutcubit.get(context).completeCases.length,
+                  ),
+                  SizedBox(
+                    height: 8.0,
+                  ),
+                ]),
+              ),
+            );
+          },
+        );
       },
     );
   }

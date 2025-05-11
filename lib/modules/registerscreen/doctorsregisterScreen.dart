@@ -156,38 +156,7 @@ class DoctorRegisterScreen extends StatelessWidget {
                                   .changepassvisibility(),
                               hidepassword: registercubit.get(context).hidepass,
                             ),
-                            const SizedBox(height: 20),
-                            const Text(
-                              'Upload Medical License:',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xFF004E7F),
-                              ),
-                            ),
-                            const SizedBox(height: 10),
-                            GestureDetector(
-                              onTap: () => pickLicenseImage(context),
-                              child: Container(
-                                height: 150,
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.grey),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: licenseImage != null
-                                    ? Image.file(licenseImage!,
-                                        fit: BoxFit.cover)
-                                    : const Center(
-                                        child: Icon(
-                                          Icons.add_a_photo_outlined,
-                                          size: 40,
-                                          color: Color(0xFF004E7F),
-                                        ),
-                                      ),
-                              ),
-                            ),
-                            const SizedBox(height: 20),
+                            const SizedBox(height: 80),
                             ConditionalBuilder(
                               condition: state is! registerLoadingState,
                               builder: (context) => defaultbutton(

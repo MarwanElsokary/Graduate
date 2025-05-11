@@ -58,7 +58,8 @@ class newPostScreen1 extends StatelessWidget {
           body: Container(
             color: Color(0xFFB8F5FF),
             child: Card(
-              color: Color.fromRGBO(255, 255, 255, 0.82),
+              color: Color.fromRGBO(255, 255, 255, 0.62),
+              elevation: 0,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(30)),
                 side: BorderSide(
@@ -466,7 +467,7 @@ class newPostScreen2 extends StatelessWidget {
   var itemsMax = [
     'Maxillary Complete Denture',
     'Maxillary Partial Denture',
-    'Maxillary Overdenture',
+    'Maxillary Caries',
     'Maxillary Single Denture',
     'Maxillofacial Case',
     'Full Mouth Rehabilitation',
@@ -478,10 +479,8 @@ class newPostScreen2 extends StatelessWidget {
     'Well Developed Ridge',
   ];
   var itemsPartialMax = [
-    'kennedy |',
-    'kennedy ||',
-    'kennedy |||',
-    'kennedy |V',
+    'Cavity ',
+    'Tooth',
   ];
   String? maxillaryModificationdropdownvalue;
   var itemsModMax = ['1', '2', '3', '4', '5', '6', '7', '8', 'Un Modified'];
@@ -489,7 +488,7 @@ class newPostScreen2 extends StatelessWidget {
   var itemsman = [
     'Mandibular Complete Denture',
     'Mandibular Partial Denture',
-    'Mandibular Overdenture',
+    'Mandibular Caries',
     'Mandibular Single Denture',
     'Maxillofacial Case',
     'Full Mouth Rehabilitation',
@@ -501,10 +500,8 @@ class newPostScreen2 extends StatelessWidget {
     'Well Developed Ridge',
   ];
   var itemsPartialman = [
-    'kennedy |',
-    'kennedy ||',
-    'kennedy |||',
-    'kennedy |V',
+    'Cavity ',
+    'Tooth',
   ];
   String? mandibularModificationdropdownvalue;
   var itemsModman = [
@@ -679,7 +676,8 @@ class newPostScreen2 extends StatelessWidget {
           body: Container(
             color: Color(0xFFB8F5FF),
             child: Card(
-              color: Color.fromRGBO(255, 255, 255, 0.82),
+              color: Color.fromRGBO(255, 255, 255, 0.62),
+              elevation: 0,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(30)),
                 side: BorderSide(
@@ -836,7 +834,7 @@ class newPostScreen2 extends StatelessWidget {
                                       pre = null;
                                     }
                                   } else if (newValue ==
-                                      'Maxillary Partial Denture') {
+                                      'Maxillary Single Denture') {
                                     doctorLayoutcubit
                                         .get(context)
                                         .showPartialSubCategoryMAX(true);
@@ -936,7 +934,12 @@ class newPostScreen2 extends StatelessWidget {
                                 items: itemsMax.map((String items) {
                                   return DropdownMenuItem(
                                     value: items,
-                                    child: Text(items),
+                                    child: Text(items,
+                                        style: TextStyle(
+                                          color: cc.defcol,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                        )),
                                   );
                                 }).toList(),
                               ),
@@ -977,109 +980,14 @@ class newPostScreen2 extends StatelessWidget {
                                   items: itemsPartialMax.map((String items) {
                                     return DropdownMenuItem(
                                       value: items,
-                                      child: Text(items),
+                                      child: Text(items,
+                                          style: TextStyle(
+                                            color: cc.defcol,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w600,
+                                          )),
                                     );
                                   }).toList(),
-                                ),
-                              ),
-                              ConditionalBuilder(
-                                fallback: (context) => SizedBox(),
-                                condition:
-                                    doctorLayoutcubit.get(context).isPartialMAX,
-                                builder: (context) => DropdownButtonFormField(
-                                  value: maxillaryModificationdropdownvalue,
-                                  decoration: InputDecoration(
-                                    label: Text(
-                                      'Choose  Modification',
-                                      style: TextStyle(
-                                        color: Color(0xFF06A4FF),
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                    border: InputBorder.none,
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide.none,
-                                    ),
-                                  ),
-                                  icon: const Icon(
-                                    IconBroken.Arrow___Down_2,
-                                    color: cc.defcol,
-                                  ),
-                                  validator: (value) {
-                                    if (value == null) {
-                                      return 'Please Choose Modification';
-                                    }
-                                  },
-                                  onChanged: (String? newValue) {
-                                    maxillaryModificationdropdownvalue =
-                                        newValue!;
-                                    print(maxillaryModificationdropdownvalue);
-                                  },
-                                  items: itemsModMax.map((String items) {
-                                    return DropdownMenuItem(
-                                      value: items,
-                                      child: Text(items),
-                                    );
-                                  }).toList(),
-                                ),
-                              ),
-                              ConditionalBuilder(
-                                fallback: (context) => SizedBox(),
-                                condition: doctorLayoutcubit
-                                    .get(context)
-                                    .isCompleteMAX,
-                                builder: (context) => DropdownButtonFormField(
-                                  value: maxillarySubcategorydropdownvalue,
-                                  decoration: InputDecoration(
-                                    label: Text(
-                                      'Choose Sub Category',
-                                      style: TextStyle(
-                                        color: Color(0xFF06A4FF),
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                    border: InputBorder.none,
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide.none,
-                                    ),
-                                  ),
-                                  icon: const Icon(
-                                    IconBroken.Arrow___Down_2,
-                                    color: cc.defcol,
-                                  ),
-                                  validator: (value) {
-                                    if (value == null) {
-                                      return 'Please Choose Subcategory';
-                                    }
-                                  },
-                                  onChanged: (String? newValue) {
-                                    maxillarySubcategorydropdownvalue =
-                                        newValue!;
-                                    print(maxillarySubcategorydropdownvalue);
-                                  },
-                                  items: itemsCompleteMax.map((String items) {
-                                    return DropdownMenuItem(
-                                      value: items,
-                                      child: Text(items),
-                                    );
-                                  }).toList(),
-                                ),
-                              ),
-                              ConditionalBuilder(
-                                builder: (context) => SizedBox(),
-                                condition: doctorLayoutcubit
-                                        .get(context)
-                                        .isMaxillofacial ||
-                                    doctorLayoutcubit.get(context).isFullmouth,
-                                fallback: (context) => Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text('Mandibular',
-                                      style: TextStyle(
-                                        fontSize: 15,
-                                        color: cc.defcol,
-                                      )),
                                 ),
                               ),
                               SizedBox(
@@ -1137,7 +1045,7 @@ class newPostScreen2 extends StatelessWidget {
                                           null;
                                       mandibularSubcategorydropdownvalue = null;
                                     } else if (newValue ==
-                                        'Mandibular Partial Denture') {
+                                        'Mandibular Single Denture') {
                                       doctorLayoutcubit
                                           .get(context)
                                           .IsMaxillofacial(false);
@@ -1230,7 +1138,12 @@ class newPostScreen2 extends StatelessWidget {
                                   items: itemsman.map((String items) {
                                     return DropdownMenuItem(
                                       value: items,
-                                      child: Text(items),
+                                      child: Text(items,
+                                          style: TextStyle(
+                                            color: cc.defcol,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w600,
+                                          )),
                                     );
                                   }).toList(),
                                 ),
@@ -1272,92 +1185,12 @@ class newPostScreen2 extends StatelessWidget {
                                   items: itemsPartialman.map((String items) {
                                     return DropdownMenuItem(
                                       value: items,
-                                      child: Text(items),
-                                    );
-                                  }).toList(),
-                                ),
-                              ),
-                              ConditionalBuilder(
-                                fallback: (context) => SizedBox(),
-                                condition:
-                                    doctorLayoutcubit.get(context).isPartialMAN,
-                                builder: (context) => DropdownButtonFormField(
-                                  value: mandibularModificationdropdownvalue,
-                                  decoration: InputDecoration(
-                                    label: Text(
-                                      'Choose  Modification',
-                                      style: TextStyle(
-                                        color: Color(0xFF06A4FF),
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                    border: InputBorder.none,
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide.none,
-                                    ),
-                                  ),
-                                  icon: const Icon(
-                                    IconBroken.Arrow___Down_2,
-                                    color: cc.defcol,
-                                  ),
-                                  validator: (value) {
-                                    if (value == null) {
-                                      return 'Please Choose Modification';
-                                    }
-                                  },
-                                  onChanged: (String? newValue) {
-                                    mandibularModificationdropdownvalue =
-                                        newValue!;
-                                    print(mandibularModificationdropdownvalue);
-                                  },
-                                  items: itemsModman.map((String items) {
-                                    return DropdownMenuItem(
-                                      value: items,
-                                      child: Text(items),
-                                    );
-                                  }).toList(),
-                                ),
-                              ),
-                              ConditionalBuilder(
-                                fallback: (context) => SizedBox(),
-                                condition: doctorLayoutcubit
-                                    .get(context)
-                                    .isCompleteMAN,
-                                builder: (context) => DropdownButtonFormField(
-                                  value: mandibularSubcategorydropdownvalue,
-                                  decoration: InputDecoration(
-                                    label: Text(
-                                      'Choose  Sub Category',
-                                      style: TextStyle(
-                                        color: Color(0xFF06A4FF),
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                    border: InputBorder.none,
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide.none,
-                                    ),
-                                  ),
-                                  icon: const Icon(
-                                    IconBroken.Arrow___Down_2,
-                                    color: cc.defcol,
-                                  ),
-                                  validator: (value) {
-                                    if (value == null) {
-                                      return 'Please Choose Subcategory';
-                                    }
-                                  },
-                                  onChanged: (String? newValue) {
-                                    mandibularSubcategorydropdownvalue =
-                                        newValue!;
-                                    print(mandibularSubcategorydropdownvalue);
-                                  },
-                                  items: itemsCompleteman.map((String items) {
-                                    return DropdownMenuItem(
-                                      value: items,
-                                      child: Text(items),
+                                      child: Text(items,
+                                          style: TextStyle(
+                                            color: cc.defcol,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w600,
+                                          )),
                                     );
                                   }).toList(),
                                 ),
@@ -1394,7 +1227,12 @@ class newPostScreen2 extends StatelessWidget {
                                 items: items3.map((String items) {
                                   return DropdownMenuItem(
                                     value: items,
-                                    child: Text(items),
+                                    child: Text(items,
+                                        style: TextStyle(
+                                          color: cc.defcol,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                        )),
                                   );
                                 }).toList(),
                               ),
@@ -1403,161 +1241,201 @@ class newPostScreen2 extends StatelessWidget {
                               ),
                               if (imgs.isNotEmpty)
                                 Container(
-                                  //  height: 300,
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(
-                                      4.0,
-                                    ),
-                                  ),
-                                  // child: GridView.builder(
-                                  //   physics: BouncingScrollPhysics(),
-                                  //   shrinkWrap: true,
-                                  //   gridDelegate:
-                                  //   SliverGridDelegateWithFixedCrossAxisCount(
-                                  //     crossAxisCount: 2,
-                                  //     crossAxisSpacing: 5,
-                                  //     mainAxisSpacing: 5,
-                                  //   ),
-                                  //   itemCount: imgs.length,
-                                  //   itemBuilder: (context, index) {
-                                  //     return
-                                  //         Stack(
-                                  //           alignment: AlignmentDirectional.topEnd,
-                                  //           children: [
-                                  //             Image.file(
-                                  //               File(imgs[index]!.path),
-                                  //               fit: BoxFit.cover,
-                                  //               width: double.infinity,
-                                  //             ),
-                                  //             IconButton(
-                                  //               icon: CircleAvatar(
-                                  //                 radius: 15.0,
-                                  //                 child: Icon(
-                                  //                   Icons.close,
-                                  //                   size: 16.0,
-                                  //                 ),
-                                  //                 backgroundColor: Colors.white,
-                                  //               ),
-                                  //               onPressed: () {
-                                  //                 doctorLayoutcubit
-                                  //                     .get(context)
-                                  //                     .removePostImage(
-                                  //                     imgs[index]!.path);
-                                  //               },
-                                  //             ),
-                                  //           ],
-                                  //         );
-                                  //   },
-                                  // ),
-                                  child: Container(
-                                    color: Colors.blue,
-                                    height: 400,
-                                    width: 300,
-                                    child: GridView.builder(
-                                      physics: BouncingScrollPhysics(),
-                                      shrinkWrap: true,
-                                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 1,
-                                        crossAxisSpacing: 5,
-                                        mainAxisSpacing: 5,
+                                    //  height: 300,
+                                    width: double.infinity,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(
+                                        4.0,
                                       ),
-                                      itemCount: imgs.length,
-                                      itemBuilder: (context, index) {
-                                        final cubit = doctorLayoutcubit.get(context);
-                                        final imageKey = imgs[index].key;
-                                        final analyzedImage = cubit.analyzedImages[imageKey];
+                                    ),
+                                    // child: GridView.builder(
+                                    //   physics: BouncingScrollPhysics(),
+                                    //   shrinkWrap: true,
+                                    //   gridDelegate:
+                                    //   SliverGridDelegateWithFixedCrossAxisCount(
+                                    //     crossAxisCount: 2,
+                                    //     crossAxisSpacing: 5,
+                                    //     mainAxisSpacing: 5,
+                                    //   ),
+                                    //   itemCount: imgs.length,
+                                    //   itemBuilder: (context, index) {
+                                    //     return
+                                    //         Stack(
+                                    //           alignment: AlignmentDirectional.topEnd,
+                                    //           children: [
+                                    //             Image.file(
+                                    //               File(imgs[index]!.path),
+                                    //               fit: BoxFit.cover,
+                                    //               width: double.infinity,
+                                    //             ),
+                                    //             IconButton(
+                                    //               icon: CircleAvatar(
+                                    //                 radius: 15.0,
+                                    //                 child: Icon(
+                                    //                   Icons.close,
+                                    //                   size: 16.0,
+                                    //                 ),
+                                    //                 backgroundColor: Colors.white,
+                                    //               ),
+                                    //               onPressed: () {
+                                    //                 doctorLayoutcubit
+                                    //                     .get(context)
+                                    //                     .removePostImage(
+                                    //                     imgs[index]!.path);
+                                    //               },
+                                    //             ),
+                                    //           ],
+                                    //         );
+                                    //   },
+                                    // ),
+                                    child: Container(
+                                      color: Colors.blue,
+                                      height: 400,
+                                      width: 300,
+                                      child: GridView.builder(
+                                        physics: BouncingScrollPhysics(),
+                                        shrinkWrap: true,
+                                        gridDelegate:
+                                            SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 1,
+                                          crossAxisSpacing: 5,
+                                          mainAxisSpacing: 5,
+                                        ),
+                                        itemCount: imgs.length,
+                                        itemBuilder: (context, index) {
+                                          final cubit =
+                                              doctorLayoutcubit.get(context);
+                                          final imageKey = imgs[index].key;
+                                          final analyzedImage =
+                                              cubit.analyzedImages[imageKey];
 
-                                        return Card(
-                                          elevation: 3,
-                                          clipBehavior: Clip.antiAliasWithSaveLayer,
-                                          margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
-                                          child: Stack(
-                                            fit: StackFit.expand,
-                                            children: [
-                                              // الصورة الأصلية
-                                              Image.file(
-                                                File(imageKey),
-                                                fit: BoxFit.cover,
-                                              ),
-
-                                              // زر الإزالة
-                                              Positioned(
-                                                top: 10,
-                                                right: 10,
-                                                child: IconButton(
-                                                  icon: Icon(Icons.close, color: Colors.blue),
-                                                  onPressed: () => cubit.removePostImage(imageKey),
+                                          return Card(
+                                            elevation: 3,
+                                            clipBehavior:
+                                                Clip.antiAliasWithSaveLayer,
+                                            margin: EdgeInsets.symmetric(
+                                                horizontal: 10.0,
+                                                vertical: 10.0),
+                                            child: Stack(
+                                              fit: StackFit.expand,
+                                              children: [
+                                                // الصورة الأصلية
+                                                Image.file(
+                                                  File(imageKey),
+                                                  fit: BoxFit.cover,
                                                 ),
-                                              ),
 
-                                              // عرض الصورة المحللة (إذا كانت متوفرة)
-                                              if (analyzedImage != null)
-                                                Positioned.fill(
-                                                  child: Container(
-                                                    color: Colors.black.withOpacity(0.3),
-                                                    child: Center(
-                                                      child: Column(
-                                                        mainAxisAlignment: MainAxisAlignment.center,
-                                                        children: [
-                                                          Text(
-                                                            'AI Diagnostics',
-                                                            style: TextStyle(
-                                                              color: Colors.white,
-                                                              fontSize: 18,
-                                                              fontWeight: FontWeight.bold,
-                                                            ),
-                                                          ),
-                                                          SizedBox(height: 10),
-                                                          Container(
-                                                            width: 250,
-                                                            height: 250,
-                                                            decoration: BoxDecoration(
-                                                              border: Border.all(color: Colors.amber, width: 2),
-                                                              boxShadow: [
-                                                                BoxShadow(
-                                                                  color: Colors.black.withOpacity(0.5),
-                                                                  spreadRadius: 2,
-                                                                  blurRadius: 5,
-                                                                ),
-                                                              ],
-                                                            ),
-                                                            child:Container(
-                                                              width: double.infinity,
-                                                              height: double.infinity,
-                                                              decoration: BoxDecoration(
-                                                                border: Border.all(color: Colors.blue, width: 2),
+                                                // زر الإزالة
+                                                Positioned(
+                                                  top: 10,
+                                                  right: 10,
+                                                  child: IconButton(
+                                                    icon: Icon(Icons.close,
+                                                        color: Colors.blue),
+                                                    onPressed: () =>
+                                                        cubit.removePostImage(
+                                                            imageKey),
+                                                  ),
+                                                ),
+
+                                                // عرض الصورة المحللة (إذا كانت متوفرة)
+                                                if (analyzedImage != null)
+                                                  Positioned.fill(
+                                                    child: Container(
+                                                      color: Colors.black
+                                                          .withOpacity(0.3),
+                                                      child: Center(
+                                                        child: Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Text(
+                                                              'AI Diagnostics',
+                                                              style: TextStyle(
+                                                                color: Colors
+                                                                    .white,
+                                                                fontSize: 18,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
                                                               ),
-                                                              child: analyzedImage != null
-                                                                  ? Image.memory(
-                                                                analyzedImage!,
-                                                                fit: BoxFit.contain,
-                                                                frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
-                                                                  if (frame == null) {
-                                                                    return Center(child: CircularProgressIndicator());
-                                                                  }
-                                                                  return child;
-                                                                },
-                                                                errorBuilder: (context, error, stackTrace) {
-                                                                  print('❌ Failed to display image: $error');
-                                                                  return Center(child: Icon(Icons.error));
-                                                                },
-                                                              )
-                                                                  : Center(child: CircularProgressIndicator()),
-                                                            )
-                                                          ),
-                                                        ],
+                                                            ),
+                                                            SizedBox(
+                                                                height: 10),
+                                                            Container(
+                                                                width: 250,
+                                                                height: 250,
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  border: Border.all(
+                                                                      color: Colors
+                                                                          .amber,
+                                                                      width: 2),
+                                                                  boxShadow: [
+                                                                    BoxShadow(
+                                                                      color: Colors
+                                                                          .black
+                                                                          .withOpacity(
+                                                                              0.5),
+                                                                      spreadRadius:
+                                                                          2,
+                                                                      blurRadius:
+                                                                          5,
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                                child:
+                                                                    Container(
+                                                                  decoration:
+                                                                      BoxDecoration(
+                                                                    border: Border.all(
+                                                                        color: Colors
+                                                                            .blue,
+                                                                        width:
+                                                                            2),
+                                                                  ),
+                                                                  child: analyzedImage !=
+                                                                          null
+                                                                      ? Image
+                                                                          .memory(
+                                                                          analyzedImage!,
+                                                                          fit: BoxFit
+                                                                              .contain,
+                                                                          frameBuilder: (context,
+                                                                              child,
+                                                                              frame,
+                                                                              wasSynchronouslyLoaded) {
+                                                                            if (frame ==
+                                                                                null) {
+                                                                              return Center(child: CircularProgressIndicator());
+                                                                            }
+                                                                            return child;
+                                                                          },
+                                                                          errorBuilder: (context,
+                                                                              error,
+                                                                              stackTrace) {
+                                                                            print('❌ Failed to display image: $error');
+                                                                            return Center(child: Icon(Icons.error));
+                                                                          },
+                                                                        )
+                                                                      : Center(
+                                                                          child:
+                                                                              CircularProgressIndicator()),
+                                                                )),
+                                                          ],
+                                                        ),
                                                       ),
                                                     ),
                                                   ),
-                                                ),
-                                            ],
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  )
-                                ),
+
+
+                                              ],
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    )),
                               SizedBox(
                                 height: 10.0,
                               ),
@@ -1577,35 +1455,20 @@ class newPostScreen2 extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Icon(
-                                  IconBroken.Image,
+                                  IconBroken.Image,                    color: defaultcol,
 
                                 ),
                                 SizedBox(
                                   width: 5.0,
                                 ),
                                 Text(
-                                  'Add Photo',
+                                  'Add Photo',style: TextStyle(
+                                  color: defaultcol,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700
+
+
                                 ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: TextButton(
-                            onPressed: () {
-                              doctorLayoutcubit.get(context).takeImages();
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  IconBroken.Camera,
-                                ),
-                                SizedBox(
-                                  width: 5.0,
-                                ),
-                                Text(
-                                  'Take Photo',
                                 ),
                               ],
                             ),

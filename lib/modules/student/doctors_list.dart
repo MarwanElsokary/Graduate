@@ -19,6 +19,7 @@ class doctorsScreen extends StatelessWidget {
       builder: (context, state) {
         var cubit = supervisorLayoutcubit.get(context).doctors;
         return Scaffold(
+          backgroundColor: Color(0xFFB8F5FF),
           appBar: AppBar(
             title: Text(
               'Doctors List',

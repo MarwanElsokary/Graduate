@@ -6,7 +6,18 @@ import 'package:project/layout/doctor/doctorcubit/states.dart';
 import 'package:project/modules/doctor/post_screen.dart';
 import '../../shared/components/components.dart';
 
-class casesOfDoctor extends StatelessWidget {
+class casesOfDoctor extends StatefulWidget {
+  @override
+  State<casesOfDoctor> createState() => _casesOfDoctorState();
+}
+
+class _casesOfDoctorState extends State<casesOfDoctor> {
+  @override
+  void initState() {
+    super.initState();
+    doctorLayoutcubit.get(context).getCasesOfDoctor();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<doctorLayoutcubit, doctorLayoutstates>(

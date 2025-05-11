@@ -2,6 +2,7 @@
     package="com.GP.project">
      <uses-permission android:name="android.permission.INTERNET" />
     <application
+        android:enableOnBackInvokedCallback="true"
         android:label="Smile Care"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">

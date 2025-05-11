@@ -21,6 +21,8 @@ class postPerDoctorScreenStudent extends StatelessWidget {
         return ConditionalBuilder(
           condition: supervisorLayoutcubit.get(context).casesperdoctor.length > 0,
           builder: (context) => Scaffold(
+            backgroundColor: Color(0xFFB8F5FF),
+
             appBar: defaultAppBar(
               context: context,
               title: 'Doctor Cases',

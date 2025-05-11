@@ -47,7 +47,7 @@ class doctorProfileScreen extends StatelessWidget {
                                   child: CircleAvatar(
                                     radius: 64.0,
                                     backgroundImage: NetworkImage(
-                                      'Dr${userModel?.image}',
+                                      '${userModel?.image}',
                                     ),
                                   ),
                                 ),
@@ -73,7 +73,7 @@ class doctorProfileScreen extends StatelessWidget {
                             height: 15,
                           ),
                           Text(
-                            '${userModel?.name}',
+                            'DR.${userModel?.name}',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Color(0xFF003E65),

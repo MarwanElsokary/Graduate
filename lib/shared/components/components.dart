@@ -8,6 +8,7 @@ import 'package:project/layout/student/studentcubit/cubit.dart';
 import 'package:project/layout/supervisor/supervisorcubit/cubit.dart';
 
 import '../../models/case_model.dart';
+import '../../modules/doctor/update_case.dart';
 import '../../modules/supervisor/update_case.dart';
 import '../styles/colors.dart';
 import 'constants.dart';
@@ -256,11 +257,18 @@ Widget studentDefaultbuildPost(
         await studentLayoutcubit.studentGetCase(model.caseId as String);
         navigateto(context, w);
       },
-      child: Card(
-        clipBehavior: Clip.antiAliasWithSaveLayer,
-        margin: EdgeInsets.symmetric(
-          horizontal: 10.0,
+      child:  Card(
+        color: Color.fromRGBO(255, 255, 255, 0.62),
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(30)),
+          side: BorderSide(
+            color: Color.fromRGBO(107, 201, 255, 1),
+            width: 2,
+          ),
         ),
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
         child: Padding(
           padding: const EdgeInsets.all(10.0),
           child: Column(
@@ -428,7 +436,7 @@ Widget studentDefaultbuildPost(
                 ConditionalBuilder(
                   condition: model.images.length == 1,
                   builder: (context) => Container(
-                    //       height: 300,
+                         height: 300,
                     width: double.infinity,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(
@@ -902,6 +910,13 @@ Widget supervisorBuildPost(
         clipBehavior: Clip.antiAliasWithSaveLayer,
         color: Color.fromRGBO(255, 255, 255, 0.62),
         elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(30)),
+          side: BorderSide(
+            color: Color.fromRGBO(107, 201, 255, 1),
+            width: 2,
+          ),
+        ),
         margin: EdgeInsets.symmetric(
           horizontal: 10.0,
         ),
@@ -1428,7 +1443,7 @@ Widget doctorBuildPostWithUpdate(
                             ),
                             TextButton(
                               onPressed: () {
-                                // doctorLayoutcubit.deleteCase(model.caseId);
+                                doctorLayoutcubit.deleteCase(model.caseId);
                                 Navigator.pop(context);
                               },
                               child: Text(
@@ -1707,8 +1722,8 @@ Widget doctorBuildPostWithUpdate(
               ),
               defaultbutton(
                 onpress: () async {
-                  // await doctorLayoutcubit.doctorGetCase(model.caseId as String);
-                  // navigateto(context, doctorEditCaseScreen());
+                   await doctorLayoutcubit.doctorGetCase(model.caseId as String);
+                   navigateto(context, doctorEditCaseScreen());
                 },
                 text: 'Update ',
                 radius: 30,

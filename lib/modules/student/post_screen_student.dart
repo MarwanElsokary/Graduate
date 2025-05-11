@@ -48,14 +48,38 @@ class PostScreenStudent extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              fallback: (context) => Stack(
-                                children: [
-                                  CircleAvatar(
-                                    radius: 25.0,
-                                    backgroundImage:
-                                        AssetImage('images/profileimage.jpg'),
+                              fallback: (context) => Scaffold(
+                                appBar: defaultAppBar(
+                                  context: context,
+                                  title: 'Doctor Cases',
+                                ),
+                                body: Container(
+                                  color: Color(0xFFb8f5ff),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Expanded(
+                                        child: Image.asset(
+                                          'images/no_data_found1.png',
+                                          width: double.infinity, // تحكمي في الحجم حسب الحاجة
+                                          height: 347,
+                                        ),
+                                      ),
+                                      SizedBox(height: 20), // مسافة بين الصورة والنص
+                                      Expanded(
+                                        child: Text(
+                                          "Sorry We Can’t Find Any Data!",
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w600,
+                                            color: Color(0xFF004E7F),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ],
+                                ),
                               ),
                             ),
                             SizedBox(

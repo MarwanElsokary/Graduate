@@ -16,6 +16,8 @@ class fullMouthScreen extends StatelessWidget {
         return ConditionalBuilder(
            condition:  studentLayoutcubit.get(context).fullMouthCases.length >0,
           builder: (context) => Scaffold(
+            backgroundColor: Color(0xFFB8F5FF),
+
             appBar: defaultAppBar(
               context: context,
               title: 'Full Mouth Rehabilitation',

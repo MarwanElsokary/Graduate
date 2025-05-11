@@ -22,9 +22,10 @@ class singlrdentureScreen extends StatelessWidget {
                 .length > 0,
             builder: (context) =>
                 Scaffold(
+                  backgroundColor: Color(0xFFB8F5FF),
                   appBar: defaultAppBar(
                     context: context,
-                    title: 'Single Denture Cases',
+                    title: 'partial Denture Cases',
                   ),
                   body: SingleChildScrollView(
                     physics: BouncingScrollPhysics(),
@@ -62,7 +63,7 @@ class singlrdentureScreen extends StatelessWidget {
 
                   appBar: defaultAppBar(
                   context: context,
-                  title: 'Single Denture Cases',
+                  title: 'partial Denture Cases',
                 ),
             body: Container(
               color: Color(0xFFb8f5ff),

@@ -17,6 +17,8 @@ class maxillofacialScreen extends StatelessWidget {
           //if level =post &   studentLayoutcubit.get(context).studentCases.length>0,
           condition: studentLayoutcubit.get(context).maxilloCases.length>0,
           builder: (context) => Scaffold(
+            backgroundColor: Color(0xFFB8F5FF),
+
             appBar: defaultAppBar(
               context: context,
               title: 'Maxillofacial Cases',

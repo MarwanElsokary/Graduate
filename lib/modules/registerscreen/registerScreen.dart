@@ -124,7 +124,7 @@ class registerScreen extends StatelessWidget {
                                         controller: Idcon,
                                         radius: 30,
                                         bordercolor: Color(0xFF6BC9FF),
-                                        maxLength: 4,
+                                        maxLength: 8,
                                         keyboardtype: TextInputType.number,
                                         validator: (value) {
                                           if (value!.isEmpty) {
@@ -286,40 +286,6 @@ class registerScreen extends StatelessWidget {
                                         height: 15,
                                       ),
                                       const SizedBox(height: 10),
-                                      Center(
-                                        child: Text(
-                                          'Upload Your ID:',
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold,
-                                            color: Color(0xFF004E7F),
-                                          ),
-                                        ),
-                                      ),
-                                      const SizedBox(height: 10),
-                                      GestureDetector(
-                                        onTap: () => pickLicenseImage(context),
-                                        child: Container(
-                                          height: 150,
-                                          width: double.infinity,
-                                          decoration: BoxDecoration(
-                                            border:
-                                                Border.all(color: Colors.grey),
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                          ),
-                                          child: licenseImage != null
-                                              ? Image.file(licenseImage!,
-                                                  fit: BoxFit.cover)
-                                              : const Center(
-                                                  child: Icon(
-                                                    Icons.add_a_photo_outlined,
-                                                    size: 40,
-                                                    color: Color(0xFF004E7F),
-                                                  ),
-                                                ),
-                                        ),
-                                      ),
                                       SizedBox(
                                         height: 5,
                                       ),

@@ -15,18 +15,21 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   List<Map<String, String>> onboardingData = [
     {
       "image": "images/onboarding1.png",
-      "title": "Welcome to",
-      "description": "Experience the ease of appoint your doctor",
+      "title": "Welcome to Smile Care!",
+      "description": '''Experience the ease of finding  
+      your patients ''',
     },
     {
       "image": "images/onboarding3.png",
-      "title": "Make your appointment easy!",
-      "description": "Your health is safe with us",
+      "title": "Save your Efforts and Time",
+      "description": '''There Are many categories and cases
+      you can choose what Suits you ''',
     },
     {
       "image": "images/onboarding2.png",
-      "title": "Your doctors are Here!",
-      "description": "Say hello to your new doctor",
+      "title": " Doctors make it easy for you!",
+      "description": '''Doctors help you finding your case
+by Uploading it on the APP''',
     },
   ];
 

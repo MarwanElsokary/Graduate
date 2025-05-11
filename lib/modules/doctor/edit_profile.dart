@@ -166,8 +166,8 @@ class doctorEditProfileScreen extends StatelessWidget {
                                     radius: 50.0,
                                     backgroundImage: doctorProfileImage == null
                                         ? NetworkImage('${userModel.image}')
-                                        : FileImage(doctorProfileImage)
-                                            as ImageProvider,
+                                        : FileImage(doctorProfileImage!) as ImageProvider,
+
                                   ),
                                 ),
                                 IconButton(

@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:dio/dio.dart';
-import 'package:image/image.dart' as img;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -25,9 +24,9 @@ import '../../../modules/doctor/deep/classifier.dart';
 import '../../../modules/doctor/newpost_screen1.dart';
 import '../../../modules/doctor/post_screen.dart';
 import '../../../modules/loginscreen/loginScreen.dart';
-import '../doctor_Layout_screen.dart';
+
 Future<Uint8List?> getPredictionImageFromAI(File imageFile) async {
-  const url = 'https://82a9-156-211-113-188.ngrok-free.app/predict';
+  const url = 'https://4c1d-2c0f-fc88-400e-5127-9869-c1dc-6e02-8329.ngrok-free.app/predict';
 
   try {
     Dio dio = Dio();
@@ -81,6 +80,7 @@ class doctorLayoutcubit extends Cubit<doctorLayoutstates> {
     doctorProfileScreen(),
   ];
 
+
   Future<void> _handleMessage(
       BuildContext context, RemoteMessage message) async {
     if (message.data['case_id'] != null) {
@@ -114,7 +114,7 @@ class doctorLayoutcubit extends Cubit<doctorLayoutstates> {
 
 //get image function
   File? doctorSelectedImage;
-  var doctorProfileImage;
+  File? doctorProfileImage;
   var picker = ImagePicker();
 
   Future<void> getDoctorImage() async {
@@ -123,11 +123,7 @@ class doctorLayoutcubit extends Cubit<doctorLayoutstates> {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
-      doctorSelectedImage = File(pickedFile.path);
-      doctorProfileImage = await FlutterImageCompress.compressAndGetFile(
-          doctorSelectedImage!.absolute.path,
-          doctorSelectedImage!.path + 'compressed.jpg',
-          quality: 40);
+      doctorProfileImage = File(pickedFile.path); // <-- التحويل المهم هنا
       emit(doctorProfileImagePickedSucessState());
     } else {
       print('No Image Selected.');
@@ -138,18 +134,17 @@ class doctorLayoutcubit extends Cubit<doctorLayoutstates> {
 // upload image function
   String? imageurl;
 
-  void uploadDoctorProfileImage() {
-    imageurl = null;
+  Future<void> uploadDoctorProfileImage() async {
     emit(doctorUpdateLoadingState());
+
     firebase_storage.FirebaseStorage.instance
         .ref()
-        .child('users/${Uri.file(doctorProfileImage!.path).pathSegments.last}')
+        .child('doctors/${Uri.file(doctorProfileImage!.path).pathSegments.last}')
         .putFile(doctorProfileImage!)
         .then((value) {
       value.ref.getDownloadURL().then((value) {
-        print(value);
-        imageurl = value;
-        emit(doctorUploadProfileImageSucessState());
+        updateDoctorData(image: value, name: '', phone: '', email: '');
+        // ← هنا بيحدث الرابط في firestore
       }).catchError((error) {
         emit(doctorUploadProfileImageErrorState());
       });
@@ -415,40 +410,58 @@ class doctorLayoutcubit extends Cubit<doctorLayoutstates> {
 
     for (final image in images) {
       try {
-        // 1. إرسال الصورة للخادم
-        final response = await Dio().post(
-          'https://r2a9-156-211-113-18a.ngrok-free.app/predict',
+        final dio = Dio();
+
+        // 1. إعداد الطلب مع خيارات أفضل
+        final response = await dio.post(
+          'https://b099-197-54-138-7.ngrok-free.app/predict',
           data: FormData.fromMap({
             'image': await MultipartFile.fromFile(image.path),
           }),
           options: Options(
             responseType: ResponseType.bytes,
-            headers: {'Accept': 'image/jpeg'},
+            headers: {
+              'Accept': 'image/jpeg',
+              'Content-Type': 'multipart/form-data',
+            },
+            validateStatus: (status) => status! < 500, // تقبل الأكواد أقل من 500
           ),
-        );
+          onSendProgress: (sent, total) {
+            print('Sent: $sent / Total: $total');
+          },
+        ).timeout(Duration(seconds: 30));
 
-        // 2. التحقق من الاستجابة
-        if (response.statusCode == 200 && response.data != null) {
+        // 2. معالجة الاستجابة
+        if (response.statusCode == 200) {
           analyzedImages[image.path] = response.data;
-          labels[image.path] = 'تم التحليل بنجاح';
-
-          // 3. تحديث الواجهة فوراً
+          labels[image.path] = 'AI Diagnosis';
+          emit(imageAnalysisSuccessState(image.path));
+        } else {
+          labels[image.path] = 'خطأ في الخادم (${response.statusCode})';
           emit(imageAnalysisUpdateState());
         }
+      } on DioException catch (e) {
+        // 3. معالجة أخطاء Dio بشكل خاص
+        String errorMessage = 'خطأ في الاتصال';
+        if (e.response != null) {
+          errorMessage = 'خطأ ${e.response!.statusCode}: ${e.response!.statusMessage}';
+        } else {
+          errorMessage = 'خطأ في الشبكة: ${e.message}';
+        }
+
+        labels[image.path] = errorMessage;
+        analyzedImages.remove(image.path);
+        print('تفاصيل الخطأ: $e');
+        emit(imageAnalysisUpdateState());
       } catch (e) {
-        labels[image.path] = 'خطأ في التحليل';
-        print('Error: $e');
+        labels[image.path] = 'خطأ غير متوقع';
+        analyzedImages.remove(image.path);
+        print('خطأ غير متوقع: $e');
+        emit(imageAnalysisUpdateState());
       }
     }
 
     emit(sucessloadingLabels());
-  }
-
-  Future<void> uploadFunction1(List<PickedFile> images) async {
-    for (int i = 0; i < images.length; i++) {
-      var imageUrl = await uploadFile1(images[i]);
-      imagesUrl.add(imageUrl.toString());
-    }
   }
 
   Future<String> uploadFile1(PickedFile image) async {
@@ -490,7 +503,7 @@ class doctorLayoutcubit extends Cubit<doctorLayoutstates> {
     emit(doctorNewPostLoadingState());
     imagesUrl = [];
     await uploadFunction(selectedImages);
-    await uploadFunction1(takedImages);
+    await uploadFunction(takedImages.cast<XFile>());
     print(imagesUrl.length);
     createCase(
       dateTime: dateTime,
@@ -841,8 +854,10 @@ class doctorLayoutcubit extends Cubit<doctorLayoutstates> {
         .update(model.tomap())
         .then((value) {
       emit(doctorUpdateCasesSucessState());
+      getCasesOfDoctor();
     }).catchError((error) {
       emit(doctorUpdateCasesErrorState(error));
+      getCasesOfDoctor();
     });
   }
 

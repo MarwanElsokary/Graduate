@@ -161,7 +161,7 @@ class categoriesScreen extends StatelessWidget {
                                       height: 3,
                                     ),
                                     Image(
-                                      image: AssetImage('images/partial.png'),
+                                      image: AssetImage('images/images 3.png'),
                                       fit: BoxFit.cover,
                                       height: 140,
                                       width: 140,
@@ -169,7 +169,7 @@ class categoriesScreen extends StatelessWidget {
                                     SizedBox(
                                       height: 5,
                                     ),
-                                    Text('Partial Denture',
+                                    Text('Single Denture',
                                         style: TextStyle(
                                             fontWeight: FontWeight.w600,
                                             color: Color(0xFF004E7F),
@@ -200,7 +200,7 @@ class categoriesScreen extends StatelessWidget {
                                       height: 3,
                                     ),
                                     Image(
-                                      image: AssetImage('images/images 3.png'),
+                                      image: AssetImage('images/partial.png'),
                                       fit: BoxFit.cover,
                                       height: 140,
                                       width: 140,
@@ -208,7 +208,7 @@ class categoriesScreen extends StatelessWidget {
                                     SizedBox(
                                       height: 5,
                                     ),
-                                    Text('Single denture',
+                                    Text('partial denture',
                                         style: TextStyle(
                                             fontWeight: FontWeight.w600,
                                             color: Color(0xFF004E7F),
@@ -239,7 +239,7 @@ class categoriesScreen extends StatelessWidget {
                                       height: 3,
                                     ),
                                     Image(
-                                      image: AssetImage('images/images 2.png'),
+                                      image: AssetImage('images/Caries.png'),
                                       fit: BoxFit.cover,
                                       height: 140,
                                       width: 140,
@@ -247,7 +247,7 @@ class categoriesScreen extends StatelessWidget {
                                     SizedBox(
                                       height: 5,
                                     ),
-                                    Text('Over denture',
+                                    Text('Caries',
                                         style: TextStyle(
                                             fontWeight: FontWeight.w600,
                                             color: Color(0xFF004E7F),
