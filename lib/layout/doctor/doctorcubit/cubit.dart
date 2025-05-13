@@ -332,12 +332,15 @@ class doctorLayoutcubit extends Cubit<doctorLayoutstates> {
   Future<void> selectImages() async {
     try {
       final List<XFile>? pickedFile = await picker2.pickMultiImage();
-      if (pickedFile!.isNotEmpty || pickedFile != null) {
+      if (pickedFile != null && pickedFile.isNotEmpty) {
         selectedImages.addAll(pickedFile);
         print(selectedImages.length);
         analyzeImage(selectedImages);
         emit(casePostImagePickedSuccessState());
+      } else {
+        print("No images selected");
       }
+
     } catch (e) {
       print('something Wrong' + e.toString());
       emit(casePostImagePickedErrorState());
@@ -414,7 +417,7 @@ class doctorLayoutcubit extends Cubit<doctorLayoutstates> {
 
         // 1. إعداد الطلب مع خيارات أفضل
         final response = await dio.post(
-          'https://b099-197-54-138-7.ngrok-free.app/predict',
+          'https://4c1d-2c0f-fc88-400e-5127-9869-c1dc-6e02-8329.ngrok-free.app/predict',
           data: FormData.fromMap({
             'image': await MultipartFile.fromFile(image.path),
           }),

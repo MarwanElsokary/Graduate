@@ -1,5 +1,0 @@
-0 Complete Edentulous
-1 Partially Edentulous
-2 Ear Maxillofacial
-3 Eye Maxillofacial
-4 Nose Maxillofacial
